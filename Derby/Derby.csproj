@@ -159,17 +159,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PackController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201312232023095_InitialConfiguration.cs" />
-    <Compile Include="Migrations\201312232023095_InitialConfiguration.Designer.cs">
-      <DependentUpon>201312232023095_InitialConfiguration.cs</DependentUpon>
+    <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
+    <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
+      <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
+    <Compile Include="Models\Contestant.cs" />
     <Compile Include="Models\Den.cs" />
     <Compile Include="Models\DerbyDb.cs" />
     <Compile Include="Models\Heat.cs" />
@@ -182,6 +185,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DerbyDb.mdf" />
+    <Content Include="App_Data\DerbyDb_log.ldf">
+      <DependentUpon>DerbyDb.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -229,10 +236,14 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Pack\Create.cshtml" />
+    <Content Include="Views\Pack\Delete.cshtml" />
+    <Content Include="Views\Pack\Details.cshtml" />
+    <Content Include="Views\Pack\Edit.cshtml" />
+    <Content Include="Views\Pack\Index.cshtml" />
+    <Content Include="Views\Competition\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -241,8 +252,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312232023095_InitialConfiguration.resx">
-      <DependentUpon>201312232023095_InitialConfiguration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201312270426471_Initial-Configuration.resx">
+      <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

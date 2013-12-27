@@ -13,7 +13,7 @@ namespace Derby.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201312232023095_InitialConfiguration"; }
+            get { return "201312270426471_Initial-Configuration"; }
         }
         
         string IMigrationMetadata.Source

@@ -12,5 +12,6 @@ namespace Derby.Models
 
 		public int PackId { get; set; }
 
+        //public ICollection<Scout> Scouts { get; set; }
 	}
 }

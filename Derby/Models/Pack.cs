@@ -13,5 +13,6 @@ namespace Derby.Models
 
         public ICollection<Den> Dens { get; set; }
         public ICollection<Competition> Competitions { get; set; }
+        public ICollection<Scout> Scouts { get; set; }
 	}
 }

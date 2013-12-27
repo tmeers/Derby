@@ -18,5 +18,6 @@ namespace Derby.Models
 		public DbSet<Racer> Racers { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Heat> Heats { get; set; }
+        public DbSet<Contestant> Contestants { get; set; }
 	}
 }

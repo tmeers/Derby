@@ -1,0 +1,31 @@
+﻿@model Derby.Models.Competition
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h4>Dens</h4>
+        <div>
+            @foreach (var den in Model.Pack.Dens)
+            {
+                <div class="col-sm-2">
+                    <h4>@den.Name</h4>
+                    @*@foreach (var scout in den.Scouts)
+                    {
+                        <div>@scout.Name</div>
+                    }*@
+                    
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

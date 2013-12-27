@@ -18,6 +18,12 @@ namespace Derby
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
+
+            routes.MapRoute(
+                name: "Competition",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Competition", action = "Index", id = UrlParameter.Optional }
+            );
 		}
 	}
 }
