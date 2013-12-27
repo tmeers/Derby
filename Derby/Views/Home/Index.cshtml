@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Derby.Models.Pack>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<Derby.Models.Pack>
 @{
     ViewBag.Title = "Home Page";
 }
@@ -6,17 +7,61 @@
 <div class="jumbotron">
     <h1>Winners Circle</h1>
     <p class="lead">A free tool for managing Pinewood Derby and Raingutter Regatta races.</p>
-    
+@if (!Request.IsAuthenticated)
+{  
+    <p><a href="/login/" class="btn btn-primary btn-large">Log In To Get Started &raquo;</a></p>
+}
+else
+{
+    <p><a href="/pack/create/" class="btn btn-primary btn-large">Register a Pack &raquo;</a></p>
+}
 </div>
 
 <div class="row">
-    <h2>Packs</h2>
-    @foreach (var item in Model)
+@if (!Request.IsAuthenticated)
+{
+    <h2>Registered Packs</h2>
+    if (Model == null || Model.Count() == 0)
     {
+        <div>There are no registered Packs</div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
         <div class="col-sm-2">
             <h4>@item.Name</h4>
             <div>@item.Region</div>
         </div>
+        }
     }
 
+}
+else
+{
+    <h2>My Registered Packs</h2>
+    foreach (var pack in Model)
+    {
+        <div class="col-sm-2">
+            <h4>@Html.ActionLink(pack.Name, "", "pack", new { id = pack.Id }, pack.Name)</h4>
+            <div>@pack.Region</div>
+            @if (pack.Dens != null && pack.Dens.Any()) 
+            { 
+                <div>Dens - @pack.Dens.Count(x => x.PackId == pack.Id)</div>
+            }
+            else
+            {
+                <div>No Dens yet</div>
+            }
+            @if (pack.Scouts != null && pack.Scouts.Any())
+            {
+                <div>Scouts - @pack.Scouts.Count(x => x.PackId == pack.Id)</div>
+            }
+            else
+            {
+                <div>No Scouts yet</div>
+            }
+        </div>
+    }
+}
 </div>

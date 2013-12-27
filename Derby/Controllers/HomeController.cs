@@ -11,12 +11,17 @@ namespace Derby.Controllers
 	{
 		DerbyDb _db = new DerbyDb();
 
-		public ActionResult Index()
-		{
-			var packs = _db.Packs.ToList();
+        public ActionResult Index()
+        {
+            var packs = _db.Packs.ToList();
+            foreach (var pack in packs)
+            {
+                pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+            }
 
             return View(packs);
-		}
+        }
 
 		public ActionResult About()
 		{

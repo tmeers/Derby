@@ -30,12 +30,12 @@ namespace Derby.Migrations
                     }
                 });
 
-            context.Scouts.AddOrUpdate(s => s.Name,
-                new Scout
-                {
-                    Name = "John Doe",
-                    Inactive = false
-                });
+            //context.Scouts.AddOrUpdate(s => s.Name,
+            //    new Scout
+            //    {
+            //        Name = "John Doe",
+            //        Inactive = false
+            //    });
         }
     }
 }

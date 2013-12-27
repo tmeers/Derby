@@ -20,18 +20,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var pack in Model) {
+                @if (pack.Dens != null && pack.Dens.Any()) 
+            { 
+                foreach (var den in pack.Dens)
+                {
+                <div>@Html.ActionLink(den.Name, "Edit", new { id = den.Id }) - @pack.Scouts.Count(x => x.DenId == den.Id) scouts</div>
+                }
+                }
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => pack.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Region)
+            @Html.DisplayFor(modelItem => pack.Region)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = pack.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = pack.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = pack.Id })
         </td>
     </tr>
 }
