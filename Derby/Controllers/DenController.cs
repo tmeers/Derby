@@ -10,119 +10,108 @@ using Derby.Models;
 
 namespace Derby.Controllers
 {
-    public class PackController : Controller
+    public class DenController : Controller
     {
-        private DerbyDb _db = new DerbyDb();
+        private DerbyDb db = new DerbyDb();
 
-        // GET: /Pack/
-        public ActionResult Index(int? id)
+        // GET: /Den/
+        public ActionResult Index()
         {
-            var packs = _db.Packs.ToList();
-            foreach (var pack in packs)
-            {
-                pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-            }
-
-            return View(packs);
+            return View(db.Dens.ToList());
         }
 
-        // GET: /Pack/Details/5
+        // GET: /Den/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
-            if (pack == null)
+            Den den = db.Dens.Find(id);
+            if (den == null)
             {
                 return HttpNotFound();
             }
-
-            pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
-            pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-
-            return View(pack);
+            return View(den);
         }
 
-        // GET: /Pack/Create
-        public ActionResult Create()
+        // GET: /Den/Create
+        public ActionResult Create(int packId)
         {
             return View();
         }
 
-        // POST: /Pack/Create
+        // POST: /Den/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,Region")] Pack pack)
+        public ActionResult Create([Bind(Include="Id,Name,PackId")] Den den)
         {
             if (ModelState.IsValid)
             {
-                _db.Packs.Add(pack);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                db.Dens.Add(den);
+                db.SaveChanges();
+                return RedirectToAction("Details", "Pack", new {id = den.PackId} );
             }
 
-            return View(pack);
+            return View(den);
         }
 
-        // GET: /Pack/Edit/5
+        // GET: /Den/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
-            if (pack == null)
+            Den den = db.Dens.Find(id);
+            if (den == null)
             {
                 return HttpNotFound();
             }
-            return View(pack);
+            return View(den);
         }
 
-        // POST: /Pack/Edit/5
+        // POST: /Den/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name,Region")] Pack pack)
+        public ActionResult Edit([Bind(Include="Id,Name,PackId")] Den den)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(pack).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(den).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(pack);
+            return View(den);
         }
 
-        // GET: /Pack/Delete/5
+        // GET: /Den/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
-            if (pack == null)
+            Den den = db.Dens.Find(id);
+            if (den == null)
             {
                 return HttpNotFound();
             }
-            return View(pack);
+            return View(den);
         }
 
-        // POST: /Pack/Delete/5
+        // POST: /Den/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pack pack = _db.Packs.Find(id);
-            _db.Packs.Remove(pack);
-            _db.SaveChanges();
+            Den den = db.Dens.Find(id);
+            db.Dens.Remove(den);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -130,7 +119,7 @@ namespace Derby.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

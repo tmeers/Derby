@@ -4,31 +4,66 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Pack Details</h2>
 
 <div>
-    <h4>Pack</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div>
+        @Html.ActionLink("Edit", "edit", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
+        @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Region)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Region)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Region)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Region)
+                </dd>
 
-    </dl>
+            </dl>
+        </div>
+        <div class="col-sm-5">
+            <a href="/den/create"></a>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Dens)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Scouts)
+                    </th>
+                    <th><a href="/den/create/@Model.Id" class="btn btn-xs btn-success">Add Den</a></th>
+                </tr>
+
+                @foreach (var den in Model.Dens)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => den.Name)
+                        </td>
+                        <td>
+                            @Model.Scouts.Count(x => x.DenId == den.Id)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" }) |
+                            @Html.ActionLink("Details", "Details", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-default" }) |
+                            @Html.ActionLink("Delete", "Delete", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-danger" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

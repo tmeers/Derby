@@ -16,19 +16,19 @@ namespace Derby.Migrations
 
         protected override void Seed(Derby.Models.DerbyDb context)
         {
-            context.Packs.AddOrUpdate(p => p.Name,
-                new Pack
-                {
-                    Name = "000",
-                    Region = "My Region",
-                    Dens = new List<Den> 
-                    { 
-                        new Den { Name = "Tigers"},
-                        new Den { Name = "Wolves"},
-                        new Den { Name = "Bears"},
-                        new Den { Name = "Weblows"} 
-                    }
-                });
+            //context.Packs.AddOrUpdate(p => p.Name,
+            //    new Pack
+            //    {
+            //        Name = "000",
+            //        Region = "My Region",
+            //        Dens = new List<Den> 
+            //        { 
+            //            new Den { Name = "Tigers"},
+            //            new Den { Name = "Wolves"},
+            //            new Den { Name = "Bears"},
+            //            new Den { Name = "Weblows"} 
+            //        }
+            //    });
 
             //context.Scouts.AddOrUpdate(s => s.Name,
             //    new Scout

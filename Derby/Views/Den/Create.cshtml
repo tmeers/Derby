@@ -1,7 +1,7 @@
-﻿@model Derby.Models.Pack
+﻿@model Derby.Models.Den
 
 @{
-    ViewBag.Title = "Create Pack";
+    ViewBag.Title = "Create Den";
 }
 
 <h2>Create</h2>
@@ -23,13 +23,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Region, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Region)
-                @Html.ValidationMessageFor(model => model.Region)
-            </div>
-        </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.PackId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">*@
+                @Html.HiddenFor(model => model.PackId)
+                @Html.ValidationMessageFor(model => model.PackId)
+        @*    </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -40,7 +40,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-xs btn-default" })
+    @Html.ActionLink("Back to List", "Index", new {}, new { @class = "btn btn-xs btn-default" })
 </div>
 
 @section Scripts {

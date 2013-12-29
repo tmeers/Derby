@@ -43,7 +43,7 @@ else
     foreach (var pack in Model)
     {
         <div class="col-sm-2">
-            <h4>@Html.ActionLink(pack.Name, "", "pack", new { id = pack.Id }, pack.Name)</h4>
+            <h4>@Html.ActionLink(pack.Name, "details", "pack", new { id = pack.Id }, pack.Name)</h4>
             <div>@pack.Region</div>
             @if (pack.Dens != null && pack.Dens.Any()) 
             { 

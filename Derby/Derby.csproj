@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LowercaseRoutesMVC">
+      <HintPath>..\packages\LowercaseRoutesMVC.1.0.3\lib\LowercaseRoutesMVC.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -160,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
+    <Compile Include="Controllers\DenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackController.cs" />
     <Compile Include="Global.asax.cs">
@@ -242,6 +246,11 @@
     <Content Include="Views\Pack\Edit.cshtml" />
     <Content Include="Views\Pack\Index.cshtml" />
     <Content Include="Views\Competition\Index.cshtml" />
+    <Content Include="Views\Den\Create.cshtml" />
+    <Content Include="Views\Den\Delete.cshtml" />
+    <Content Include="Views\Den\Details.cshtml" />
+    <Content Include="Views\Den\Edit.cshtml" />
+    <Content Include="Views\Den\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

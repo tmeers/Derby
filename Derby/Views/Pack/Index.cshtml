@@ -7,8 +7,9 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-xs btn-success" })
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -17,17 +18,16 @@
         <th>
             @Html.DisplayNameFor(model => model.Region)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dens)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Scouts)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var pack in Model) {
-                @if (pack.Dens != null && pack.Dens.Any()) 
-            { 
-                foreach (var den in pack.Dens)
-                {
-                <div>@Html.ActionLink(den.Name, "Edit", new { id = den.Id }) - @pack.Scouts.Count(x => x.DenId == den.Id) scouts</div>
-                }
-                }
     <tr>
         <td>
             @Html.DisplayFor(modelItem => pack.Name)
@@ -36,9 +36,15 @@
             @Html.DisplayFor(modelItem => pack.Region)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = pack.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = pack.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = pack.Id })
+            @pack.Dens.Count()
+        </td>
+        <td>
+            @pack.Scouts.Count()
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = pack.Id }, new { @class = "btn btn-xs btn-primary" }) |
+            @Html.ActionLink("Details", "Details", new { id = pack.Id }, new { @class = "btn btn-xs btn-default" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = pack.Id }, new { @class = "btn btn-xs btn-danger" })
         </td>
     </tr>
 }
