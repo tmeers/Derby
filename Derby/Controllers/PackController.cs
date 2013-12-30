@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
@@ -61,6 +62,7 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
+                pack.CreatedById = User.Identity.GetUserId();
                 _db.Packs.Add(pack);
                 _db.SaveChanges();
                 return RedirectToAction("Index");

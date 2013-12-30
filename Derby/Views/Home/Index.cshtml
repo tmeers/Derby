@@ -40,7 +40,7 @@ else
 else
 {
     <h2>My Registered Packs</h2>
-    foreach (var pack in Model)
+    foreach (var pack in Model.Where(x => x.CreatedById == User.Identity.GetUserId()))
     {
         <div class="col-sm-2">
             <h4>@Html.ActionLink(pack.Name, "details", "pack", new { id = pack.Id }, pack.Name)</h4>

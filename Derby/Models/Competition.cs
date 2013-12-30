@@ -14,6 +14,7 @@ namespace Derby.Models
         public int RaceType { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime EventDate { get; set; }
+        public string CreatedById { get; set; }
 
         public Pack Pack { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Derby.Models
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Region { get; set; }
-        public Guid CreatedById { get; set; }
+        public string CreatedById { get; set; }
 
         public ICollection<Den> Dens { get; set; }
         public ICollection<Competition> Competitions { get; set; }

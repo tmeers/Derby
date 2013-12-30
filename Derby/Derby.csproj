@@ -173,6 +173,10 @@
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312302013513_CreatedBy.cs" />
+    <Compile Include="Migrations\201312302013513_CreatedBy.Designer.cs">
+      <DependentUpon>201312302013513_CreatedBy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -245,12 +249,16 @@
     <Content Include="Views\Pack\Details.cshtml" />
     <Content Include="Views\Pack\Edit.cshtml" />
     <Content Include="Views\Pack\Index.cshtml" />
-    <Content Include="Views\Competition\Index.cshtml" />
     <Content Include="Views\Den\Create.cshtml" />
     <Content Include="Views\Den\Delete.cshtml" />
     <Content Include="Views\Den\Details.cshtml" />
     <Content Include="Views\Den\Edit.cshtml" />
     <Content Include="Views\Den\Index.cshtml" />
+    <Content Include="Views\Competition\Create.cshtml" />
+    <Content Include="Views\Competition\Delete.cshtml" />
+    <Content Include="Views\Competition\Details.cshtml" />
+    <Content Include="Views\Competition\Edit.cshtml" />
+    <Content Include="Views\Competition\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -263,6 +271,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201312270426471_Initial-Configuration.resx">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312302013513_CreatedBy.resx">
+      <DependentUpon>201312302013513_CreatedBy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
