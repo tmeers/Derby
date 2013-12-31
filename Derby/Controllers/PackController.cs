@@ -33,7 +33,7 @@ namespace Derby.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             var user = User.Identity.GetUserId();

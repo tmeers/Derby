@@ -169,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\OwnershipType.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
@@ -176,6 +177,10 @@
     <Compile Include="Migrations\201312302013513_CreatedBy.cs" />
     <Compile Include="Migrations\201312302013513_CreatedBy.Designer.cs">
       <DependentUpon>201312302013513_CreatedBy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312312147259_Ownership.cs" />
+    <Compile Include="Migrations\201312312147259_Ownership.Designer.cs">
+      <DependentUpon>201312312147259_Ownership.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="Models\Heat.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Pack.cs" />
+    <Compile Include="Models\PackMembership.cs" />
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\Racer.cs" />
     <Compile Include="Models\Scout.cs" />
@@ -259,6 +265,7 @@
     <Content Include="Views\Competition\Details.cshtml" />
     <Content Include="Views\Competition\Edit.cshtml" />
     <Content Include="Views\Competition\Index.cshtml" />
+    <Content Include="Views\Errors\_404Error.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -274,6 +281,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312302013513_CreatedBy.resx">
       <DependentUpon>201312302013513_CreatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312312147259_Ownership.resx">
+      <DependentUpon>201312312147259_Ownership.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
