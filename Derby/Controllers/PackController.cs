@@ -35,7 +35,10 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = db.Packs.Find(id);
+
+            var user = User.Identity.GetUserId();
+
+            Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && x.CreatedById == user);
             if (pack == null)
             {
                 return HttpNotFound();
