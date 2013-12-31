@@ -9,15 +9,15 @@ namespace Derby.Controllers
 {
 	public class HomeController : Controller
 	{
-		DerbyDb _db = new DerbyDb();
+		DerbyDb db = new DerbyDb();
 
         public ActionResult Index()
         {
-            var packs = _db.Packs.ToList();
+            var packs = db.Packs.ToList();
             foreach (var pack in packs)
             {
-                pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
             }
 
             return View(packs);
@@ -39,9 +39,9 @@ namespace Derby.Controllers
 
 		protected override void Dispose(bool disposing)
 		{
-			if (_db != null)
+			if (db != null)
 			{
-				_db.Dispose();
+				db.Dispose();
 			}
 			base.Dispose(disposing);
 		}

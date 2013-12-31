@@ -13,16 +13,16 @@ namespace Derby.Controllers
 {
     public class PackController : Controller
     {
-        private DerbyDb _db = new DerbyDb();
+        private DerbyDb db = new DerbyDb();
 
         // GET: /Pack/
         public ActionResult Index(int? id)
         {
-            var packs = _db.Packs.ToList();
+            var packs = db.Packs.ToList();
             foreach (var pack in packs)
             {
-                pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
             }
 
             return View(packs);
@@ -35,14 +35,14 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
+            Pack pack = db.Packs.Find(id);
             if (pack == null)
             {
                 return HttpNotFound();
             }
 
-            pack.Dens = _db.Dens.Where(d => d.PackId == pack.Id).ToList();
-            pack.Scouts = _db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
 
             return View(pack);
         }
@@ -63,8 +63,8 @@ namespace Derby.Controllers
             if (ModelState.IsValid)
             {
                 pack.CreatedById = User.Identity.GetUserId();
-                _db.Packs.Add(pack);
-                _db.SaveChanges();
+                db.Packs.Add(pack);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +78,7 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
+            Pack pack = db.Packs.Find(id);
             if (pack == null)
             {
                 return HttpNotFound();
@@ -95,8 +95,8 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(pack).State = EntityState.Modified;
-                _db.SaveChanges();
+                db.Entry(pack).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(pack);
@@ -109,7 +109,7 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = _db.Packs.Find(id);
+            Pack pack = db.Packs.Find(id);
             if (pack == null)
             {
                 return HttpNotFound();
@@ -122,9 +122,9 @@ namespace Derby.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Pack pack = _db.Packs.Find(id);
-            _db.Packs.Remove(pack);
-            _db.SaveChanges();
+            Pack pack = db.Packs.Find(id);
+            db.Packs.Remove(pack);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -132,7 +132,7 @@ namespace Derby.Controllers
         {
             if (disposing)
             {
-                _db.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }
