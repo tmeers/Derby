@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
 using Microsoft.AspNet.Identity;
 
@@ -68,6 +69,15 @@ namespace Derby.Controllers
                 pack.CreatedById = User.Identity.GetUserId();
                 db.Packs.Add(pack);
                 db.SaveChanges();
+                
+                var member = new PackMembership();
+                member.PackId = pack.Id;
+                member.UserId = pack.CreatedById;
+                member.AccessLevel = OwnershipType.Owner;
+                
+                db.PackMemberships.Add(member);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
