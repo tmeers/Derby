@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
@@ -11,16 +12,36 @@ namespace Derby.Controllers
 	{
 		DerbyDb db = new DerbyDb();
 
-        public ActionResult Index()
-        {
-            var packs = db.Packs.ToList();
-            foreach (var pack in packs)
-            {
-                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-            }
+	    public ActionResult Index()
+	    {
+            var packs = new List<Pack>();
+	        if (!Request.IsAuthenticated)
+	        {
+	            packs = db.Packs.ToList();
+	            foreach (var pack in packs)
+	            {
+	                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+	                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+	            }
+	        }
+	        else
+	        {
+	            var user = User.Identity.GetUserId();
+	            var memberships = db.PackMemberships.Where(x => x.UserId == user).ToList();
 
-            return View(packs);
+	            foreach (var membership in memberships)
+	            {
+	                var pack = db.Packs.FirstOrDefault(x => x.Id == membership.PackId);
+	                if (pack != null)
+	                {
+	                    pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+	                    pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+
+	                    packs.Add(pack);
+	                }
+	            }
+	        }
+	        return View(packs);
         }
 
 		public ActionResult About()
