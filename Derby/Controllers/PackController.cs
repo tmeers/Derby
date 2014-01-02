@@ -20,19 +20,13 @@ namespace Derby.Controllers
         public ActionResult Index(int? id)
         {
             var user = User.Identity.GetUserId();
-            var memberships = db.PackMemberships.Where(x => x.UserId == user).ToList();
+            var membership = db.PackMemberships.Where(x => x.UserId == user);
 
-            var packs = new List<Pack>();
-            foreach (var membership in memberships)
+            var packs = db.Packs.Where(x => membership.Any(y => y.UserId == user)).ToList();
+            foreach (var pack in packs)
             {
-                var pack = db.Packs.FirstOrDefault(x => x.Id == membership.PackId);
-                if (pack != null)
-                {
-                    pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList(); 
-                    pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-
-                    packs.Add(pack);
-                }
+                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
             }
 
             return View(packs);
@@ -47,7 +41,6 @@ namespace Derby.Controllers
             }
 
             var user = User.Identity.GetUserId();
-            var memberships = db.PackMemberships.Where(x => x.UserId == user).ToList();
 
             Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && x.CreatedById == user);
             if (pack == null)

@@ -18,29 +18,21 @@ namespace Derby.Controllers
 	        if (!Request.IsAuthenticated)
 	        {
 	            packs = db.Packs.ToList();
-	            foreach (var pack in packs)
-	            {
-	                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-	                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-	            }
 	        }
 	        else
 	        {
 	            var user = User.Identity.GetUserId();
-	            var memberships = db.PackMemberships.Where(x => x.UserId == user).ToList();
+	            var membership = db.PackMemberships.Where(x => x.UserId == user).ToList();
 
-	            foreach (var membership in memberships)
-	            {
-	                var pack = db.Packs.FirstOrDefault(x => x.Id == membership.PackId);
-	                if (pack != null)
-	                {
-	                    pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-	                    pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-
-	                    packs.Add(pack);
-	                }
-	            }
+                packs = db.Packs.Where(x => membership.Any(y => y.UserId == user)).ToList();
 	        }
+
+            foreach (var pack in packs)
+            {
+                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+            }
+
 	        return View(packs);
         }
 
