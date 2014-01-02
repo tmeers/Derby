@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201312312147259_Ownership.Designer.cs">
       <DependentUpon>201312312147259_Ownership.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401012344093_CreatedDates.cs" />
+    <Compile Include="Migrations\201401012344093_CreatedDates.Designer.cs">
+      <DependentUpon>201401012344093_CreatedDates.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -284,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312312147259_Ownership.resx">
       <DependentUpon>201312312147259_Ownership.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401012344093_CreatedDates.resx">
+      <DependentUpon>201401012344093_CreatedDates.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
