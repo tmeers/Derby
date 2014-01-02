@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Derby.Models.Pack>
+﻿@model IEnumerable<Derby.ViewModels.PackViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -6,10 +6,12 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-xs btn-success" })
-</p>
-
+@if (!Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", new {}, new {@class = "btn btn-xs btn-success"})
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -27,7 +29,8 @@
         <th></th>
     </tr>
 
-@foreach (var pack in Model) {
+@foreach (var pack in Model) 
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => pack.Name)
@@ -42,10 +45,11 @@
             @pack.Scouts.Count()
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = pack.Id }, new { @class = "btn btn-xs btn-primary" }) |
-            @Html.ActionLink("Details", "Details", new { id = pack.Id }, new { @class = "btn btn-xs btn-default" }) |
-            @Html.ActionLink("Add Den", "Create", "Den", new { packId = pack.Id }, new { @class = "btn btn-xs btn-success" }) &nbsp; | &nbsp;
-            @Html.ActionLink("Delete", "Delete", new { id = pack.Id }, new { @class = "btn btn-xs btn-danger" })
+            
+            @if (pack.Membership != null)
+            {
+                @Html.RenderPartial("_EditControlsPartial", new { packData = pack })
+            }
         </td>
     </tr>
 }

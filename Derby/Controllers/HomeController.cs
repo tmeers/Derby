@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
+using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
@@ -14,26 +17,10 @@ namespace Derby.Controllers
 
 	    public ActionResult Index()
 	    {
-            var packs = new List<Pack>();
-	        if (!Request.IsAuthenticated)
-	        {
-	            packs = db.Packs.ToList();
-	        }
-	        else
-	        {
-	            var user = User.Identity.GetUserId();
-	            var membership = db.PackMemberships.Where(x => x.UserId == user).ToList();
+            var user = User.Identity.GetUserId();
+            Infrastructure.PackList packs = new PackList();
 
-                packs = db.Packs.Where(x => membership.Any(y => y.UserId == user)).ToList();
-	        }
-
-            foreach (var pack in packs)
-            {
-                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-            }
-
-	        return View(packs);
+            return View(packs.BuildPackListing(user));
         }
 
 		public ActionResult About()

@@ -13,6 +13,11 @@ namespace Derby.Models
         public int Id { get; set; }
         public int PackId { get; set; }
         public string UserId { get; set; }
-        public OwnershipType AccessLevel { get; set; } 
+        public OwnershipType AccessLevel { get; set; }
+
+        public PackMembership()
+        {
+            AccessLevel = OwnershipType.None;
+        }
     }
 }

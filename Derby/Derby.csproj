@@ -170,6 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\OwnershipType.cs" />
+    <Compile Include="Infrastructure\PackList.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
@@ -201,6 +202,7 @@
     <Compile Include="Models\Scout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\PackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DerbyDb.mdf" />
@@ -270,6 +272,7 @@
     <Content Include="Views\Competition\Edit.cshtml" />
     <Content Include="Views\Competition\Index.cshtml" />
     <Content Include="Views\Errors\_404Error.cshtml" />
+    <Content Include="Views\Pack\_EditControlsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

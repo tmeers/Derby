@@ -20,16 +20,9 @@ namespace Derby.Controllers
         public ActionResult Index(int? id)
         {
             var user = User.Identity.GetUserId();
-            var membership = db.PackMemberships.Where(x => x.UserId == user);
+            Infrastructure.PackList packs = new PackList();
 
-            var packs = db.Packs.Where(x => membership.Any(y => y.UserId == user)).ToList();
-            foreach (var pack in packs)
-            {
-                pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-                pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-            }
-
-            return View(packs);
+            return View(packs.BuildPackListing(user));
         }
 
         // GET: /Pack/Details/5
