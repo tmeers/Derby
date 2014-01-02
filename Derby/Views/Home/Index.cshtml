@@ -18,50 +18,37 @@ else
 </div>
 
 <div class="row">
-@if (!Request.IsAuthenticated)
-{
+
     <h2>Registered Packs</h2>
-    if (Model == null || Model.Count() == 0)
+    @foreach (var pack in Model)
     {
-        <div>There are no registered Packs</div>
-    }
-    else
-    {
-        foreach (var item in Model)
+    <div class="col-sm-2">
+        @if (!Request.IsAuthenticated)
         {
-        <div class="col-sm-2">
-            <h4>@item.Name</h4>
-            <div>@item.Region</div>
-        </div>
+            <h4>@pack.Name</h4>
         }
+        else
+        {
+            <h4>@Html.ActionLink(pack.Name, "details", "pack", new {id = pack.Id}, pack.Name)</h4>
+        }
+        <div>@pack.Region</div>
+        @if (pack.Dens != null && pack.Dens.Any()) 
+        { 
+            <div>Dens - @pack.Dens.Count(x => x.PackId == pack.Id)</div>
+        }
+        else
+        {
+            <div>No Dens yet</div>
+        }
+        @if (pack.Scouts != null && pack.Scouts.Any())
+        {
+            <div>Scouts - @pack.Scouts.Count(x => x.PackId == pack.Id)</div>
+        }
+        else
+        {
+            <div>No Scouts yet</div>
+        }
+    </div>
     }
 
-}
-else
-{
-    <h2>My Registered Packs</h2>
-    foreach (var pack in Model.Where(x => x.CreatedById == User.Identity.GetUserId()))
-    {
-        <div class="col-sm-2">
-            <h4>@Html.ActionLink(pack.Name, "details", "pack", new { id = pack.Id }, pack.Name)</h4>
-            <div>@pack.Region</div>
-            @if (pack.Dens != null && pack.Dens.Any()) 
-            { 
-                <div>Dens - @pack.Dens.Count(x => x.PackId == pack.Id)</div>
-            }
-            else
-            {
-                <div>No Dens yet</div>
-            }
-            @if (pack.Scouts != null && pack.Scouts.Any())
-            {
-                <div>Scouts - @pack.Scouts.Count(x => x.PackId == pack.Id)</div>
-            }
-            else
-            {
-                <div>No Scouts yet</div>
-            }
-        </div>
-    }
-}
 </div>
