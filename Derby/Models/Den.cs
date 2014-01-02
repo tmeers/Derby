@@ -9,9 +9,8 @@ namespace Derby.Models
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-
+        public DateTime CreateDateTime { get; set; }
 		public int PackId { get; set; }
-
         //public ICollection<Scout> Scouts { get; set; }
 	}
 }

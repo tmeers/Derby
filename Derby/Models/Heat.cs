@@ -10,6 +10,7 @@ namespace Derby.Models
         public int Id { get; set; }
         public int RaceId { get; set; }
         public DateTime CreatedDate { get; set; }
+        
         public ICollection<Contestant> Contestants { get; set; }
     }
 }

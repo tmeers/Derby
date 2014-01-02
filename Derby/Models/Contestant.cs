@@ -11,5 +11,6 @@ namespace Derby.Models
         public int RacerId { get; set; }
         public int HeatId { get; set; }
         public int Place { get; set; }
+        public int Lane { get; set; }
     }
 }
