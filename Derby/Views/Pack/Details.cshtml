@@ -43,7 +43,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Scouts)
                     </th>
-                    <th><a href="/den/create/@Model.Id" class="btn btn-xs btn-success">Add Den</a></th>
+                    <th>@Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })</th>
                 </tr>
 
                 @foreach (var den in Model.Dens)
