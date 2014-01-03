@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Derby.Infrastructure
 {
-    public class PackList
+    public class PackAccess
     {
         DerbyDb db = new DerbyDb();
 
