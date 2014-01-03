@@ -18,7 +18,7 @@ namespace Derby.Controllers
 	    public ActionResult Index()
 	    {
             var user = User.Identity.GetUserId();
-            Infrastructure.PackList packs = new PackList();
+            Infrastructure.PackAccess packs = new PackAccess();
 
             return View(packs.BuildPackListing(user));
         }

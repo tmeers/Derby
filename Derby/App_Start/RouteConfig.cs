@@ -46,7 +46,7 @@ namespace Derby
 
             routes.MapRoute(
                 name: "Pack-Details",
-                url: "pack/{id}",
+                url: "pack/details/{id}",
                 defaults: new { controller = "Pack", action = "Details" }
             );
             routes.MapRoute(

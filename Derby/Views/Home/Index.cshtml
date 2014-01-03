@@ -29,7 +29,13 @@ else
         }
         else
         {
-            <h4>@Html.ActionLink(pack.Name, "details", "pack", new {id = pack.Id}, pack.Name)</h4>
+            if (pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Owner || pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Contributor)
+            { 
+                <h4>@Html.ActionLink(pack.Name, "details", "pack", new {id = pack.Id}, pack.Name)</h4>
+            }
+                else { 
+                <h4>@Html.ActionLink(pack.Name, "info", "pack", new {id = pack.Id}, pack.Name)</h4>
+            }
         }
         <div>@pack.Region</div>
         @if (pack.Dens != null && pack.Dens.Any()) 

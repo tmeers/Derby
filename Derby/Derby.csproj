@@ -170,7 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\OwnershipType.cs" />
-    <Compile Include="Infrastructure\PackList.cs" />
+    <Compile Include="Infrastructure\PackAccess.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>

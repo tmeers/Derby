@@ -20,7 +20,7 @@ namespace Derby.Controllers
         public ActionResult Index(int? id)
         {
             var user = User.Identity.GetUserId();
-            Infrastructure.PackList packs = new PackList();
+            Infrastructure.PackAccess packs = new PackAccess();
 
             return View(packs.BuildPackListing(user));
         }
@@ -36,6 +36,29 @@ namespace Derby.Controllers
             var user = User.Identity.GetUserId();
 
             Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && x.CreatedById == user);
+            if (pack == null)
+            {
+                return HttpNotFound();
+            }
+
+            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+
+            return View(pack);
+        }
+
+        public ActionResult Info(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            var user = User.Identity.GetUserId();
+            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
+
+            // TODO Adjust this to now show if Access level is 0 or null
+            Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && db.PackMemberships.Any(m => m.UserId == user));
             if (pack == null)
             {
                 return HttpNotFound();
