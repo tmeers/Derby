@@ -49,7 +49,11 @@ namespace Derby
                 url: "pack/{id}",
                 defaults: new { controller = "Pack", action = "Details" }
             );
-
+            routes.MapRoute(
+                name: "Pack-Info",
+                url: "pack/{id}",
+                defaults: new { controller = "Pack", action = "Info" }
+            );
             //routes.MapRoute(
             //    name: "Pack-Edit",
             //    url: "pack/edit/{id}",

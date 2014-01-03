@@ -273,6 +273,7 @@
     <Content Include="Views\Competition\Index.cshtml" />
     <Content Include="Views\Errors\_404Error.cshtml" />
     <Content Include="Views\Pack\_EditControlsPartial.cshtml" />
+    <Content Include="Views\Pack\Info.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
