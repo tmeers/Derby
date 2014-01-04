@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Derby.ViewModels.PackViewModel>
+﻿@using Derby.Infrastructure
+@model IEnumerable<Derby.ViewModels.PackViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -45,10 +46,16 @@
             @pack.Scouts.Count()
         </td>
         <td>
-            
             @if (pack.Membership != null)
             {
-                @Html.RenderPartial("_EditControlsPartial", pack )
+                @Html.ActionLink("Edit", "Edit", new {id = pack.Id}, new {@class = "btn btn-xs btn-primary"}) @:|
+                @Html.ActionLink("Details", "Details", new {id = pack.Id}, new {@class = "btn btn-xs btn-default"}) @:|
+                @Html.ActionLink("Add Den", "Create", "Den", new {packId = pack.Id}, new {@class = "btn btn-xs btn-success"}) 
+                if (pack.Membership.AccessLevel == OwnershipType.Owner)
+                 {
+                     @:&nbsp; | &nbsp;
+                     @Html.ActionLink("Delete", "Delete", new {id = pack.Id}, new {@class = "btn btn-xs btn-danger"})
+                 }
             }
         </td>
     </tr>
