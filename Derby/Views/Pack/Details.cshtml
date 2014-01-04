@@ -1,4 +1,5 @@
-﻿@model Derby.ViewModels.PackViewModel
+﻿@using Derby.Models
+@model Derby.ViewModels.PackViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -9,7 +10,8 @@
 <div>
     <div>
         @Html.ActionLink("Edit", "edit", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
-        @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })
+        @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })  &nbsp; &nbsp; | &nbsp; &nbsp;
+        @Html.ActionLink("Create New Competition", "create", "Competition", new { packId = Model.Id }, new { @class = "btn btn-xs btn-info" })
     </div>
     <hr />
     <div class="row">
