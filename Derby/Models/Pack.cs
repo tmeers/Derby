@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Derby.Models
 {
@@ -9,6 +10,7 @@ namespace Derby.Models
 		public string Name { get; set; }
 		public string Region { get; set; }
         public string CreatedById { get; set; }
+        [Display(Name = "Created Date")]
         public DateTime CreateDateTime { get; set; }
 
         public ICollection<Den> Dens { get; set; }
