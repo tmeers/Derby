@@ -15,14 +15,7 @@
         <h4>Competition</h4>
         <hr />
         @Html.ValidationSummary(true)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PackId, "PackId", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PackId", String.Empty)
-                @Html.ValidationMessageFor(model => model.PackId)
-            </div>
-        </div>
+        @*@Html.HiddenFor(model => model.PackId)*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
@@ -49,26 +42,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate)
-                @Html.ValidationMessageFor(model => model.CreatedDate)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.EventDate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EventDate)
                 @Html.ValidationMessageFor(model => model.EventDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedById, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedById)
-                @Html.ValidationMessageFor(model => model.CreatedById)
             </div>
         </div>
 

@@ -70,6 +70,11 @@ namespace Derby
                 defaults: new { controller = "Den", action = "Create", packId = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "Competition-Create",
+                url: "competition/create/{packId}",
+                defaults: new { controller = "Competition", action = "Create" }
+            );
 
             routes.MapRoute(
                 name: "Competition-Details",

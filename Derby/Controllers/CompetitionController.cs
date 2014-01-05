@@ -38,9 +38,9 @@ namespace Derby.Controllers
         }
 
         // GET: /Competition/Create
-        public ActionResult Create()
+        public ActionResult Create(int packId)
         {
-            ViewBag.PackId = new SelectList(db.Packs, "Id", "Name");
+            ViewBag.PackId = packId; //new SelectList(db.Packs, "Id", "Name");
             return View();
         }
 
@@ -49,14 +49,17 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,PackId,Title,Location,RaceType,CreatedDate,EventDate")] Competition competition)
+        public ActionResult Create([Bind(Include = "Id,Title,Location,RaceType,EventDate")] Competition competition, int packId)
         {
             if (ModelState.IsValid)
             {
                 competition.CreatedById = User.Identity.GetUserId();
+                competition.CreatedDate = DateTime.Now;
+                competition.PackId = packId;
+
                 db.Competitions.Add(competition);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Pack", new { id = competition.PackId });
             }
 
             ViewBag.PackId = new SelectList(db.Packs, "Id", "Name", competition.PackId);
