@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201401012344093_CreatedDates.Designer.cs">
       <DependentUpon>201401012344093_CreatedDates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401062121002_DenCreatedDateFix.cs" />
+    <Compile Include="Migrations\201401062121002_DenCreatedDateFix.Designer.cs">
+      <DependentUpon>201401062121002_DenCreatedDateFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -294,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401012344093_CreatedDates.resx">
       <DependentUpon>201401012344093_CreatedDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401062121002_DenCreatedDateFix.resx">
+      <DependentUpon>201401062121002_DenCreatedDateFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
