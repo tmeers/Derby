@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Derby.Infrastructure;
 using Derby.Models;
+using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
@@ -35,15 +36,9 @@ namespace Derby.Controllers
 
             var user = User.Identity.GetUserId();
 
-            Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && x.CreatedById == user);
-            if (pack == null)
-            {
-                return HttpNotFound();
-            }
+            PackViewModel pack = OpenPack(id, user);
 
-            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-
+            LoadPackData(pack);
             return View(pack);
         }
 
@@ -55,19 +50,35 @@ namespace Derby.Controllers
             }
 
             var user = User.Identity.GetUserId();
-            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
 
-            // TODO Adjust this to now show if Access level is 0 or null
-            Pack pack = db.Packs.FirstOrDefault(x => x.Id == id && db.PackMemberships.Any(m => m.UserId == user));
-            if (pack == null)
-            {
-                return HttpNotFound();
-            }
+            PackViewModel pack = OpenPack(id, user);
 
-            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+            LoadPackData(pack);
 
             return View(pack);
+        }
+
+        private PackViewModel OpenPack(int? id, string user)
+        {
+            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
+            PackAccess access = new PackAccess();
+            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
+
+            if (pack != null && pack.Membership.AccessLevel != OwnershipType.None)
+                //if (pack == null)
+                {
+                    HttpNotFound();
+                }
+
+            
+
+            return pack;
+        }
+
+        private void LoadPackData(PackViewModel pack)
+        {
+            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
         }
 
         // GET: /Pack/Create
@@ -86,6 +97,7 @@ namespace Derby.Controllers
             if (ModelState.IsValid)
             {
                 pack.CreatedById = User.Identity.GetUserId();
+                pack.CreateDateTime = DateTime.Now;
                 db.Packs.Add(pack);
                 db.SaveChanges();
                 
