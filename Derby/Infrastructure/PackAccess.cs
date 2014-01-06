@@ -26,7 +26,11 @@ namespace Derby.Infrastructure
             else
             {
                 var membership = db.PackMemberships.Where(x => x.UserId == user);
-                packs = db.Packs.Where(x => membership.Any(y => y.UserId == user)).ToList();
+                // TODO Need to see about a better way to do this part. 
+                foreach (var item in membership)
+                {
+                    packs.Add(db.Packs.FirstOrDefault(x => x.Id == item.PackId));
+                }
             }
 
             var packsView = new List<PackViewModel>();
@@ -36,6 +40,7 @@ namespace Derby.Infrastructure
                 view.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
                 view.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
                 view.Membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user);
+                view.Competitions = db.Competitions.Where(c => c.PackId == pack.Id).ToList();
 
                 packsView.Add(view);
             }

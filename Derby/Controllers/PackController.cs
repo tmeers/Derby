@@ -38,7 +38,7 @@ namespace Derby.Controllers
 
             PackViewModel pack = OpenPack(id, user);
 
-            LoadPackData(pack);
+            //LoadPackData(pack);
             return View(pack);
         }
 
@@ -53,24 +53,21 @@ namespace Derby.Controllers
 
             PackViewModel pack = OpenPack(id, user);
 
-            LoadPackData(pack);
+            //LoadPackData(pack);
 
             return View(pack);
         }
 
         private PackViewModel OpenPack(int? id, string user)
         {
-            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
+            //var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
             PackAccess access = new PackAccess();
             PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
 
             if (pack != null && pack.Membership.AccessLevel != OwnershipType.None)
-                //if (pack == null)
-                {
-                    HttpNotFound();
-                }
-
-            
+            {
+                HttpNotFound();
+            }
 
             return pack;
         }
@@ -79,6 +76,7 @@ namespace Derby.Controllers
         {
             pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
             pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
+            pack.Competitions = db.Competitions.Where(c => c.PackId == pack.Id).ToList();
         }
 
         // GET: /Pack/Create
@@ -149,6 +147,12 @@ namespace Derby.Controllers
         // GET: /Pack/Delete/5
         public ActionResult Delete(int? id)
         {
+
+            var user = User.Identity.GetUserId();
+            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
+            if (membership.AccessLevel != OwnershipType.Owner)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
