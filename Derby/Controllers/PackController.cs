@@ -72,13 +72,6 @@ namespace Derby.Controllers
             return pack;
         }
 
-        private void LoadPackData(PackViewModel pack)
-        {
-            pack.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
-            pack.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-            pack.Competitions = db.Competitions.Where(c => c.PackId == pack.Id).ToList();
-        }
-
         // GET: /Pack/Create
         public ActionResult Create()
         {
