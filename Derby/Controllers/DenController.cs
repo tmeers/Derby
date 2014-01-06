@@ -50,6 +50,7 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
+                den.CreatedDateTime = DateTime.Now;
                 db.Dens.Add(den);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Pack", new {id = den.PackId} );

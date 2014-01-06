@@ -11,7 +11,7 @@ namespace Derby.Models
 		public int Id { get; set; }
 		public string Name { get; set; }
         [Display(Name = "Created Date")]
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 		public int PackId { get; set; }
         //public ICollection<Scout> Scouts { get; set; }
 	}
