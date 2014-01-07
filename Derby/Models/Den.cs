@@ -13,6 +13,7 @@ namespace Derby.Models
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
 		public int PackId { get; set; }
+        public string LogoPath { get; set; }
         //public ICollection<Scout> Scouts { get; set; }
 	}
 }
