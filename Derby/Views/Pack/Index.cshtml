@@ -48,9 +48,14 @@
         <td>
             @if (pack.Membership != null)
             {
-                @Html.ActionLink("Edit", "Edit", new {id = pack.Id}, new {@class = "btn btn-xs btn-primary"}) @:|
                 @Html.ActionLink("Details", "Details", new {id = pack.Id}, new {@class = "btn btn-xs btn-default"}) @:|
-                @Html.ActionLink("Add Den", "Create", "Den", new {packId = pack.Id}, new {@class = "btn btn-xs btn-success"}) 
+                @Html.ActionLink("Add Den", "Create", "Den", new {packId = pack.Id}, new {@class = "btn btn-xs btn-success"})
+                if (pack.Membership.AccessLevel == OwnershipType.Owner || pack.Membership.AccessLevel == OwnershipType.Contributor)
+                 {
+                     @: | 
+                     @Html.ActionLink("New Competition", "create", "Competition", new { packId = pack.Id }, new { @class = "btn btn-xs btn-info" })
+                 }
+                
                 if (pack.Membership.AccessLevel == OwnershipType.Owner)
                  {
                      @:&nbsp; | &nbsp;

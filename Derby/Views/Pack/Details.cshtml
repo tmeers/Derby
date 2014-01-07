@@ -1,39 +1,63 @@
-﻿@using Derby.Models
+﻿@using Derby.Infrastructure
+@using Derby.Models
 @model Derby.ViewModels.PackViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Pack Details</h2>
+<h3>Pack: @Html.DisplayFor(model => model.Name) - @Html.DisplayFor(model => model.Region)</h3>
 
 <div>
-    <div>
-        @Html.ActionLink("Edit", "edit", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
-        @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })  &nbsp; &nbsp; | &nbsp; &nbsp;
-        @Html.ActionLink("Create New Competition", "create", "Competition", new { packId = Model.Id }, new { @class = "btn btn-xs btn-info" })
-    </div>
     <hr />
     <div class="row">
-        <div class="col-sm-5">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+        <div class="col-md-5">
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Competitions)
+                    </th>
+                    <th colspan="2">
+                        @Html.ActionLink("Create New Competition", "create", "Competition", new { packId = Model.Id }, new { @class = "btn btn-xs btn-info" })
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Event Date
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Races
+                    </th>
+                </tr>
+                @foreach (var comp in Model.Competitions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => comp.EventDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => comp.Location)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => comp.Title)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "Details", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-default" })
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Region)
-                </dt>
+                            @if (Model.Membership.AccessLevel == OwnershipType.Owner)
+                            {
+                                @:&nbsp; | &nbsp;
+                                @Html.ActionLink("Delete", "Delete", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-danger" })
+                            }
+                        </td>
+                    </tr>
+                }
 
-                <dd>
-                    @Html.DisplayFor(model => model.Region)
-                </dd>
-
-            </dl>
+            </table>
         </div>
         <div class="col-sm-5">
             <a href="/den/create"></a>
@@ -45,7 +69,10 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Scouts)
                     </th>
-                    <th>@Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })</th>
+                    <th>
+                        @Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" }) | 
+                        @Html.ActionLink("Add Scout", "Create", "Scout", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })
+                    </th>
                 </tr>
 
                 @foreach (var den in Model.Dens)
@@ -59,8 +86,13 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" }) |
-                            @Html.ActionLink("Details", "Details", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-default" }) |
-                            @Html.ActionLink("Delete", "Delete", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-danger" })
+                            @Html.ActionLink("Details", "Details", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-default" })
+                            @if (Model.Membership.AccessLevel == OwnershipType.Owner)
+                            {
+                                @:&nbsp; | &nbsp;
+                                @Html.ActionLink("Delete", "Delete", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-danger" })
+                            }
+                            
                         </td>
                     </tr>
                 }
@@ -68,4 +100,9 @@
             </table>
         </div>
     </div>
+</div>
+<hr/>
+<div>
+    @Html.ActionLink("Edit", "edit", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
+    @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })
 </div>
