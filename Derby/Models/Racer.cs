@@ -12,6 +12,9 @@ namespace Derby.Models
         [Display(Name = "Car Number")]
         public string CarNumber { get; set; }
 
+        [Display(Name = "Car Weight")]
+        public double Weight { get; set; }
+
 		public int DenId { get; set; }
         public int ScoutId { get; set; }
 	}
