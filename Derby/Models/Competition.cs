@@ -16,12 +16,18 @@ namespace Derby.Models
         [Required]
         [Display(Name = "Race Type")]
         public int RaceType { get; set; }
+
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
 
         [Required]
         [Display(Name = "Event Date")]
         public DateTime EventDate { get; set; }
+
+        [Required]
+        [Display(Name = "Number of Lanes")]
+        public int LaneCount { get; set; }
+
         public string CreatedById { get; set; }
 
         public Pack Pack { get; set; }
