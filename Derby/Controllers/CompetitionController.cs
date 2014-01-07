@@ -49,7 +49,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Location,RaceType,EventDate")] Competition competition, int packId)
+        public ActionResult Create([Bind(Include = "Id,Title,Location,RaceType,EventDate,LaneCount")] Competition competition, int packId)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,PackId,Title,Location,RaceType,CreatedDate,EventDate,CreatedById")] Competition competition)
+        public ActionResult Edit([Bind(Include = "Id,PackId,Title,Location,RaceType,EventDate,LaneCount")] Competition competition)
         {
             if (ModelState.IsValid)
             {
