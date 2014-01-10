@@ -7,10 +7,10 @@
 
 <h2>Registered Packs</h2>
 
-@if (!Request.IsAuthenticated)
+@if (Request.IsAuthenticated)
 {
     <p>
-        @Html.ActionLink("Create New", "Create", new {}, new {@class = "btn btn-xs btn-success"})
+        @Html.ActionLink("Register a Pack", "Create", "Pack", new { }, new { @class = "btn btn-xs btn-success" })
     </p>
 }
 <table class="table">
@@ -27,6 +27,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Scouts)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Competitions)
+        </th>
         <th></th>
     </tr>
 
@@ -34,16 +37,20 @@
 {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => pack.Name)
+            @Html.ActionLink(pack.Name, "Details", "Pack", new {id = pack.Id}, new { @title = "Pack Details" }) 
         </td>
         <td>
-            @Html.DisplayFor(modelItem => pack.Region)
+            @Html.ActionLink(pack.Region, "Details", "Pack", new { id = pack.Id }, new { @title = "Pack Details" }) 
         </td>
         <td>
             @pack.Dens.Count()
         </td>
         <td>
             @pack.Scouts.Count()
+            @*@Html.ActionLink(pack.Scouts.Count().ToString(), "Index", "Scout", new { packId = pack.Id }, new { }) *@
+        </td>
+        <td>
+            @Html.ActionLink(pack.Competitions.Count().ToString(), "Index", "Competition", new { packId = pack.Id }, new { })
         </td>
         <td>
             @if (pack.Membership != null)

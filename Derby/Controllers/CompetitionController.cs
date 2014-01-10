@@ -15,10 +15,10 @@ namespace Derby.Controllers
     {
         private DerbyDb db = new DerbyDb();
 
-        // GET: /Competition/
-        public ActionResult Index()
+        // GET: /Competition/List/
+        public ActionResult Index(int packId)
         {
-            var competitions = db.Competitions.Include(c => c.Pack);
+            var competitions = db.Competitions.Where(c => c.PackId == packId);//.Include(c => c.Pack);
             return View(competitions.ToList());
         }
 
