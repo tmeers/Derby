@@ -54,6 +54,24 @@ namespace Derby
                 url: "pack/{id}",
                 defaults: new { controller = "Pack", action = "Info" }
             );
+
+            routes.MapRoute(
+                name: "Scout-Index",
+                url: "scout/list/{packId}",
+                defaults: new { controller = "Scout", action = "Index", packId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Scout-Create",
+                url: "scout/create/{packId}",
+                defaults: new { controller = "Scout", action = "Create", packId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Scout-Details",
+                url: "scout/{id}",
+                defaults: new { controller = "Scout", action = "Details", id = UrlParameter.Optional }
+            );
             //routes.MapRoute(
             //    name: "Pack-Edit",
             //    url: "pack/edit/{id}",
