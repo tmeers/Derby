@@ -11,6 +11,10 @@
 <div>
     <hr />
     <div class="row">
+        <div class="breadcrumb">
+            @Html.ActionLink("Scouts", "Index", "Scout", new { packId = Model.Id }, new { @class = "btn btn-xs btn-primary" })
+            @Html.ActionLink("Add Scout", "Create", "Scout", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })
+        </div>
         <div class="col-md-5">
 
             <table class="table">
@@ -59,7 +63,7 @@
 
             </table>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-3">
             <a href="/den/create"></a>
             <table class="table">
                 <tr>
@@ -67,11 +71,7 @@
                         @Html.DisplayNameFor(model => model.Dens)
                     </th>
                     <th>
-                        Racers
-                    </th>
-                    <th>
-                        @Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" }) | 
-                        @Html.ActionLink("Add Scout", "Create", "Scout", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })
+                        @Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })
                     </th>
                 </tr>
 
@@ -82,11 +82,7 @@
                             @Html.DisplayFor(modelItem => den.Name)
                         </td>
                         <td>
-                            @den.Racers.Count()
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" }) |
-                            @Html.ActionLink("Details", "Details", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-default" })
+                            @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" })
                             @if (Model.Membership.AccessLevel == OwnershipType.Owner)
                             {
                                 @:&nbsp; | &nbsp;
