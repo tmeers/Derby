@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Derby.Models;
 
 namespace Derby.Controllers
@@ -114,9 +115,11 @@ namespace Derby.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Scout scout = db.Scouts.Find(id);
-            db.Scouts.Remove(scout);
+            scout.Inactive = true;
+
+            db.Entry(scout).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { packId = scout.PackId });
         }
 
         protected override void Dispose(bool disposing)
