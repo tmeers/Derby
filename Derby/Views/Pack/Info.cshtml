@@ -7,39 +7,50 @@
 <h2>Pack Details</h2>
 
 <div>
-    <div>
-        @Html.ActionLink("Back to List", "index", new { }, new { @class = "btn btn-xs btn-default" })
-    </div>
     <hr />
     <div class="row">
         <div class="col-sm-5">
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+            <div class="row">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Region)
-                </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Region)
+                    </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Region)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Region)
+                    </dd>
+                    <dt>
+                        Active Scouts
+                    </dt>
+                    <dd>
+                        @Model.Scouts.Count()
+                    </dd>
+                    <dt>
 
-            </dl>
+                    </dt>
+                    <dd>
+
+                    </dd>
+                </dl>
+            </div>
+            <div class="row">
+                <a class="well well-sm">
+                    Current Competition
+                </a>
+            </div>
         </div>
-        <div class="col-sm-5">
-            <a href="/den/create"></a>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Dens)
-                    </th>
-                </tr>
+        <div class="col-sm-2">
+            <h3>@Html.DisplayNameFor(model => model.Dens)</h3>
+
+            <table class="panel-body table">
 
                 @foreach (var den in Model.Dens)
                 {
