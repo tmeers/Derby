@@ -9,7 +9,7 @@ namespace Derby.Models
         public string Name { get; set; }
         public bool Inactive { get; set; }
         public int PackId { get; set; }
-        public int DenId { get; set; }
+
         [Display(Name = "Created Date")]
         public DateTime CreateDateTime { get; set; }
 

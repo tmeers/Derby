@@ -195,6 +195,10 @@
     <Compile Include="Migrations\201401070323020_Logo.Designer.cs">
       <DependentUpon>201401070323020_Logo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401120247134_Drop_Scout-DenId.cs" />
+    <Compile Include="Migrations\201401120247134_Drop_Scout-DenId.Designer.cs">
+      <DependentUpon>201401120247134_Drop_Scout-DenId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -210,6 +214,7 @@
     <Compile Include="Models\Scout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\DenViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401070323020_Logo.resx">
       <DependentUpon>201401070323020_Logo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401120247134_Drop_Scout-DenId.resx">
+      <DependentUpon>201401120247134_Drop_Scout-DenId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
