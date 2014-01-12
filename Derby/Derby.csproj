@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201401120312301_RacerAlignment.Designer.cs">
       <DependentUpon>201401120312301_RacerAlignment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401120507093_CompetitionCompleted.cs" />
+    <Compile Include="Migrations\201401120507093_CompetitionCompleted.Designer.cs">
+      <DependentUpon>201401120507093_CompetitionCompleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -334,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401120312301_RacerAlignment.resx">
       <DependentUpon>201401120312301_RacerAlignment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401120507093_CompetitionCompleted.resx">
+      <DependentUpon>201401120507093_CompetitionCompleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

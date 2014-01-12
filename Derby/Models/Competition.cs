@@ -32,5 +32,7 @@ namespace Derby.Models
         public string CreatedById { get; set; }
 
         public Pack Pack { get; set; }
+
+        public bool Completed { get; set; }
     }
 }
