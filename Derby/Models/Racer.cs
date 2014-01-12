@@ -17,5 +17,6 @@ namespace Derby.Models
 
 		public int DenId { get; set; }
         public int ScoutId { get; set; }
+        public int CompetitionId { get; set; }
 	}
 }

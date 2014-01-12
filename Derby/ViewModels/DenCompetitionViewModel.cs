@@ -7,7 +7,7 @@ using Derby.Models;
 
 namespace Derby.ViewModels
 {
-    public class DenViewModel
+    public class DenCompetitionViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,10 +15,11 @@ namespace Derby.ViewModels
         public DateTime CreatedDateTime { get; set; }
         public int PackId { get; set; }
         public string LogoPath { get; set; }
+        public int CompetitionId { get; set; }
 
         public ICollection<Racer> Racers { get; set; }
 
-        public DenViewModel(Den den)
+        public DenCompetitionViewModel(Den den)
         {
             Id = den.Id;
             Name = den.Name;

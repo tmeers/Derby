@@ -67,7 +67,7 @@
                         @Html.DisplayNameFor(model => model.Dens)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Scouts)
+                        Racers
                     </th>
                     <th>
                         @Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" }) | 
@@ -82,7 +82,7 @@
                             @Html.DisplayFor(modelItem => den.Name)
                         </td>
                         <td>
-                            @Model.Scouts.Count(x => x.DenId == den.Id)
+                            @den.Racers.Count()
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" }) |
