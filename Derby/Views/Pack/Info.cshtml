@@ -39,9 +39,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Dens)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Scouts)
-                    </th>
                 </tr>
 
                 @foreach (var den in Model.Dens)
@@ -49,9 +46,6 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => den.Name)
-                        </td>
-                        <td>
-                            @Model.Scouts.Count(x => x.DenId == den.Id)
                         </td>
                     </tr>
                 }
