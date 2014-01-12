@@ -15,7 +15,7 @@ namespace Derby.ViewModels
         public DateTime CreateDateTime { get; set; }
 
         public PackMembership Membership { get; set; }
-        public ICollection<Den> Dens { get; set; }
+        public ICollection<DenViewModel> Dens { get; set; }
         public ICollection<Competition> Competitions { get; set; }
         public ICollection<Scout> Scouts { get; set; }
 

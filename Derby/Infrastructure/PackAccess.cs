@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using Derby.Models;
 using Derby.ViewModels;
@@ -37,7 +39,14 @@ namespace Derby.Infrastructure
             foreach (var pack in packs)
             {
                 var view = new PackViewModel(pack);
-                view.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                var _dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
+                foreach (var _den in _dens)
+                {
+                    DenViewModel _denView = new DenViewModel(_den);
+                    _denView.Racers = db.Racers.Where(d => d.DenId == _denView.Id).ToList();
+                    view.Dens.Add(_denView);
+                }
+                
                 view.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
                 view.Membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user);
                 view.Competitions = db.Competitions.Where(c => c.PackId == pack.Id).ToList();

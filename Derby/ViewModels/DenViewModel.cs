@@ -17,5 +17,14 @@ namespace Derby.ViewModels
         public string LogoPath { get; set; }
 
         public ICollection<Racer> Racers { get; set; }
+
+        public DenViewModel(Den den)
+        {
+            Id = den.Id;
+            Name = den.Name;
+            CreatedDateTime = den.CreatedDateTime;
+            PackId = den.PackId;
+            LogoPath = den.LogoPath;
+        }
     }
 }
