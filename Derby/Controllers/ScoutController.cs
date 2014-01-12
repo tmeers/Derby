@@ -83,7 +83,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name,Inactive,PackId,CreateDateTime")] Scout scout)
+        public ActionResult Edit([Bind(Include="Id,Name,Inactive")] Scout scout)
         {
             if (ModelState.IsValid)
             {
