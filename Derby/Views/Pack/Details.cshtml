@@ -27,10 +27,10 @@
                         Event Date
                     </th>
                     <th>
-                        Location
+                        Title
                     </th>
                     <th>
-                        Races
+                        Racers
                     </th>
                 </tr>
                 @foreach (var comp in Model.Competitions)
@@ -40,10 +40,10 @@
                             @Html.DisplayFor(modelItem => comp.EventDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => comp.Location)
+                            @Html.DisplayFor(modelItem => comp.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => comp.Title)
+                            
                         </td>
                         <td>
                             @Html.ActionLink("Details", "Details", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-default" })
@@ -59,8 +59,7 @@
 
             </table>
         </div>
-        <div class="col-sm-3">
-            <a href="/den/create"></a>
+        <div class="col-sm-1">
             <table class="table">
                 <tr>
                     <th>
@@ -69,6 +68,7 @@
                     <th>
                         @Html.ActionLink("Add Den", "Create", "Den", new { packId = Model.Id }, new { @class = "btn btn-xs btn-success" })
                     </th>
+                    <th></th>
                 </tr>
 
                 @foreach (var den in Model.Dens)
@@ -78,13 +78,13 @@
                             @Html.DisplayFor(modelItem => den.Name)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", "Den" , new { id = den.Id }, new { @class = "btn btn-xs btn-primary" })
+                            <a href="@Url.Action("Edit", "Den", new { id = den.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="icon-pencil"></i></a>
+                        </td>
+                        <td>
                             @if (Model.Membership.AccessLevel == OwnershipType.Owner)
                             {
-                                @:&nbsp; | &nbsp;
-                                @Html.ActionLink("Delete", "Delete", "Den", new { id = den.Id }, new { @class = "btn btn-xs btn-danger" })
+                                <a href="@Url.Action("Delete", "Den", new { id = den.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="icon-trash"></i></a>
                             }
-                            
                         </td>
                     </tr>
                 }
