@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using Derby.Infrastructure;
 
 namespace Derby.Models
 {
@@ -15,7 +13,7 @@ namespace Derby.Models
 
         [Required]
         [Display(Name = "Race Type")]
-        public int RaceType { get; set; }
+        public RaceType RaceType { get; set; }
 
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
