@@ -51,7 +51,6 @@
             {
                 @Html.ActionLink("Details", "Details", new {id = pack.Id}, new {@class = "btn btn-xs btn-default"}) 
 
-                
                 if (pack.Membership.AccessLevel == OwnershipType.Owner || pack.Membership.AccessLevel == OwnershipType.Contributor)
                 {
                     @:&nbsp;|&nbsp;
@@ -59,8 +58,6 @@
                     @:&nbsp;|&nbsp;
                     @Html.ActionLink("New Competition", "create", "Competition", new { packId = pack.Id }, new { @class = "btn btn-xs btn-info" })
                 }
-                
-
             }
         </td>
     </tr>
