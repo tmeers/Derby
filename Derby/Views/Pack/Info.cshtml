@@ -4,64 +4,51 @@
     ViewBag.Title = "Info";
 }
 
-<h2>Pack Details</h2>
-
+<h3>Pack Details</h3>
+<div class="well well-sm">
+    <h4 class="list-group-item-heading">@Html.DisplayFor(model => model.Name) &nbsp;-&nbsp; @Html.DisplayFor(model => model.Region)</h4>
+</div>
 <div>
     <hr />
     <div class="row">
-        <div class="col-sm-5">
-            <div class="row">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </dt>
+        <div class="col-sm-6">
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Name)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Region)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Region)
-                    </dd>
-                    <dt>
-                        Active Scouts
-                    </dt>
-                    <dd>
-                        @Model.Scouts.Count()
-                    </dd>
-                    <dt>
-
-                    </dt>
-                    <dd>
-
-                    </dd>
-                </dl>
-            </div>
-            <div class="row">
-                <a class="well well-sm">
-                    Current Competition
-                </a>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Html.DisplayNameFor(model => model.Competitions)</h3>
+                </div>
+                <table class="panel-body table">
+                @if (Model.Competitions.Any())
+                {
+                     foreach (var comp in Model.Competitions.OrderByDescending(x => x.Id).Take(5))
+                     {
+                         <tr>
+                             <td>@Html.DisplayFor(modelItem => comp.Title)</td>
+                             <td>@Html.DisplayFor(modelItem => comp.EventDate)</td>
+                         </tr>
+                     }
+                }
+                else
+                {
+                    <tr><td>No Competitions Have Been Added</td></tr>
+                }
+                </table>
             </div>
         </div>
         <div class="col-sm-2">
-            <h3>@Html.DisplayNameFor(model => model.Dens)</h3>
-
-            <table class="panel-body table">
-
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Html.DisplayNameFor(model => model.Dens)</h3>
+                </div>
+                <table class="panel-body table">
                 @foreach (var den in Model.Dens)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => den.Name)
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => den.Name)</td>
                     </tr>
                 }
-
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
