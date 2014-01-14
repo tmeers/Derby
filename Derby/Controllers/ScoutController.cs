@@ -94,6 +94,25 @@ namespace Derby.Controllers
             return View(scout);
         }
 
+        public ActionResult Activate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Scout scout = db.Scouts.Find(id);
+            if (scout == null)
+            {
+                return HttpNotFound();
+            }
+
+            scout.Inactive = false;
+
+            db.Entry(scout).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { packId = scout.PackId });
+        }
+
         // GET: /Scout/Delete/5
         public ActionResult Delete(int? id)
         {

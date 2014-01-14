@@ -29,7 +29,7 @@ namespace Derby.Controllers
         // GET: /Pack/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (id == null || !Request.IsAuthenticated)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
@@ -44,7 +44,7 @@ namespace Derby.Controllers
 
         public ActionResult Info(int? id)
         {
-            if (id == null)
+            if (id == null || !Request.IsAuthenticated)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
@@ -64,7 +64,7 @@ namespace Derby.Controllers
             PackAccess access = new PackAccess();
             PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
 
-            if (pack != null && pack.Membership.AccessLevel != OwnershipType.None)
+            if (!Request.IsAuthenticated || pack != null && pack.Membership.AccessLevel != OwnershipType.None)
             {
                 HttpNotFound();
             }
@@ -85,7 +85,7 @@ namespace Derby.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="Id,Name,Region")] Pack pack)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Request.IsAuthenticated)
             {
                 pack.CreatedById = User.Identity.GetUserId();
                 pack.CreateDateTime = DateTime.Now;
