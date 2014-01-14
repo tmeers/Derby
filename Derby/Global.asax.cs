@@ -17,8 +17,8 @@ namespace Derby
 
         protected void Application_Start()
         {
-            //Database.SetInitializer(new CreateDatabaseIfNotExists<DerbyDb>());
-            //db.Database.Initialize(true);
+            Database.SetInitializer(new CreateDatabaseIfNotExists<DerbyDb>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DerbyDb, Migrations.Configuration>());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
