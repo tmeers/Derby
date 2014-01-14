@@ -134,7 +134,7 @@ namespace Derby.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="Id,Name,Region")] Pack pack)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Request.IsAuthenticated)
             {
                 db.Entry(pack).State = EntityState.Modified;
                 db.SaveChanges();
@@ -146,6 +146,10 @@ namespace Derby.Controllers
         // GET: /Pack/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
             var user = User.Identity.GetUserId();
             var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);

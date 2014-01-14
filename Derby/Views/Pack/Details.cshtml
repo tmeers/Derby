@@ -6,20 +6,22 @@
     ViewBag.Title = "Details";
 }
 
-<h3>Pack: @Html.DisplayFor(model => model.Name) - @Html.DisplayFor(model => model.Region)</h3>
-
+<h3>Pack: @Html.DisplayFor(model => model.Name) - <small>@Html.DisplayFor(model => model.Region)</small></h3>
+<p>
+    @if (Model.Membership.AccessLevel == OwnershipType.Owner || Model.Membership.AccessLevel == OwnershipType.Contributor)
+    {
+        <a href="@Url.Action("Index", "Scout", new { packId = Model.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="icon-group"></i>&nbsp; Scouts</a>
+        <a href="@Url.Action("create", "Competition", new { packId = Model.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp; New Competition</a>
+    }
+</p>
 <div>
-    <hr />
     <div class="row">
         <div class="col-md-5">
 
             <table class="table">
                 <tr>
-                    <th>
+                    <th colspan="4">
                         @Html.DisplayNameFor(model => model.Competitions)
-                    </th>
-                    <th colspan="2">
-                        <a href="@Url.Action("create", "Competition", new { packId = Model.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp;Create New Competition</a>
                     </th>
                 </tr>
                 <tr>
@@ -32,6 +34,7 @@
                     <th>
                         Racers
                     </th>
+                    <th>&nbsp;</th>
                 </tr>
                 @foreach (var comp in Model.Competitions)
                 {
@@ -43,16 +46,16 @@
                             @Html.DisplayFor(modelItem => comp.Title)
                         </td>
                         <td>
-                            
+                            @* // TODO Add Racers count *@
                         </td>
                         <td>
                             @Html.ActionLink("Details", "Details", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-default" })
 
-                            @if (Model.Membership.AccessLevel == OwnershipType.Owner)
+                            @*@if (Model.Membership.AccessLevel == OwnershipType.Owner)
                             {
                                 @:&nbsp; | &nbsp;
                                 @Html.ActionLink("Delete", "Delete", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-danger" })
-                            }
+                            }*@
                         </td>
                     </tr>
                 }
@@ -79,8 +82,7 @@
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", "Den", new { id = den.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="icon-pencil"></i></a>
-                        </td>
-                        <td>
+
                             @if (Model.Membership.AccessLevel == OwnershipType.Owner)
                             {
                                 <a href="@Url.Action("Delete", "Den", new { id = den.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="icon-trash"></i></a>

@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Registered Packs</h2>
+<h3>Registered Packs</h3>
 
 @if (Request.IsAuthenticated)
 {
@@ -49,14 +49,14 @@
         <td>
             @if (pack.Membership != null)
             {
-                <a href="@Url.Action("Details", "Pack", new { packId = pack.Id })" class="btn btn-xs btn-default" title="Delete"><i class="icon-info"></i>&nbsp;Details</a>
+                <a href="@Url.Action("Details", "Pack", new { id = pack.Id })" class="btn btn-xs btn-default" title="Details"><i class="icon-info"></i>&nbsp; Details</a>
 
                 if (pack.Membership.AccessLevel == OwnershipType.Owner || pack.Membership.AccessLevel == OwnershipType.Contributor)
                 {
                     @:&nbsp;|&nbsp;
-                    <a href="@Url.Action("Index", "Scout", new { packId = pack.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="icon-group"></i>&nbsp;Scouts</a>
+                    <a href="@Url.Action("Index", "Scout", new { packId = pack.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="icon-group"></i>&nbsp; Scouts</a>
                     @:&nbsp;|&nbsp;
-                    <a href="@Url.Action("create", "Competition", new { packId = pack.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp;New Competition</a>
+                    <a href="@Url.Action("create", "Competition", new { packId = pack.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp; New Competition</a>
                 }
             }
         </td>

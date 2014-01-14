@@ -4,7 +4,7 @@
     ViewBag.Title = "Scouts";
 }
 
-<h2>Scouts</h2>
+<h3>Scouts</h3>
 
 <p>
     @Html.ActionLink("Create New", "Create", "Scout", new { }, new { @class = "btn btn-xs btn-success" }) &nbsp;|&nbsp;
@@ -38,6 +38,7 @@
         <td>
             @if (!item.Inactive)
             {
+                <a href="@Url.Action("Details", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="icon-info"></i>&nbsp; Details</a>
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) @:|
             }
             
