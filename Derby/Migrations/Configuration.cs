@@ -1,3 +1,6 @@
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 namespace Derby.Migrations
 {
     using System;
@@ -16,6 +19,9 @@ namespace Derby.Migrations
 
         protected override void Seed(Derby.Models.DerbyDb context)
         {
+            var user = new ApplicationUser() { UserName = "demo" };
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var result = userManager.Create(user, "demo");
             //context.Packs.AddOrUpdate(p => p.Name,
             //    new Pack
             //    {

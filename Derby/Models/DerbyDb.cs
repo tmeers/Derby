@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Derby.Models
 {
-	public class DerbyDb : DbContext
-	{
-		public DerbyDb() : base("name=DerbyDb") { }
+    public class ApplicationUser : IdentityUser
+    {
+    }
 
+	public class DerbyDb : IdentityDbContext
+	{
+        public DerbyDb() : base("name=DerbyDb") { }
+
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        
         public DbSet<Pack> Packs { get; set; }
 		public DbSet<Den> Dens { get; set; }
         public DbSet<Scout> Scouts { get; set; }
@@ -21,5 +30,14 @@ namespace Derby.Models
         public DbSet<Contestant> Contestants { get; set; }
 
         public DbSet<PackMembership> PackMemberships { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+        }
+
+
+
 	}
 }
