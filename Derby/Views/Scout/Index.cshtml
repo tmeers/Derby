@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Derby.Models.Scout>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Scouts";
 }
 
-<h2>Index</h2>
+<h2>Scouts</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "Scout", new { }, new { @class = "btn btn-xs btn-success" }) &nbsp;|&nbsp;
+    @Html.ActionLink("Back to Pack List", "index", "Pack", new { }, new { @class = "btn btn-xs btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -23,15 +24,31 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @if (!item.Inactive) { 
+                @Html.ActionLink(item.Name, "Details", new { id = item.Id })
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.Name)
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreateDateTime)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @if (!item.Inactive)
+            {
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) @:|
+            }
+            
+            @if (!item.Inactive)
+            {
             @Html.ActionLink("Inactivate", "Delete", new { id=item.Id })
+            }
+            else
+            {
+                @Html.ActionLink("Activate", "Activate", new { id = item.Id })
+            }
         </td>
     </tr>
 }

@@ -49,14 +49,14 @@
         <td>
             @if (pack.Membership != null)
             {
-                @Html.ActionLink("Details", "Details", new {id = pack.Id}, new {@class = "btn btn-xs btn-default"}) 
+                <a href="@Url.Action("Details", "Pack", new { packId = pack.Id })" class="btn btn-xs btn-default" title="Delete"><i class="icon-info"></i>&nbsp;Details</a>
 
                 if (pack.Membership.AccessLevel == OwnershipType.Owner || pack.Membership.AccessLevel == OwnershipType.Contributor)
                 {
                     @:&nbsp;|&nbsp;
-                    @Html.ActionLink("Scouts", "Index", "Scout", new { packId = pack.Id }, new { @class = "btn btn-xs btn-primary" })  
+                    <a href="@Url.Action("Index", "Scout", new { packId = pack.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="icon-group"></i>&nbsp;Scouts</a>
                     @:&nbsp;|&nbsp;
-                    @Html.ActionLink("New Competition", "create", "Competition", new { packId = pack.Id }, new { @class = "btn btn-xs btn-info" })
+                    <a href="@Url.Action("create", "Competition", new { packId = pack.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp;New Competition</a>
                 }
             }
         </td>

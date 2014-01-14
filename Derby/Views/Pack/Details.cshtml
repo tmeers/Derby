@@ -19,7 +19,7 @@
                         @Html.DisplayNameFor(model => model.Competitions)
                     </th>
                     <th colspan="2">
-                        @Html.ActionLink("Create New Competition", "create", "Competition", new { packId = Model.Id }, new { @class = "btn btn-xs btn-info" })
+                        <a href="@Url.Action("create", "Competition", new { packId = Model.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp;Create New Competition</a>
                     </th>
                 </tr>
                 <tr>
