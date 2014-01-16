@@ -223,8 +223,10 @@
     <Compile Include="Models\Scout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CompetitionViewModel.cs" />
     <Compile Include="ViewModels\DenCompetitionViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
+    <Compile Include="ViewModels\RacerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bear.jpg" />
