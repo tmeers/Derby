@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
@@ -18,23 +19,48 @@ namespace Derby.Controllers
         // GET: /Competition/List/
         public ActionResult Index(int packId)
         {
-            var competitions = db.Competitions.Where(c => c.PackId == packId);//.Include(c => c.Pack);
+            var competitions = db.Competitions.Where(c => c.PackId == packId);
             return View(competitions.ToList());
         }
 
         // GET: /Competition/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (id == null || !Request.IsAuthenticated)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Competition competition = db.Competitions.Find(id);
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
             if (competition == null)
             {
                 return HttpNotFound();
             }
-            return View(competition);
+
+            CompetitionViewModel view = new CompetitionViewModel(competition);
+            view.Pack = db.Packs.FirstOrDefault(p => p.Id == view.PackId);
+
+            var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
+            var _scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
+
+            foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
+            {
+                var _den = den;
+                var denView = new DenCompetitionViewModel(_den);
+                foreach (var racer in _racers.Where(d => d.DenId == _den.Id))
+                {
+                    var racerView = new RacerViewModel(racer);
+                    racerView.Den = _den;
+                    racerView.Scout = _scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
+
+                    view.Racers.Add(racerView);
+                    denView.Racers.Add(racerView);
+                }
+
+                view.Dens.Add(denView);
+            }
+
+            return View(view);
         }
 
         // GET: /Competition/Create
