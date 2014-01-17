@@ -31,10 +31,8 @@
                     <th>
                         Title
                     </th>
-                    <th>
-                        Racers
-                    </th>
-                    <th>&nbsp;</th>
+
+                    <th colspan="2">&nbsp;</th>
                 </tr>
                 @foreach (var comp in Model.Competitions)
                 {
@@ -45,17 +43,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => comp.Title)
                         </td>
+
                         <td>
-                            @* // TODO Add Racers count *@
+                            <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default" title="Edit"><i class="fa fa-tachometer"></i> Dashboard</a>
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-default" })
-
-                            @*@if (Model.Membership.AccessLevel == OwnershipType.Owner)
-                            {
-                                @:&nbsp; | &nbsp;
-                                @Html.ActionLink("Delete", "Delete", "Competition", new { id = comp.Id }, new { @class = "btn btn-xs btn-danger" })
-                            }*@
+                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
                         </td>
                     </tr>
                 }
