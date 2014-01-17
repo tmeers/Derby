@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Derby.ViewModels;
 
 namespace Derby.Controllers
 {
@@ -23,10 +25,7 @@ namespace Derby.Controllers
             }
 
             var races = db.Races.Where(x => x.CompetitionId == competitionId).ToList();
-            if (!races.Any())
-            {
-                return HttpNotFound();
-            }
+
 
             foreach (var race in races)
             {
@@ -55,9 +54,18 @@ namespace Derby.Controllers
         }
 
         // GET: /Race/Create
-        public ActionResult Create()
+        public ActionResult Create(int competitionId)
         {
-            return View();
+            var raceView = new RaceViewModel();
+            raceView.Competition = db.Competitions.FirstOrDefault(c => c.Id == competitionId);
+            raceView.Dens = db.Dens.Where(d => d.PackId == raceView.Competition.PackId).ToList();
+            raceView.DenList = new ArrayList();
+            foreach (var den in raceView.Dens)
+            {
+                raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
+            }
+
+            return View(raceView);
         }
 
         // POST: /Race/Create
@@ -70,6 +78,7 @@ namespace Derby.Controllers
             if (ModelState.IsValid)
             {
                 race.CreatedDate = DateTime.Now;
+                race.CompletedDate = DateTime.Now;
                 db.Races.Add(race);
                 db.SaveChanges();
                 return RedirectToAction("Index");
