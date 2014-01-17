@@ -17,6 +17,8 @@ namespace Derby.Models
         [Display(Name = "Completed Date")]
         public DateTime CompletedDate { get; set; }
 
+        public int DenId { get; set; }
+
         public ICollection<Racer> Racers { get; set; }
         public ICollection<Heat> Heats { get; set; }
     }
