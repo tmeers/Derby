@@ -105,6 +105,17 @@ namespace Derby
                 url: "competition/list/{packId}",
                 defaults: new { controller = "Competition", action = "Index", packId = UrlParameter.Optional }
             );
+                
+            routes.MapRoute(
+                name: "Race-Index",
+                url: "race/{competitionId}",
+                defaults: new { controller = "Race", action = "Index", competitionId = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Race-Create",
+                url: "race/create/{competitionId}",
+                defaults: new { controller = "Race", action = "Create", competitionId = UrlParameter.Optional }
+            );
 
             routes.MapRouteLowercase(
                 name: "Default",

@@ -25,18 +25,21 @@
                     </th>
                 </tr>
                 <tr>
+                    <th>Edit</th>
                     <th>
                         Event Date
                     </th>
                     <th>
                         Title
                     </th>
-
-                    <th colspan="2">&nbsp;</th>
+                    <th>&nbsp;</th>
                 </tr>
                 @foreach (var comp in Model.Competitions)
                 {
                     <tr>
+                        <td>
+                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => comp.EventDate)
                         </td>
@@ -45,14 +48,8 @@
                         </td>
 
                         <td>
-                            <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default" title="Edit"><i class="fa fa-tachometer"></i> Dashboard</a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
-                        </td>
-
-                        <td>
-                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-flag-checkered"></i></a>
+                            <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default" title="Dashboard"><i class="fa fa-tachometer"></i></a>
+                            <a href="@Url.Action("Index", "Race", new { competitionId = comp.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-flag-checkered"></i></a>
                         </td>
                        
                     </tr>

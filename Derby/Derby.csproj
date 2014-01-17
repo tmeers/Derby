@@ -232,6 +232,7 @@
     <Compile Include="ViewModels\DenCompetitionViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
     <Compile Include="ViewModels\RacerViewModel.cs" />
+    <Compile Include="ViewModels\RaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DerbyDb.mdf" />
