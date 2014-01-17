@@ -40,3 +40,14 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.announcement-heading {
+  font-size: 30px;
+  margin: 0;
+}
+
+.announcement-text {
+  margin: 0;
+}
+
+.denlogo-small{ width: 70px; }
