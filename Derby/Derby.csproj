@@ -166,6 +166,7 @@
     <Compile Include="Controllers\DenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackController.cs" />
+    <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\ScoutController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -269,6 +270,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -326,6 +328,11 @@
     <Content Include="Views\Scout\Details.cshtml" />
     <Content Include="Views\Scout\Edit.cshtml" />
     <Content Include="Views\Scout\Index.cshtml" />
+    <Content Include="Views\Race\Create.cshtml" />
+    <Content Include="Views\Race\Delete.cshtml" />
+    <Content Include="Views\Race\Details.cshtml" />
+    <Content Include="Views\Race\Edit.cshtml" />
+    <Content Include="Views\Race\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
