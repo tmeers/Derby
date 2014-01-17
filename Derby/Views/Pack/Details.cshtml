@@ -10,8 +10,8 @@
 <p>
     @if (Model.Membership.AccessLevel == OwnershipType.Owner || Model.Membership.AccessLevel == OwnershipType.Contributor)
     {
-        <a href="@Url.Action("Index", "Scout", new { packId = Model.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="icon-group"></i>&nbsp; Scouts</a>
-        <a href="@Url.Action("create", "Competition", new { packId = Model.Id })" class="btn btn-xs btn-info" title="Delete"><i class="icon-trophy"></i>&nbsp; New Competition</a>
+        <a href="@Url.Action("Index", "Scout", new { packId = Model.Id })" class="btn btn-xs btn-primary" title="Delete"><i class="fa fa-group"></i>&nbsp; Scouts</a>
+        <a href="@Url.Action("create", "Competition", new { packId = Model.Id })" class="btn btn-xs btn-info" title="Delete"><i class="fa fa-trophy"></i>&nbsp; New Competition</a>
     }
 </p>
 <div>
@@ -81,11 +81,11 @@
                             @Html.DisplayFor(modelItem => den.Name)
                         </td>
                         <td>
-                            <a href="@Url.Action("Edit", "Den", new { id = den.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="icon-pencil"></i></a>
+                            <a href="@Url.Action("Edit", "Den", new { id = den.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
 
                             @if (Model.Membership.AccessLevel == OwnershipType.Owner)
                             {
-                                <a href="@Url.Action("Delete", "Den", new { id = den.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="icon-trash"></i></a>
+                                <a href="@Url.Action("Delete", "Den", new { id = den.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="fa fa-trash-o"></i></a>
                             }
                         </td>
                     </tr>
