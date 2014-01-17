@@ -9,7 +9,6 @@
     <h4 class="list-group-item-heading">@Html.DisplayFor(model => model.Name) &nbsp;-&nbsp; @Html.DisplayFor(model => model.Region)</h4>
 </div>
 <div>
-    <hr />
     <div class="row">
         <div class="col-sm-6">
 
@@ -25,6 +24,11 @@
                          <tr>
                              <td>@Html.DisplayFor(modelItem => comp.Title)</td>
                              <td>@Html.DisplayFor(modelItem => comp.EventDate)</td>
+                             
+                             <td>
+                                 <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default text-muted" title="Edit"><i class="fa fa-trophy"></i> Vew Dashboard</a>
+                             </td> 
+
                          </tr>
                      }
                 }
@@ -41,12 +45,28 @@
                     <h3 class="panel-title">@Html.DisplayNameFor(model => model.Dens)</h3>
                 </div>
                 <table class="panel-body table">
-                @foreach (var den in Model.Dens)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => den.Name)</td>
-                    </tr>
-                }
+                    @foreach (var den in Model.Dens)
+                    {
+                        <tr class="text-center">
+                            <td><img src="@den.LogoPath" class="denlogo-xsmall" /></td>
+                            <td>@Html.DisplayFor(modelItem => den.Name)</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Html.DisplayNameFor(model => model.Scouts)</h3>
+                </div>
+                <table class="panel-body table">
+                    @foreach (var scout in Model.Scouts.Where(x => x.Inactive == false))
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => scout.Name)</td>
+                        </tr>
+                    }
                 </table>
             </div>
         </div>
