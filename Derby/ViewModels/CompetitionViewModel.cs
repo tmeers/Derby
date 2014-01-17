@@ -40,6 +40,8 @@ namespace Derby.ViewModels
         public List<RacerViewModel> Racers { get; set; }
         public List<Den> Dens { get; set; }
 
+        public List<Heat> Heats { get; set; }
+
         public CompetitionViewModel(Competition competition)
         {
             Id = competition.Id;
@@ -54,6 +56,7 @@ namespace Derby.ViewModels
             Completed = competition.Completed;
             Racers = new List<RacerViewModel>();
             Dens = new List<Den>();
+            Heats = new List<Heat>();
         }
     }
 }
