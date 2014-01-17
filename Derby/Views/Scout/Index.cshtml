@@ -8,7 +8,7 @@
 
 <p>
     @Html.ActionLink("Create New", "Create", "Scout", new { }, new { @class = "btn btn-xs btn-success" }) &nbsp;|&nbsp;
-    @Html.ActionLink("Back to Pack List", "index", "Pack", new { }, new { @class = "btn btn-xs btn-default" })
+    @Html.ActionLink("Back to Pack", "details", "Pack", new { id = Convert.ToInt32(Url.RequestContext.RouteData.Values["packId"]) }, new { @class = "btn btn-xs btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -38,7 +38,7 @@
         <td>
             @if (!item.Inactive)
             {
-                <a href="@Url.Action("Details", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="icon-info"></i>&nbsp; Details</a>
+                <a href="@Url.Action("Details", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-info"></i>&nbsp; Details</a>
                 @Html.ActionLink("Details", "Details", new { id=item.Id }) @:|
             }
             
