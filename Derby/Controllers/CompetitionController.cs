@@ -40,13 +40,14 @@ namespace Derby.Controllers
             CompetitionViewModel view = new CompetitionViewModel(competition);
             view.Pack = db.Packs.FirstOrDefault(p => p.Id == view.PackId);
 
+
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
             var _scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
 
             foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
             {
                 var _den = den;
-                var denView = new DenCompetitionViewModel(_den);
+                //var denView = new DenCompetitionViewModel(_den);
                 foreach (var racer in _racers.Where(d => d.DenId == _den.Id))
                 {
                     var racerView = new RacerViewModel(racer);
@@ -54,10 +55,10 @@ namespace Derby.Controllers
                     racerView.Scout = _scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
 
                     view.Racers.Add(racerView);
-                    denView.Racers.Add(racerView);
+                    //denView.Racers.Add(racerView);
                 }
 
-                view.Dens.Add(denView);
+                view.Dens.Add(_den);
             }
 
             return View(view);

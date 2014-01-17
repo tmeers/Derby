@@ -38,7 +38,7 @@ namespace Derby.ViewModels
         public bool Completed { get; set; }
 
         public List<RacerViewModel> Racers { get; set; }
-        public List<DenCompetitionViewModel> Dens { get; set; }
+        public List<Den> Dens { get; set; }
 
         public CompetitionViewModel(Competition competition)
         {
@@ -52,6 +52,8 @@ namespace Derby.ViewModels
             LaneCount = competition.LaneCount;
             CreatedById = competition.CreatedById;
             Completed = competition.Completed;
+            Racers = new List<RacerViewModel>();
+            Dens = new List<Den>();
         }
     }
 }

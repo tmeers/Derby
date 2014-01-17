@@ -17,7 +17,7 @@ namespace Derby.ViewModels
         public string LogoPath { get; set; }
         public int CompetitionId { get; set; }
 
-        public ICollection<RacerViewModel> Racers { get; set; }
+        //public ICollection<RacerViewModel> Racers { get; set; }
 
         public DenCompetitionViewModel(Den den)
         {
