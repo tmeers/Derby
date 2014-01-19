@@ -11,6 +11,7 @@ using Derby.Models;
 
 namespace Derby.Controllers
 {
+    [Authorize]
     public class ScoutController : Controller
     {
         private DerbyDb db = new DerbyDb();

@@ -12,6 +12,7 @@ using Derby.ViewModels;
 
 namespace Derby.Controllers
 {
+    [Authorize]
     public class RaceController : Controller
     {
         private DerbyDb db = new DerbyDb();

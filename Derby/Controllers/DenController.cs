@@ -10,6 +10,7 @@ using Derby.Models;
 
 namespace Derby.Controllers
 {
+    [Authorize]
     public class DenController : Controller
     {
         private DerbyDb db = new DerbyDb();

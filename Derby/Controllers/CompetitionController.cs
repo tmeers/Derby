@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
+    [Authorize]
     public class CompetitionController : Controller
     {
         private DerbyDb db = new DerbyDb();

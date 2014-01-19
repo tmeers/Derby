@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
+    [Authorize]
     public class PackController : Controller
     {
         private DerbyDb db = new DerbyDb();
