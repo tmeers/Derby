@@ -84,7 +84,10 @@
                                 }
                                 else
                                 {
-                                    <img src="@den.LogoPath" class="denlogo-small" />
+                                    if (den.LogoPath != "")
+                                    {
+                                        <img src="@den.LogoPath" class="denlogo-small" />
+                                    }
                                 }
                                 
                             </div>
