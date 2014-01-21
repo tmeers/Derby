@@ -27,30 +27,27 @@
                             <thead>
                                 <tr>
                                     <th class="header">Name</th>
-                                    <th class="header">Car</th>
-                                    <th class="header">Weight</th>
-                                    <th class="header">Points</th>
+                                    <th class="header">Registered</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var racer in Model.Racers)
+                                @foreach (var scout in Model.Scouts)
                                 {
-                                    var _currentRacer = racer;
+                                    var _currentRacer = scout;
                                     <tr>
-                                        <td>@_currentRacer.Scout.Name</td>
-                                        <td>@_currentRacer.CarNumber</td>
-                                        <td>@_currentRacer.Weight</td>
-                                        <td>
-                                            @{
-                                                //int points = 0;
-                                                //foreach (var race in Model.Races.Where(x => x.DenId == _currentRacer.Den.Id))
-                                                //{
-                                                //    var _race = race;
-                                                //    var heats = race.Heats.Where(x => x.RaceId == _race.Id).ToList();
-                                                //    var desePoints = (from c in heats.Contestants)
-                                                //}
-                                            }
-                                        </td>
+                                        <td>@_currentRacer.Name</td>
+                                        @{
+                                            var _racer = Model.Racers.FirstOrDefault(x => x.Scout.Id == _currentRacer.Id);
+                                        }
+                                        @if (_racer != null)
+                                        {
+                                            <td><i class="success glyphicon glyphicon-ok"></i></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="@Url.Action("Create", "Racer", new { competitionId = Model.Id, scoutId = _currentRacer.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-user"></i>&nbsp;Register Racer</a></td>
+                                        }
+
                                     </tr>
                                 }
                             </tbody>

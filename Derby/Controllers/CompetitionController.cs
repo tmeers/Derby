@@ -43,7 +43,7 @@ namespace Derby.Controllers
 
 
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
-            var _scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
+            view.Scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
 
             foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
             {
@@ -53,7 +53,7 @@ namespace Derby.Controllers
                 {
                     var racerView = new RacerViewModel(racer);
                     racerView.Den = _den;
-                    racerView.Scout = _scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
+                    racerView.Scout = view.Scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
 
                     view.Racers.Add(racerView);
                     //denView.Racers.Add(racerView);
