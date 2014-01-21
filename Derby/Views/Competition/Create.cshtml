@@ -40,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RaceType, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RaceType)
+                @Html.DropDownListFor(m => m.RaceType, new SelectList(Enum.GetValues(typeof(Derby.Infrastructure.DerbyType)), 0))
                 @Html.ValidationMessageFor(model => model.RaceType)
             </div>
         </div>
