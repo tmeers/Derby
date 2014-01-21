@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Derby.ViewModels;
 
 namespace Derby.Controllers
 {
@@ -37,9 +38,13 @@ namespace Derby.Controllers
         }
 
         // GET: /Racer/Create
-        public ActionResult Create()
+        public ActionResult Create(int competitionId, int scoutId)
         {
-            return View();
+            var packId = db.Competitions.FirstOrDefault(x => x.Id == competitionId).PackId;
+            CreateRacerViewModel view = new CreateRacerViewModel();
+            view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
+
+            return View(view);
         }
 
         // POST: /Racer/Create

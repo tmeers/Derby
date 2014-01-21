@@ -1,5 +1,4 @@
-﻿@model Derby.Models.Racer
-
+﻿@model Derby.ViewModels.CreateRacerViewModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -35,26 +34,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DenId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DenId)
-                @Html.ValidationMessageFor(model => model.DenId)
+                @Html.DropDownListFor(model => model.DenId, new SelectList(Model.Dens, "Id", "Name", Model.Dens))
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ScoutId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ScoutId)
-                @Html.ValidationMessageFor(model => model.ScoutId)
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.ScoutId)
+        @Html.HiddenFor(model => model.CompetitionId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompetitionId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CompetitionId)
-                @Html.ValidationMessageFor(model => model.CompetitionId)
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
