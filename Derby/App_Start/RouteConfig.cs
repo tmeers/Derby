@@ -96,8 +96,14 @@ namespace Derby
 
             routes.MapRoute(
                 name: "Competition-Details",
-                url: "competition/{id}",
+                url: "competition/details/{id}",
                 defaults: new { controller = "Competition", action = "Details" }
+            );
+
+            routes.MapRoute(
+                name: "Competition-Dashboard",
+                url: "competition/{id}",
+                defaults: new { controller = "Competition", action = "Dashboard" }
             );
 
             routes.MapRoute(

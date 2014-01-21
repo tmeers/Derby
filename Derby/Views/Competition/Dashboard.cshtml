@@ -1,0 +1,121 @@
+﻿@using Derby.Models
+@using Microsoft.Ajax.Utilities
+@model Derby.ViewModels.CompetitionViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title)</h3>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
+    @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+</p>
+
+<div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-group"></i> Scouts</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table id="dashboard-scouts" class="table table-hover tablesorter">
+                            <thead>
+                                <tr>
+                                    <th class="header">Name</th>
+                                    <th class="header">Car</th>
+                                    <th class="header">Weight</th>
+                                    <th class="header">Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var racer in Model.Racers)
+                                {
+                                    var _currentRacer = racer;
+                                    <tr>
+                                        <td>@_currentRacer.Scout.Name</td>
+                                        <td>@_currentRacer.CarNumber</td>
+                                        <td>@_currentRacer.Weight</td>
+                                        <td>
+                                            @{
+                                                //int points = 0;
+                                                //foreach (var race in Model.Races.Where(x => x.DenId == _currentRacer.Den.Id))
+                                                //{
+                                                //    var _race = race;
+                                                //    var heats = race.Heats.Where(x => x.RaceId == _race.Id).ToList();
+                                                //    var desePoints = (from c in heats.Contestants)
+                                                //}
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @*<div class="text-right">
+                    <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                </div>*@
+            </div>
+        </div>
+        <div class="col-md-5">
+            @foreach (var den in Model.Dens)
+            {
+                int racerCount = Model.Racers.Count(x => x.Den.Id == den.Id);
+                string panelStatus = "panel-info";
+                bool denInError = false;
+                if (racerCount == 0)
+                {
+                    panelStatus = "panel-danger";
+                    denInError = true;
+                }
+                
+                <div class="panel @panelStatus">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                @if (denInError)
+                                {
+                                    <i class="fa fa-exclamation-triangle fa-4x"></i>
+                                }
+                                else
+                                {
+                                    if (den.LogoPath != "")
+                                    {
+                                        <img src="@den.LogoPath" class="denlogo-small" />
+                                    }
+                                }
+                                
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <p class="announcement-heading">@den.Name</p>
+                                <p class="announcement-text">Racers - @racerCount</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer announcement-bottom">
+                            @if (racerCount == 0)
+                            {
+                                <div class="row">
+                                    <a>
+                                        <div class="col-xs-6">
+                                            Assign Scouts
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

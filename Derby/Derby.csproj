@@ -167,6 +167,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
+    <Compile Include="Controllers\RacerController.cs" />
     <Compile Include="Controllers\ScoutController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -334,6 +335,11 @@
     <Content Include="Views\Race\Details.cshtml" />
     <Content Include="Views\Race\Edit.cshtml" />
     <Content Include="Views\Race\Index.cshtml" />
+    <Content Include="Views\Racer\Create.cshtml" />
+    <Content Include="Views\Racer\Delete.cshtml" />
+    <Content Include="Views\Racer\Details.cshtml" />
+    <Content Include="Views\Racer\Edit.cshtml" />
+    <Content Include="Views\Racer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
