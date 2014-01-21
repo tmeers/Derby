@@ -342,6 +342,7 @@
     <Content Include="Views\Racer\Edit.cshtml" />
     <Content Include="Views\Racer\Index.cshtml" />
     <Content Include="Views\Competition\Dashboard.cshtml" />
+    <Content Include="Views\Race\Generate.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

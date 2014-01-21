@@ -128,7 +128,11 @@ namespace Derby
                 url: "race/create/{competitionId}",
                 defaults: new { controller = "Race", action = "Create", competitionId = UrlParameter.Optional }
             );
-
+            routes.MapRoute(
+                name: "Race-Generate",
+                url: "race/generate/{competitionId}",
+                defaults: new { controller = "Race", action = "Generate", competitionId = UrlParameter.Optional }
+            );
             routes.MapRouteLowercase(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

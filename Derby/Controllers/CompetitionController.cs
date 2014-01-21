@@ -39,34 +39,10 @@ namespace Derby.Controllers
                 return HttpNotFound();
             }
 
-            CompetitionViewModel view = new CompetitionViewModel(competition);
             var user = User.Identity.GetUserId();
+            CompetitionHelper helper = new CompetitionHelper();
 
-            PackAccess access = new PackAccess();
-            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
-
-            view.Pack = pack;//db.Packs.FirstOrDefault(p => p.Id == view.PackId);
-
-
-            var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
-            view.Scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
-
-            foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
-            {
-                var _den = den;
-                //var denView = new DenCompetitionViewModel(_den);
-                foreach (var racer in _racers.Where(d => d.DenId == _den.Id))
-                {
-                    var racerView = new RacerViewModel(racer);
-                    racerView.Den = _den;
-                    racerView.Scout = view.Scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
-
-                    view.Racers.Add(racerView);
-                    //denView.Racers.Add(racerView);
-                }
-
-                view.Dens.Add(_den);
-            }
+            CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
             return View(view);
         }
@@ -84,35 +60,11 @@ namespace Derby.Controllers
                 return HttpNotFound();
             }
 
-            CompetitionViewModel view = new CompetitionViewModel(competition);
-
             var user = User.Identity.GetUserId();
+            CompetitionHelper helper = new CompetitionHelper();
 
-            PackAccess access = new PackAccess();
-            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
+            CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
-            view.Pack = pack;//db.Packs.FirstOrDefault(p => p.Id == view.PackId);
-
-
-            var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
-            var _scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
-
-            foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
-            {
-                var _den = den;
-                //var denView = new DenCompetitionViewModel(_den);
-                foreach (var racer in _racers.Where(d => d.DenId == _den.Id))
-                {
-                    var racerView = new RacerViewModel(racer);
-                    racerView.Den = _den;
-                    racerView.Scout = _scouts.FirstOrDefault(s => s.Id == racer.ScoutId);
-
-                    view.Racers.Add(racerView);
-                    //denView.Racers.Add(racerView);
-                }
-
-                view.Dens.Add(_den);
-            }
 
             return View(view);
         }

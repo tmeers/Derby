@@ -23,6 +23,9 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
+                        @{
+                            bool registrationCompleted = true;
+                        }
                         <table id="dashboard-scouts" class="table table-hover tablesorter">
                             <thead>
                                 <tr>
@@ -46,18 +49,30 @@
                                         else
                                         {
                                             <td><a href="@Url.Action("Create", "Racer", new { competitionId = Model.Id, scoutId = _currentRacer.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-user"></i>&nbsp;Register Racer</a></td>
+                                            
+                                            registrationCompleted = false;
                                         }
 
                                     </tr>
                                 }
                             </tbody>
                         </table>
+
                     </div>
                 </div>
                 @*<div class="text-right">
                     <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
                 </div>*@
-            </div>
+            </div>            
+            @if (registrationCompleted)
+            {
+                <div class="alert alert-dismissable alert-success">
+                    <h4>Registration Completed!</h4>
+                    <p>
+                        @Html.ActionLink("Generate Races", "Generate", "Race", new { competitionId = Model.Id }, new { @class = "btn btn-xs btn-primary" })
+                    </p>
+                </div>
+            }
         </div>
         <div class="col-md-5">
             @foreach (var den in Model.Dens)
