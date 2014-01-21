@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,7 @@ namespace Derby.ViewModels
 
         [Required]
         [Display(Name = "Race Type")]
-        public RaceType RaceType { get; set; }
+        public DerbyType RaceType { get; set; }
 
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
@@ -37,6 +38,7 @@ namespace Derby.ViewModels
 
         public bool Completed { get; set; }
 
+        public ICollection<Scout> Scouts { get; set; }
         public List<RacerViewModel> Racers { get; set; }
         public List<Den> Dens { get; set; }
 
@@ -54,6 +56,7 @@ namespace Derby.ViewModels
             LaneCount = competition.LaneCount;
             CreatedById = competition.CreatedById;
             Completed = competition.Completed;
+            Scouts = new List<Scout>();
             Racers = new List<RacerViewModel>();
             Dens = new List<Den>();
             Races = new List<Race>();
