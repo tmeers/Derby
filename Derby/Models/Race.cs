@@ -15,7 +15,7 @@ namespace Derby.Models
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Completed Date")]
-        public DateTime CompletedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
 
         public int DenId { get; set; }
 
