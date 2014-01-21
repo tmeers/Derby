@@ -11,7 +11,14 @@
 
 <p>
     @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
-    @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+    @if (Model.Pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Guest)
+    {
+        @Html.ActionLink("Back to Pack", "Info", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
+    }
+    else
+    {
+        @Html.ActionLink("Back to Pack", "Details", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
+    }
 </p>
 
 <div>

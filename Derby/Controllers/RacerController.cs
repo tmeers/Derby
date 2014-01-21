@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Derby.Models;
 using Derby.ViewModels;
 
@@ -58,10 +59,11 @@ namespace Derby.Controllers
             {
                 db.Racers.Add(racer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("details", "Competition", new {id = racer.CompetitionId});
             }
 
-            return View(racer);
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: /Racer/Edit/5

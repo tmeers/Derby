@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -39,7 +40,12 @@ namespace Derby.Controllers
             }
 
             CompetitionViewModel view = new CompetitionViewModel(competition);
-            view.Pack = db.Packs.FirstOrDefault(p => p.Id == view.PackId);
+            var user = User.Identity.GetUserId();
+
+            PackAccess access = new PackAccess();
+            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
+
+            view.Pack = pack;//db.Packs.FirstOrDefault(p => p.Id == view.PackId);
 
 
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
@@ -79,7 +85,13 @@ namespace Derby.Controllers
             }
 
             CompetitionViewModel view = new CompetitionViewModel(competition);
-            view.Pack = db.Packs.FirstOrDefault(p => p.Id == view.PackId);
+
+            var user = User.Identity.GetUserId();
+
+            PackAccess access = new PackAccess();
+            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
+
+            view.Pack = pack;//db.Packs.FirstOrDefault(p => p.Id == view.PackId);
 
 
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();

@@ -34,7 +34,7 @@ namespace Derby.ViewModels
 
         public string CreatedById { get; set; }
 
-        public Pack Pack { get; set; }
+        public PackViewModel Pack { get; set; }
 
         public bool Completed { get; set; }
 
