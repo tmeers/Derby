@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Derby.Infrastructure
 {
-    public enum RaceType
+    public enum DerbyType
     {
         [Display(Name = "Pinewood Derby")]
         PinewoodDerby,
