@@ -13,7 +13,7 @@ namespace Derby.Models
 
         [Required]
         [Display(Name = "Race Type")]
-        public RaceType RaceType { get; set; }
+        public DerbyType RaceType { get; set; }
 
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
