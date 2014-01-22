@@ -209,7 +209,7 @@ namespace Derby.Controllers
                         Contestant _contestant = new Contestant();
                         _contestant.HeatId = _heat.Id;
                         _contestant.RacerId = _racer.Id;
-                        _contestant.Lane = 
+                        //_contestant.Lane = 
                     }
                 }
             }
