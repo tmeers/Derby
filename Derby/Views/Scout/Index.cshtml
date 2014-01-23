@@ -44,7 +44,7 @@
             
             @if (!item.Inactive)
             {
-            @Html.ActionLink("Inactivate", "Delete", new { id=item.Id })
+            @Html.ActionLink("Inactivate", "Inactivate", new { id = item.Id })
             }
             else
             {
