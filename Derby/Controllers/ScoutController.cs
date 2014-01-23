@@ -115,7 +115,7 @@ namespace Derby.Controllers
         }
 
         // GET: /Scout/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Inactivate(int? id)
         {
             if (id == null)
             {
@@ -130,9 +130,9 @@ namespace Derby.Controllers
         }
 
         // POST: /Scout/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Inactivate")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult InactivateConfirmed(int id)
         {
             Scout scout = db.Scouts.Find(id);
             scout.Inactive = true;

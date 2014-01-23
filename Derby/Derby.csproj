@@ -339,7 +339,7 @@
     <Content Include="Views\Errors\_404Error.cshtml" />
     <Content Include="Views\Pack\Info.cshtml" />
     <Content Include="Views\Scout\Create.cshtml" />
-    <Content Include="Views\Scout\Delete.cshtml" />
+    <Content Include="Views\Scout\Inactivate.cshtml" />
     <Content Include="Views\Scout\Details.cshtml" />
     <Content Include="Views\Scout\Edit.cshtml" />
     <Content Include="Views\Scout\Index.cshtml" />
