@@ -249,10 +249,6 @@
     <Compile Include="ViewModels\RaceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\DerbyDb.mdf" />
-    <Content Include="App_Data\DerbyDb_log.ldf">
-      <DependentUpon>DerbyDb.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bear.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -356,7 +352,9 @@
     <Content Include="Views\Competition\Dashboard.cshtml" />
     <Content Include="Views\Race\Generate.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
