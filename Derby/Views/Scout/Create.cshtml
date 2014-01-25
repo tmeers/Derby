@@ -24,26 +24,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Inactive, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Inactive)
-                @Html.ValidationMessageFor(model => model.Inactive)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.HiddenFor(model => model.PackId)
             @Html.ValidationMessageFor(model => model.PackId)
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Scout List", "Index", "Scout", new { packId = ViewBag.PackId }, new { @class = "btn btn-xs btn-default" })
 </div>

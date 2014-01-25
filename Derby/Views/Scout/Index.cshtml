@@ -39,16 +39,16 @@
             @if (!item.Inactive)
             {
                 <a href="@Url.Action("Details", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-info"></i>&nbsp; Details</a>
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) @:|
+                @:|
             }
             
             @if (!item.Inactive)
             {
-            @Html.ActionLink("Inactivate", "Inactivate", new { id = item.Id })
+                <a href="@Url.Action("Inactivate", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-pause"></i>&nbsp; Inactivate</a>
             }
             else
             {
-                @Html.ActionLink("Activate", "Activate", new { id = item.Id })
+                <a href="@Url.Action("Activate", "Scout", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-play"></i>&nbsp; Activate</a>
             }
         </td>
     </tr>

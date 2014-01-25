@@ -41,6 +41,7 @@ namespace Derby.Controllers
         // GET: /Scout/Create
         public ActionResult Create(int packId)
         {
+            ViewBag.PackId = packId;
             return View();
         }
 

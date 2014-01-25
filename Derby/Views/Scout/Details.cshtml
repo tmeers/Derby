@@ -1,4 +1,5 @@
-﻿@model Derby.Models.Scout
+﻿@using Derby.Models
+@model Derby.Models.Scout
 
 @{
     ViewBag.Title = "Details";
@@ -45,6 +46,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Edit", "Scout", new { id = Model.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a> |
+    @Html.ActionLink("Back to List", "Index", "Scout", new { packId = Model.PackId }, new { @class = "btn btn-xs btn-default" })
 </p>

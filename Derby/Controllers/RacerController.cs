@@ -45,6 +45,9 @@ namespace Derby.Controllers
             CreateRacerViewModel view = new CreateRacerViewModel();
             view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
 
+            view.CompetitionId = competitionId;
+            view.ScoutId = scoutId;
+
             return View(view);
         }
 
