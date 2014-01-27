@@ -53,3 +53,5 @@ input[type="checkbox"].input-validation-error {
 .denlogo-xsmall{ width: 30px; }
 .denlogo-small{ width: 70px; }
 
+/* Override for a smaller table text size in Yeti */
+table.table td {font-size: 15px;}
