@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
@@ -148,43 +149,52 @@ namespace Derby.Controllers
         }
 
 
-        public ActionResult Generate(int competitionId)
+        public ActionResult Generate(int competitionId, int denId)
         {
             RaceViewModel view = new RaceViewModel();
             view.CompetitionId = competitionId;
             view.Competition = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
+
+            var _den = db.Dens.FirstOrDefault(x => x.Id == denId);
+            if (_den == null)
+            {
+                return RedirectToAction("Details", "Competition", new { id = competitionId });
+            }
 
             return View(view);
         }
 
         [HttpPost, ActionName("Generate")]
         [ValidateAntiForgeryToken]
-        public ActionResult GenerateConfirmed(int id)
+        public ActionResult GenerateConfirmed(int competitionId, int denId)
         {
-            Competition competition = db.Competitions.Find(id);
+            Competition competition = db.Competitions.Find(competitionId);
             var user = User.Identity.GetUserId();
             CompetitionHelper helper = new CompetitionHelper();
 
             CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
-            var racers = db.Racers.Where(x => x.CompetitionId == view.Id).ToList();
-
-            foreach (var den in view.Dens)
+            var _den = db.Dens.FirstOrDefault(x => x.Id == denId);
+            if (_den == null)
             {
-                var _den = den;
+                return RedirectToAction("Details", "Competition", new {id = competitionId});
+            }
 
-                var _race = new Race();
-                _race.CompetitionId = competition.Id;
-                _race.CreatedDate = DateTime.Now;
-                _race.DenId = _den.Id;
 
-                db.Races.Add(_race);
-                db.SaveChanges();
+            var racers = db.Racers.Where(x => x.CompetitionId == view.Id && x.DenId == _den.Id).ToList();
 
-                var _denRacers = racers.Where(x => x.DenId == _den.Id).ToList();
+            var _race = new Race();
+            _race.CompetitionId = competition.Id;
+            _race.CreatedDate = DateTime.Now;
+            _race.DenId = _den.Id;
 
-                int _totalHeats = HeatGenerator.GenerateHeatCount(competition.LaneCount, _denRacers.Count);
-                /*
+            db.Races.Add(_race);
+            db.SaveChanges();
+
+            var _denRacers = racers.Where(x => x.DenId == _den.Id).ToList();
+
+            int _totalHeats = HeatGenerator.GenerateHeatCount(competition.LaneCount, _denRacers.Count);
+            /*
                  * Get number of heats based on LaneCount and RacerCount
                  * Get number of lanes per heat based on LaneCount, HeatCount, and RacerCount
                  * 
@@ -194,25 +204,25 @@ namespace Derby.Controllers
                  *    Each Racer must race N times, but what is N?
                  *       Or should there be an elimination point level? In orde rto move to next heat you must get N points?
                  */
-                for (int i = 0; i <= _totalHeats; i++)
+            for (int i = 0; i <= _totalHeats; i++)
+            {
+                var _heat = new Heat();
+                _heat.RaceId = _race.Id;
+                _heat.CreatedDate = DateTime.Now;
+                db.Heats.Add(_heat);
+                db.SaveChanges();
+
+
+                foreach (var racer in _denRacers)
                 {
-                    var _heat = new Heat();
-                    _heat.RaceId = _race.Id;
-                    _heat.CreatedDate = DateTime.Now;
-                    db.Heats.Add(_heat);
-                    db.SaveChanges();
-
-
-                    foreach (var racer in _denRacers)
-                    {
-                        var _racer = racer;
-                        Contestant _contestant = new Contestant();
-                        _contestant.HeatId = _heat.Id;
-                        _contestant.RacerId = _racer.Id;
-                        //_contestant.Lane = 
-                    }
+                    var _racer = racer;
+                    Contestant _contestant = new Contestant();
+                    _contestant.HeatId = _heat.Id;
+                    _contestant.RacerId = _racer.Id;
+                    //_contestant.Lane = 
                 }
             }
+
 
             return RedirectToAction("Index");
         }

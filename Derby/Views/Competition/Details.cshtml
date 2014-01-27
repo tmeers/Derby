@@ -111,19 +111,34 @@
                     </div>
                     <a href="#">
                         <div class="panel-footer announcement-bottom">
-                            @if (racerCount == 0)
-                            {
-                                <div class="row">
-                                    <a>
-                                        <div class="col-xs-6">
-                                            Assign Scouts
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </a>
+                        @if (racerCount == 0)
+                        {
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    Assign Scouts
                                 </div>
-                            }
+                                <div class="col-xs-6 text-right">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                            </div>
+                        }
+                            
+                        @{
+                            var races = Model.Races.ToList();
+                        }
+                        @if (!races.Any())
+                        {
+                            <div class="row">
+                                <a href="@Url.Action("Generate", "Race", new { competitionId = Model.Id, denId = den.Id })">
+                                    <div class="col-xs-6">
+                                        Generate Heats for Den
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        }
                         </div>
                     </a>
                 </div>
