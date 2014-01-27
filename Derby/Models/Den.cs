@@ -14,6 +14,8 @@ namespace Derby.Models
         public DateTime CreatedDateTime { get; set; }
 		public int PackId { get; set; }
         public string LogoPath { get; set; }
-        //public ICollection<Scout> Scouts { get; set; }
+        public bool InactiveStatus { get; set; }
+        public bool CanCompeteInFinals { get; set; }
+        public bool IsSystemPlaceholder { get; set; }
 	}
 }

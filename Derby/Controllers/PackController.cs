@@ -101,10 +101,12 @@ namespace Derby.Controllers
                 db.PackMemberships.Add(member);
                 db.SaveChanges();
 
-                db.Dens.Add(new Den() { Name = "Tigers", CreatedDateTime = DateTime.Now, PackId = pack.Id, LogoPath = "/content/tiger.jpg"});
-                db.Dens.Add(new Den() { Name = "Wolves", CreatedDateTime = DateTime.Now, PackId = pack.Id, LogoPath = "/content/wolf.jpg" });
-                db.Dens.Add(new Den() { Name = "Bears", CreatedDateTime = DateTime.Now, PackId = pack.Id, LogoPath = "/content/bear.jpg" });
-                db.Dens.Add(new Den() { Name = "Weblows", CreatedDateTime = DateTime.Now, PackId = pack.Id, LogoPath = "/content/webelos.png" });
+                db.Dens.Add(new Den() { Name = "Tigers", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/tiger.jpg"});
+                db.Dens.Add(new Den() { Name = "Wolves", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/wolf.jpg" });
+                db.Dens.Add(new Den() { Name = "Bears", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/bear.jpg" });
+                db.Dens.Add(new Den() { Name = "Weblows", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/webelos.png" });
+                db.Dens.Add(new Den() { Name = "Finals", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = true, LogoPath = "" });
+
                 db.SaveChanges();
 
                 return RedirectToAction("Index");

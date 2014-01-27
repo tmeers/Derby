@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201401171652002_RaceDenId.Designer.cs">
       <DependentUpon>201401171652002_RaceDenId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401272001346_DenSystemFields.cs" />
+    <Compile Include="Migrations\201401272001346_DenSystemFields.Designer.cs">
+      <DependentUpon>201401272001346_DenSystemFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401171652002_RaceDenId.resx">
       <DependentUpon>201401171652002_RaceDenId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401272001346_DenSystemFields.resx">
+      <DependentUpon>201401272001346_DenSystemFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

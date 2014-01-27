@@ -47,11 +47,13 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,PackId")] Den den)
+        public ActionResult Create([Bind(Include="Id,Name,PackId,InactiveStatus,CanCompeteInFinals")] Den den)
         {
             if (ModelState.IsValid)
             {
                 den.CreatedDateTime = DateTime.Now;
+                den.IsSystemPlaceholder = false;
+
                 db.Dens.Add(den);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Pack", new {id = den.PackId} );
