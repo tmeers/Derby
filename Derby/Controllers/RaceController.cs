@@ -180,51 +180,11 @@ namespace Derby.Controllers
                 return RedirectToAction("Details", "Competition", new {id = competitionId});
             }
 
-
-            var racers = db.Racers.Where(x => x.CompetitionId == view.Id && x.DenId == _den.Id).ToList();
-
-            var _race = new Race();
-            _race.CompetitionId = competition.Id;
-            _race.CreatedDate = DateTime.Now;
-            _race.DenId = _den.Id;
-
-            db.Races.Add(_race);
-            db.SaveChanges();
-
-            var _denRacers = racers.Where(x => x.DenId == _den.Id).ToList();
-
-            int _totalHeats = HeatGenerator.GenerateHeatCount(competition.LaneCount, _denRacers.Count);
-            /*
-                 * Get number of heats based on LaneCount and RacerCount
-                 * Get number of lanes per heat based on LaneCount, HeatCount, and RacerCount
-                 * 
-                 * Add each Heat
-                 *  - For each Heat
-                 *    Select random number of Racers
-                 *    Each Racer must race N times, but what is N?
-                 *       Or should there be an elimination point level? In orde rto move to next heat you must get N points?
-                 */
-            for (int i = 0; i <= _totalHeats; i++)
-            {
-                var _heat = new Heat();
-                _heat.RaceId = _race.Id;
-                _heat.CreatedDate = DateTime.Now;
-                db.Heats.Add(_heat);
-                db.SaveChanges();
+            var generator = new HeatGenerator(view);
+            var race = generator.GenerateRace(_den);
 
 
-                foreach (var racer in _denRacers)
-                {
-                    var _racer = racer;
-                    Contestant _contestant = new Contestant();
-                    _contestant.HeatId = _heat.Id;
-                    _contestant.RacerId = _racer.Id;
-                    //_contestant.Lane = 
-                }
-            }
-
-
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Competition", new { id = competitionId });
         }
 
         protected override void Dispose(bool disposing)
