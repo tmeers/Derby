@@ -55,3 +55,4 @@ input[type="checkbox"].input-validation-error {
 
 /* Override for a smaller table text size in Yeti */
 table.table td {font-size: 15px;}
+div.alert {font-size: 15px;}

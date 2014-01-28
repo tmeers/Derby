@@ -70,59 +70,73 @@
             </div>
         </div>
         <div class="col-md-5">
-            @foreach (var den in Model.Dens)
+        @{
+            int denCount = 0;
+        }
+        @foreach (var den in Model.Dens.Where(x => x.IsSystemPlaceholder == false))
+        {
+            int racerCount = Model.Racers.Count(x => x.Den.Id == den.Id);
+            if (racerCount <= 0)
             {
-                int racerCount = Model.Racers.Count(x => x.Den.Id == den.Id);
-                string panelStatus = "panel-info";
-                bool denInError = false;
-                if (racerCount == 0)
-                {
-                    panelStatus = "panel-danger";
-                    denInError = true;
-                }
+                continue;
+            }
+            denCount++;
                 
-                <div class="panel @panelStatus">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                @if (denInError)
-                                {
-                                    <i class="fa fa-exclamation-triangle fa-4x"></i>
-                                }
-                                else
-                                {
-                                    if (den.LogoPath != "")
-                                    {
-                                        <img src="@den.LogoPath" class="denlogo-small" />
-                                    }
-                                }
-                                
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                <p class="announcement-heading">@den.Name</p>
-                                <p class="announcement-text">Racers - @racerCount</p>
-                            </div>
+            string panelStatus = "panel-info";
+            bool denInError = false;
+            if (racerCount == 0)
+            {
+                panelStatus = "panel-danger";
+                denInError = true;
+            }
+                
+            <div class="panel @panelStatus">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                        @if (denInError)
+                        {
+                            <i class="fa fa-exclamation-triangle fa-4x"></i>
+                        }
+                        else
+                        {
+                            if (den.LogoPath != "")
+                            {
+                                <img src="@den.LogoPath" class="denlogo-small" />
+                            }
+                        }
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">@den.Name</p>
+                            <p class="announcement-text">Racers - @racerCount</p>
                         </div>
                     </div>
-                    <a href="#">
-                        <div class="panel-footer announcement-bottom">
-                            @if (racerCount == 0)
-                            {
-                                <div class="row">
-                                    <a>
-                                        <div class="col-xs-6">
-                                            Assign Scouts
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </a>
-                                </div>
-                            }
-                        </div>
-                    </a>
                 </div>
-            }
+                <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                    @if (racerCount == 0)
+                    {
+                        <div class="row">
+                            <a>
+                                <div class="col-xs-6">
+                                    Assign Scouts
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                </a>
+            </div>
+        }
+        @if (denCount == 0)
+        {
+            <div class="alert alert-dismissable alert-info text-center">
+                No Dens have joined the competition
+            </div>
+        }
         </div>
     </div>
 </div>

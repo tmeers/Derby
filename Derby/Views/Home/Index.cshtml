@@ -32,9 +32,9 @@ else
             <h4>@Html.ActionLink(pack.Name, "info", "pack", new {id = pack.Id}, pack.Name)</h4>
         }
         <div>@pack.Region</div>
-        @if (pack.Dens != null && pack.Dens.Any()) 
+        @if (pack.Dens != null && pack.Dens.Where(x => x.IsSystemPlaceholder == false).ToList().Any()) 
         { 
-            <div>Dens - @pack.Dens.Count(x => x.PackId == pack.Id)</div>
+            <div>Dens - @pack.Dens.Count(x => x.PackId == pack.Id && x.IsSystemPlaceholder == false)</div>
         }
         else
         {

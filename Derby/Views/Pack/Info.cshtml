@@ -45,7 +45,7 @@
                     <h3 class="panel-title">@Html.DisplayNameFor(model => model.Dens)</h3>
                 </div>
                 <table class="panel-body table">
-                    @foreach (var den in Model.Dens)
+                    @foreach (var den in Model.Dens.Where(x => x.IsSystemPlaceholder == false))
                     {
                         <tr class="text-center">
                             <td><img src="@den.LogoPath" class="denlogo-xsmall" /></td>

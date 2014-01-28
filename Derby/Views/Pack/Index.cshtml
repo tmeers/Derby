@@ -37,7 +37,7 @@
             @Html.ActionLink(pack.Name + " - " + pack.Region, "Details", "Pack", new {id = pack.Id}, new { @title = "Pack Details" })
         </td>
         <td>
-            @pack.Dens.Count()
+            @pack.Dens.Count(x => x.IsSystemPlaceholder == false)
         </td>
         <td>
             @pack.Scouts.Count()
