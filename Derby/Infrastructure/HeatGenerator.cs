@@ -21,6 +21,7 @@ namespace Derby.Infrastructure
 
         public int HeatCount { get; set; }
         private CompetitionViewModel Competition { get; set; }
+        List<Contestant> usedContestants = new List<Contestant>();
 
         public HeatGenerator(CompetitionViewModel competition)
         {
@@ -62,12 +63,14 @@ namespace Derby.Infrastructure
                 db.SaveChanges();
 
 
-                foreach (var racer in racers)
+                foreach (var racer in FillLineup(racers))
                 {
                     var _racer = racer;
                     Contestant _contestant = new Contestant();
                     _contestant.HeatId = _heat.Id;
                     _contestant.RacerId = _racer.Id;
+
+                    usedContestants.Add(_contestant);
                     //_contestant.Lane =  
                 }
             }
@@ -75,6 +78,13 @@ namespace Derby.Infrastructure
             return _race;
         }
 
+        private IEnumerable<Racer> FillLineup(List<Racer> racers)
+        {
+            Random r = new Random();
+            IEnumerable<Racer> threeRandom = racers.OrderBy(x => r.Next()).Take(4);
+
+            return threeRandom;
+        }
 
     }
 }
