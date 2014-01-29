@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Antlr.Runtime;
 using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
@@ -20,12 +22,13 @@ namespace Derby.Infrastructure
         private DerbyDb db = new DerbyDb();
 
         public int HeatCount { get; set; }
-        private CompetitionViewModel Competition { get; set; }
-        List<Contestant> usedContestants = new List<Contestant>();
+        private CompetitionViewModel currentCompetition { get; set; }
+        private List<Contestant> usedContestants = new List<Contestant>();
+        private List<Racer> racers = new List<Racer>(); 
 
         public HeatGenerator(CompetitionViewModel competition)
         {
-            this.Competition = competition;
+            this.currentCompetition = competition;
         }
 
         /* http://www.rahul.net/mcgrew/derby/methods.html#chaotic
@@ -41,11 +44,13 @@ namespace Derby.Infrastructure
          */
         public Race GenerateRace(Den den)
         {
-            var racers = db.Racers.Where(x => x.CompetitionId == Competition.Id && x.DenId == den.Id).ToList();
-            int totalHeats = racers.Count; //HeatGenerator.GenerateHeatCount(Competition.LaneCount, racers.Count);
+            racers = db.Racers.Where(x => x.CompetitionId == currentCompetition.Id && x.DenId == den.Id).ToList();
+            int totalHeats = GenerateHeatCount(currentCompetition.LaneCount, racers.Count);
+
+            //ICollection<int> lanes = GetLanes(currentCompetition.LaneCount);
 
             var _race = new Race();
-            _race.CompetitionId = Competition.Id;
+            _race.CompetitionId = currentCompetition.Id;
             _race.CreatedDate = DateTime.Now;
             _race.DenId = den.Id;
 
@@ -53,8 +58,8 @@ namespace Derby.Infrastructure
             db.Races.Add(_race);
             db.SaveChanges();
 
-
-            for (int i = 0; i <= totalHeats; i++)
+            //bool firstHeat = true;
+            for (int i = 1; i <= totalHeats; i++)
             {
                 var _heat = new Heat();
                 _heat.RaceId = _race.Id;
@@ -62,28 +67,65 @@ namespace Derby.Infrastructure
                 db.Heats.Add(_heat);
                 db.SaveChanges();
 
-
-                foreach (var racer in FillLineup(racers))
+                foreach (var lane in FillLineup(racers, _heat.Id))
                 {
-                    var _racer = racer;
+                    var _lane = lane;
                     Contestant _contestant = new Contestant();
                     _contestant.HeatId = _heat.Id;
-                    _contestant.RacerId = _racer.Id;
+                    _contestant.RacerId = _lane.RacerId;
+                    _contestant.Lane = _lane.LaneNumber;
+
+                    db.Contestants.Add(_contestant);
+                    db.SaveChanges();
 
                     usedContestants.Add(_contestant);
-                    //_contestant.Lane =  
                 }
+                //firstHeat = false;
             }
 
             return _race;
         }
 
-        private IEnumerable<Racer> FillLineup(List<Racer> racers)
+        // Heat count based off of numbers from known working spreadsheets (ugh spreadsheets) here: https://sites.google.com/site/pinewoodscore/Spreadsheets
+        private int GenerateHeatCount(int laneCount , int racersCount )
         {
-            Random r = new Random();
-            IEnumerable<Racer> threeRandom = racers.OrderBy(x => r.Next()).Take(4);
+            if (laneCount == 4)
+                return racersCount;
 
-            return threeRandom;
+            if (laneCount == 6 && ((racersCount <= 7 && racersCount > 3) || racersCount == 9 || racersCount == 10 || racersCount == 12))
+                return racersCount;
+
+            if (laneCount == 6 && (racersCount <= 3))
+                return 4;
+
+            return laneCount;
+        }
+
+        private ICollection<int> GetLanes()
+        {
+            ICollection<int> lanes = new Collection<int>();
+            for (int i = 1; i <= currentCompetition.LaneCount; i++)
+            {
+                lanes.Add(i);
+            }
+            return lanes;
+        }
+
+        private IEnumerable<Lane> FillLineup(List<Racer> racers, int heatId)
+        {
+            List<Contestant> previousHeat = usedContestants.Where(x => x.HeatId == heatId).ToList();
+            var lanes = GetLanes();
+            
+            Random r = new Random();
+            List<Racer> topRacers = racers.OrderBy(x => r.Next()).ToList();
+            foreach (var item in lanes)
+            {
+                // loop over lanes 
+                // look up next racer
+                // assign lane
+                var item =
+            }
+            return lineup;
         }
 
     }
