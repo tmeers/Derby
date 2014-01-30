@@ -108,7 +108,7 @@ namespace Derby.Infrastructure
         {
             List<Contestant> previousHeat = usedContestants.Where(x => x.HeatId == heatId).ToList();
             var lanes = GetLanes();
-            
+
             Random r = new Random();
             List<Racer> topRacers = racers.OrderBy(x => r.Next()).ToList();
             foreach (var item in lanes)
@@ -116,7 +116,19 @@ namespace Derby.Infrastructure
                 // loop over lanes 
                 // look up next racer
                 // assign lane
-                var item =
+                var lane = item;
+                bool racerAssigned = false;
+                Racer _racer = new Racer();
+                while (!racerAssigned)
+                {
+                    _racer = topRacers.Take(1).First();
+                    var previousRaces = usedContestants.Where(x => x.RacerId == _racer.Id).ToList();
+                    if (previousRaces.Count() < 3)
+                    {
+
+                    }
+                }
+
             }
             return lineup;
         }
