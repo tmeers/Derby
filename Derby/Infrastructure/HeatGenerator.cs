@@ -32,15 +32,8 @@ namespace Derby.Infrastructure
         }
 
         /* http://www.rahul.net/mcgrew/derby/methods.html#chaotic
-         * Get number of heats based on LaneCount and RacerCount
-         * Get number of lanes per heat based on LaneCount, HeatCount, and RacerCount
-         * 
-         * Add each Heat
-         *  - For each Heat
-         *    Select random number of Racers based on "Den" assignment
-         *    Each Racer must race 3 times
-         *    
-        
+         *      
+         * Derby rules: https://gist.github.com/tmeers/8701826
          */
         public Race GenerateRace(Den den)
         {
