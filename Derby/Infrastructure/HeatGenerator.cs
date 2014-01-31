@@ -101,7 +101,7 @@ namespace Derby.Infrastructure
             {
                 lanes.Add(i);
             }
-            return lanes;
+            return lanes; 
         }
 
         private IEnumerable<Lane> FillLineup(List<Racer> racers, int heatId)

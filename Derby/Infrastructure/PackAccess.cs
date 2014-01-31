@@ -53,5 +53,13 @@ namespace Derby.Infrastructure
 
             return packsView;
         }
+
+        internal PackViewModel OpenPack(int? id, string user)
+        {
+            PackAccess access = new PackAccess();
+            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
+
+            return pack;
+        }
     }
 }

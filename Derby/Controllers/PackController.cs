@@ -36,8 +36,13 @@ namespace Derby.Controllers
             }
 
             var user = User.Identity.GetUserId();
+            PackAccess pa = new PackAccess();
+            PackViewModel pack = pa.OpenPack(id, user);
 
-            PackViewModel pack = OpenPack(id, user);
+            if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
+            {
+                HttpNotFound();
+            }
 
             //LoadPackData(pack);
             return View(pack);
@@ -51,26 +56,16 @@ namespace Derby.Controllers
             }
 
             var user = User.Identity.GetUserId();
+            PackAccess pa = new PackAccess();
+            PackViewModel pack = pa.OpenPack(id, user);
 
-            PackViewModel pack = OpenPack(id, user);
-
-            //LoadPackData(pack);
-
-            return View(pack);
-        }
-
-        private PackViewModel OpenPack(int? id, string user)
-        {
-            //var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
-            PackAccess access = new PackAccess();
-            PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
-
-            if (!Request.IsAuthenticated || pack != null && pack.Membership.AccessLevel != OwnershipType.None)
+            if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
                 HttpNotFound();
             }
+            //LoadPackData(pack);
 
-            return pack;
+            return View(pack);
         }
 
         // GET: /Pack/Create

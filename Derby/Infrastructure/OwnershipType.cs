@@ -7,7 +7,7 @@ namespace Derby.Infrastructure
 {
     public enum OwnershipType
     {
-        None,
+        None = 0,
         Owner,
         Contributor,
         Guest
