@@ -9,10 +9,11 @@ Features
   - Manage scouts across years, not tied down to a single den
   - Create additional "dens" for leaders and friends & family races
   - Pack privacy for a "members only" use, only your pack sees your scouts and competitions
-  - Competitions are completed per den in a scheduled round robin method
+  - Competitions are completed per den in a scheduled scheduled method
     - Race Heats will be designed around the number of lanes and racers, each racer racing in a different lane with each heat
     - Heats will be scheduled to avoid racers competing against the same racer repeatedly 
-    - The Heats will follow the [Stearns-Borom Method](http://www.wtrfrd.com/pack339/339stern.htm)
+    - The Heats will follow a ["Chaotic-Rotation Method"](http://www.rahul.net/mcgrew/derby/methods.html#chaotic)  
+      - This is similar to the [Stearns-Borom Method](http://www.wtrfrd.com/pack339/339stern.htm)
 
 Pack Membership
 =====
