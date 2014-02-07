@@ -55,16 +55,16 @@ namespace Derby.Infrastructure
             PackAccess access = new PackAccess();
             PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
 
-            if (checkAccess(pack.Membership.AccessLevel, minimuLevel))
+            if (pack != null && checkAccess(pack.Membership.AccessLevel, minimuLevel))
                 return pack;
             
             return null;
         }
 
-        internal bool CheckCompetitionMembership(int? competitionId, string user, OwnershipType minimuLevel)
+        internal bool CheckCompetitionMembership(int? packId, string user, OwnershipType minimuLevel)
         {
-            Competition comp = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
-            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == comp.PackId);
+            //Competition comp = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == packId);
 
             if (member != null && checkAccess(member.AccessLevel, minimuLevel))
                 return true;
