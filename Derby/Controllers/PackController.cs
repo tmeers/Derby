@@ -30,7 +30,7 @@ namespace Derby.Controllers
         // GET: /Pack/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null || !Request.IsAuthenticated)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
@@ -50,7 +50,7 @@ namespace Derby.Controllers
 
         public ActionResult Info(int? id)
         {
-            if (id == null || !Request.IsAuthenticated)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
@@ -61,7 +61,7 @@ namespace Derby.Controllers
 
             if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
-                HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             //LoadPackData(pack);
 
@@ -149,9 +149,9 @@ namespace Derby.Controllers
         // GET: /Pack/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (!Request.IsAuthenticated)
+            if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var user = User.Identity.GetUserId();
@@ -159,10 +159,6 @@ namespace Derby.Controllers
             if (membership.AccessLevel != OwnershipType.Owner)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Pack pack = db.Packs.Find(id);
             if (pack == null)
             {
