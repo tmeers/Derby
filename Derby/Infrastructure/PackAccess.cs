@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -28,12 +29,8 @@ namespace Derby.Infrastructure
             }
             else
             {
-                var membership = db.PackMemberships.Where(x => x.UserId == user);
                 // TODO Need to see about a better way to do this part. 
-                foreach (var item in membership)
-                {
-                    packs.Add(db.Packs.FirstOrDefault(x => x.Id == item.PackId));
-                }
+                packs.AddRange(getMemberships(user).Select(item => db.Packs.FirstOrDefault(x => x.Id == item.PackId)));
             }
 
             var packsView = new List<PackViewModel>();
@@ -54,12 +51,33 @@ namespace Derby.Infrastructure
             return packsView;
         }
 
+        private IQueryable<PackMembership> getMemberships(string user)
+        {
+            return db.PackMemberships.Where(x => x.UserId == user);
+        } 
+
         internal PackViewModel OpenPack(int? id, string user)
         {
             PackAccess access = new PackAccess();
             PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == id);
 
             return pack;
+        }
+
+        internal PackMembership GetCompetitionMembership(int? competitionId, string user)
+        {
+            Competition comp = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == comp.PackId);
+
+            return member;
+        }
+
+        internal PackMembership GetDenMembership(int? denId, string user)
+        {
+            Den den = db.Dens.FirstOrDefault(x => x.Id == denId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == den.PackId);
+
+            return member;
         }
     }
 }
