@@ -19,4 +19,4 @@ Pack Membership
 =====
 Invite other pack members to be a part of the fun and watch a competition as a guest, contributor, or an owner. By default all packs are locked down to only people that are invited to join. 
   
-![Admin Dashboard](https://s3.amazonaws.com/_neckbeard/Github/Derby-AdminDashboard.Yeti.png "Admin competition dashboard")
+![Admin Dashboard](https://s3.amazonaws.com/_neckbeard/Github/Derby-AdminDashboad.Yeti.png "Admin competition dashboard")
