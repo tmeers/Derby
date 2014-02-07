@@ -60,19 +60,19 @@ namespace Derby.Infrastructure
                 db.Heats.Add(_heat);
                 db.SaveChanges();
 
-                foreach (var lane in FillLineup(racers, _heat.Id))
-                {
-                    var _lane = lane;
-                    Contestant _contestant = new Contestant();
-                    _contestant.HeatId = _heat.Id;
-                    _contestant.RacerId = _lane.RacerId;
-                    _contestant.Lane = _lane.LaneNumber;
+                //foreach (var lane in FillLineup(racers, _heat.Id))
+                //{
+                //    var _lane = lane;
+                //    Contestant _contestant = new Contestant();
+                //    _contestant.HeatId = _heat.Id;
+                //    _contestant.RacerId = _lane.RacerId;
+                //    _contestant.Lane = _lane.LaneNumber;
 
-                    db.Contestants.Add(_contestant);
-                    db.SaveChanges();
+                //    db.Contestants.Add(_contestant);
+                //    db.SaveChanges();
 
-                    usedContestants.Add(_contestant);
-                }
+                //    usedContestants.Add(_contestant);
+                //}
                 //firstHeat = false;
             }
 
@@ -104,34 +104,34 @@ namespace Derby.Infrastructure
             return lanes; 
         }
 
-        private IEnumerable<Lane> FillLineup(List<Racer> racers, int heatId)
-        {
-            List<Contestant> previousHeat = usedContestants.Where(x => x.HeatId == heatId).ToList();
-            var lanes = GetLanes();
+        //private IEnumerable<Lane> FillLineup(List<Racer> racers, int heatId)
+        //{
+        //    List<Contestant> previousHeat = usedContestants.Where(x => x.HeatId == heatId).ToList();
+        //    var lanes = GetLanes();
 
-            Random r = new Random();
-            List<Racer> topRacers = racers.OrderBy(x => r.Next()).ToList();
-            foreach (var item in lanes)
-            {
-                // loop over lanes 
-                // look up next racer
-                // assign lane
-                var lane = item;
-                bool racerAssigned = false;
-                Racer _racer = new Racer();
-                while (!racerAssigned)
-                {
-                    _racer = topRacers.Take(1).First();
-                    var previousRaces = usedContestants.Where(x => x.RacerId == _racer.Id).ToList();
-                    if (previousRaces.Count() < 3)
-                    {
+        //    Random r = new Random();
+        //    List<Racer> topRacers = racers.OrderBy(x => r.Next()).ToList();
+        //    foreach (var item in lanes)
+        //    {
+        //        // loop over lanes 
+        //        // look up next racer
+        //        // assign lane
+        //        var lane = item;
+        //        bool racerAssigned = false;
+        //        Racer _racer = new Racer();
+        //        while (!racerAssigned)
+        //        {
+        //            _racer = topRacers.Take(1).First();
+        //            var previousRaces = usedContestants.Where(x => x.RacerId == _racer.Id).ToList();
+        //            if (previousRaces.Count() < 3)
+        //            {
 
-                    }
-                }
+        //            }
+        //        }
 
-            }
-            return lineup;
-        }
+        //    }
+        //    return lineup;
+        //}
 
     }
 }
