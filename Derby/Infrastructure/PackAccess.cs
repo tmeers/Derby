@@ -101,11 +101,11 @@ namespace Derby.Infrastructure
 
         private bool checkAccess(OwnershipType given, OwnershipType minimum)
         {
-            if (minimum == OwnershipType.Guest && given == OwnershipType.Guest)
+            if (minimum == OwnershipType.Guest && (given == OwnershipType.Guest || given == OwnershipType.Contributor || given == OwnershipType.Owner))
             {
                 return true;
             }
-            else if (minimum == OwnershipType.Contributor && given == OwnershipType.Contributor)
+            else if (minimum == OwnershipType.Contributor && (given == OwnershipType.Contributor || given == OwnershipType.Owner))
             {
                 return true;
             }
