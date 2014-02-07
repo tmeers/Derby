@@ -358,6 +358,7 @@
     <Content Include="Views\Racer\Index.cshtml" />
     <Content Include="Views\Competition\Dashboard.cshtml" />
     <Content Include="Views\Race\Generate.cshtml" />
+    <Content Include="Views\Errors\_403Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
