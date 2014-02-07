@@ -28,20 +28,22 @@ namespace Derby.Controllers
         // GET: /Competition/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null || !Request.IsAuthenticated)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var user = User.Identity.GetUserId();
+
             Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
-            if (competition == null)
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            var user = User.Identity.GetUserId();
             CompetitionHelper helper = new CompetitionHelper();
-
             CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
             return View(view);
@@ -54,20 +56,23 @@ namespace Derby.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var user = User.Identity.GetUserId();
+
             Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
-            if (competition == null)
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
 
-            var user = User.Identity.GetUserId();
             CompetitionHelper helper = new CompetitionHelper();
-
             CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
 
             return View(view);
         }
+
 
         // GET: /Competition/Create
         public ActionResult Create(int packId)
@@ -106,11 +111,16 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Competition competition = db.Competitions.Find(id);
-            if (competition == null)
+            var user = User.Identity.GetUserId();
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+
             ViewBag.PackId = new SelectList(db.Packs, "Id", "Name", competition.PackId);
             return View(competition);
         }
@@ -122,12 +132,16 @@ namespace Derby.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,PackId,Title,Location,RaceType,EventDate,LaneCount")] Competition competition)
         {
-            if (ModelState.IsValid)
+            PackAccess pa = new PackAccess();
+            var user = User.Identity.GetUserId();
+
+            if (ModelState.IsValid && !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
             {
                 db.Entry(competition).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.PackId = new SelectList(db.Packs, "Id", "Name", competition.PackId);
             return View(competition);
         }
@@ -139,11 +153,16 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Competition competition = db.Competitions.Find(id);
-            if (competition == null)
+            var user = User.Identity.GetUserId();
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+
             return View(competition);
         }
 
