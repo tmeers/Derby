@@ -41,7 +41,7 @@ namespace Derby.Controllers
 
             if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
-                HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
 
             //LoadPackData(pack);
@@ -117,11 +117,16 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Pack pack = db.Packs.Find(id);
-            if (pack == null)
+
+            var user = User.Identity.GetUserId();
+            PackAccess pa = new PackAccess();
+            PackViewModel pack = pa.OpenPack(id, user);
+
+            if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
-                return HttpNotFound();
+                HttpNotFound();
             }
+
             return View(pack);
         }
 
