@@ -37,7 +37,7 @@ namespace Derby.Controllers
 
             var user = User.Identity.GetUserId();
             PackAccess pa = new PackAccess();
-            PackViewModel pack = pa.OpenPack(id, user);
+            PackViewModel pack = pa.OpenPack(id, user, OwnershipType.Contributor);
 
             if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
@@ -57,7 +57,7 @@ namespace Derby.Controllers
 
             var user = User.Identity.GetUserId();
             PackAccess pa = new PackAccess();
-            PackViewModel pack = pa.OpenPack(id, user);
+            PackViewModel pack = pa.OpenPack(id, user, OwnershipType.Guest);
 
             if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
             {
@@ -120,9 +120,9 @@ namespace Derby.Controllers
 
             var user = User.Identity.GetUserId();
             PackAccess pa = new PackAccess();
-            PackViewModel pack = pa.OpenPack(id, user);
+            PackViewModel pack = pa.OpenPack(id, user, OwnershipType.Contributor);
 
-            if (pack == null || pack.Membership.AccessLevel == OwnershipType.None)
+            if (pack == null)
             {
                 HttpNotFound();
             }
@@ -155,11 +155,9 @@ namespace Derby.Controllers
             }
 
             var user = User.Identity.GetUserId();
-            var membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user && x.PackId == id);
-            if (membership.AccessLevel != OwnershipType.Owner)
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            PackAccess pa = new PackAccess();
+            PackViewModel pack = pa.OpenPack(id, user, OwnershipType.Owner);
 
-            Pack pack = db.Packs.Find(id);
             if (pack == null)
             {
                 return HttpNotFound();
