@@ -16,7 +16,7 @@
 </p>
 <div>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-sm-7">
 
             <table class="table">
                 <tr>
@@ -25,21 +25,20 @@
                     </th>
                 </tr>
                 <tr>
-                    <th>Edit</th>
-                    <th>
+                    <th class="col-sm-1">Dashboard</th>
+                    <th class="col-sm-2">
                         Event Date
                     </th>
-                    <th>
-                        Title
-                    </th>
-                    <th>&nbsp;</th>
+                    <th class="col-sm-3">Title</th>
+                    <th class="col-sm-1">Edit&nbsp;</th>
+                    <th class="col-sm-1">Admin</th>
+                    <th class="col-sm-1">Races</th>
                 </tr>
                 @foreach (var comp in Model.Competitions)
                 {
                     <tr>
                         <td>
-                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
-                            <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-info" title="Details">&nbsp;<i class="fa fa-info"></i>&nbsp;</a>
+                            <a href="@Url.Action("Dashboard", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default" title="Pack Dashboard"><i class="fa fa-tachometer"></i></a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => comp.EventDate)
@@ -49,7 +48,12 @@
                         </td>
 
                         <td>
-                            <a href="@Url.Action("Dashboard", "Competition", new { id = comp.Id })" class="btn btn-xs btn-default" title="Dashboard"><i class="fa fa-tachometer"></i></a>
+                            <a href="@Url.Action("Edit", "Competition", new { id = comp.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i></a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details", "Competition", new { id = comp.Id })" class="btn btn-xs btn-info" title="Admin Dashboard - Details/Registration">&nbsp;<i class="fa fa-info"></i>&nbsp;</a>
+                        </td>
+                        <td>
                             <a href="@Url.Action("Index", "Race", new { competitionId = comp.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-flag-checkered"></i></a>
                         </td>
                        
