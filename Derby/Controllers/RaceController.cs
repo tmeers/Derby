@@ -143,9 +143,12 @@ namespace Derby.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Race race = db.Races.Find(id);
+            var _competitionId = race.CompetitionId;
+
             db.Races.Remove(race);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", "Race", new {competitionId = _competitionId});
         }
 
 
