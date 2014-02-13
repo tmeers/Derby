@@ -1,4 +1,4 @@
-﻿@model Derby.Models.Heat
+﻿@model Derby.ViewModels.ModifyHeatViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -10,36 +10,40 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Heat</h4>
         <hr />
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RaceId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RaceId)
-                @Html.ValidationMessageFor(model => model.RaceId)
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.RaceId)
+        @Html.ValidationMessageFor(model => model.RaceId)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate)
-                @Html.ValidationMessageFor(model => model.CreatedDate)
-            </div>
-        </div>
+        <div class="table-responsive">
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+            @{
+                var grid = new WebGrid(Model.Racers, defaultSort: "Name");
+            }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+                @grid.GetHtml(tableStyle: "table table-hover tablesorter",
+                    headerStyle: "header",
+                    alternatingRowStyle: "alt",
+                    selectedRowStyle: "select",
+                    columns: grid.Columns(
+                     grid.Column(header: "MenuId", format: (item) => item.Scout.Name, style: "description"),
+                     grid.Column(header: "Menu", format: (item) => item.CarNumber, style: "description", canSort: true),
+                     grid.Column(header: "Print?", format: @<text><input name="Add" type="checkbox" value="@item.Id" /></text>)
+                        )
+                )
+        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+        </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>

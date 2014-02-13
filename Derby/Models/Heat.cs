@@ -13,6 +13,6 @@ namespace Derby.Models
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
         
-        public ICollection<Contestant> Contestants { get; set; }
+        public virtual ICollection<Contestant> Contestants { get; set; }
     }
 }

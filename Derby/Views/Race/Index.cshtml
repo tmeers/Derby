@@ -41,6 +41,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.DenId)
         </td>
+        <td>@Html.ActionLink("Create Heat", "Create", "Heat", new { raceId = item.Id }, new {@class = "btn btn-xs btn-success"})</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
+using Derby.ViewModels;
 
 namespace Derby.Controllers
 {
@@ -36,9 +38,28 @@ namespace Derby.Controllers
         }
 
         // GET: /Heat/Create
-        public ActionResult Create()
+        public ActionResult Create(int raceId)
         {
-            return View();
+            Race race = db.Races.Find(raceId);
+            Competition competition = db.Competitions.Find(race.CompetitionId);
+
+            ModifyHeatViewModel view = new ModifyHeatViewModel();
+            view.RaceId = raceId;
+            view.Racers = new Collection<RacerViewModel>();
+
+            List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
+            if (scouts.Any())
+            {
+                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId))
+                {
+                    var racer = new RacerViewModel(item);
+                    racer.Scout = scouts.FirstOrDefault(x => x.Id == item.ScoutId);
+                    view.Racers.Add(racer);
+                }
+            }
+            view.Contestants = db.Contestants.Where(x => x.HeatId == view.Id).ToList();
+
+            return View(view);
         }
 
         // POST: /Heat/Create
@@ -46,14 +67,18 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,RaceId")] Heat heat)
+        public ActionResult Create([Bind(Include="Id,RaceId")] Heat heat, int[] selectedRacers)
         {
             if (ModelState.IsValid)
             {
                 heat.CreatedDate = DateTime.Now;
                 db.Heats.Add(heat);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                Race race = db.Races.Find(heat.RaceId);
+                var _competitionId = race.CompetitionId;
+
+                return RedirectToAction("Index", "Race", new { competitionId = _competitionId });
             }
 
             return View(heat);

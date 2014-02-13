@@ -250,7 +250,9 @@
     <Compile Include="ViewModels\CompetitionViewModel.cs" />
     <Compile Include="ViewModels\CreateRacerViewModel.cs" />
     <Compile Include="ViewModels\DenCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ModifyHeatViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
+    <Compile Include="ViewModels\RacerContestantViewModel.cs" />
     <Compile Include="ViewModels\RacerViewModel.cs" />
     <Compile Include="ViewModels\RaceViewModel.cs" />
   </ItemGroup>
