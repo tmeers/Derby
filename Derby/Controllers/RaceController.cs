@@ -85,7 +85,7 @@ namespace Derby.Controllers
                 race.CompletedDate = DateTime.Now;
                 db.Races.Add(race);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Race", new { competitionId = race.CompetitionId });
             }
 
             return View(race);
