@@ -173,6 +173,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompetitionController.cs" />
     <Compile Include="Controllers\DenController.cs" />
+    <Compile Include="Controllers\HeatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
@@ -359,6 +360,11 @@
     <Content Include="Views\Competition\Dashboard.cshtml" />
     <Content Include="Views\Race\Generate.cshtml" />
     <Content Include="Views\Errors\_403Error.cshtml" />
+    <Content Include="Views\Heat\Create.cshtml" />
+    <Content Include="Views\Heat\Delete.cshtml" />
+    <Content Include="Views\Heat\Details.cshtml" />
+    <Content Include="Views\Heat\Edit.cshtml" />
+    <Content Include="Views\Heat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
