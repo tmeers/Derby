@@ -46,10 +46,11 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,RaceId,CreatedDate")] Heat heat)
+        public ActionResult Create([Bind(Include="Id,RaceId")] Heat heat)
         {
             if (ModelState.IsValid)
             {
+                heat.CreatedDate = DateTime.Now;
                 db.Heats.Add(heat);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +79,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,RaceId,CreatedDate")] Heat heat)
+        public ActionResult Edit([Bind(Include="Id,RaceId")] Heat heat)
         {
             if (ModelState.IsValid)
             {
