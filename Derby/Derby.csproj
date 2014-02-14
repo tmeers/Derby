@@ -367,6 +367,7 @@
     <Content Include="Views\Heat\Details.cshtml" />
     <Content Include="Views\Heat\Edit.cshtml" />
     <Content Include="Views\Heat\Index.cshtml" />
+    <Content Include="Views\Heat\EditorTemplates\RacerContestantViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

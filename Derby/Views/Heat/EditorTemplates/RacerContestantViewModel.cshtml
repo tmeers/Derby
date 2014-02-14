@@ -1,0 +1,7 @@
+﻿@model Derby.ViewModels.RacerContestantViewModel
+<tr>
+    <td>@Html.CheckBoxFor(model => model.Selected)</td>
+    <td>@Html.DisplayFor(model => model.ScoutName)</td>
+    <td>@Html.DisplayFor(model => model.CarNumber)</td>
+    <td>@Html.HiddenFor(model => model.RacerId)</td>
+</tr>
