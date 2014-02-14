@@ -16,6 +16,8 @@ namespace Derby.ViewModels
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
 
+        public Competition Competition { get; set; }
+        public ICollection<Heat> CurrentHeats { get; set; } 
         public ICollection<RacerContestantViewModel> Racers { get; set; }
 
         public ModifyHeatViewModel()

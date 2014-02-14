@@ -7,7 +7,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Heat", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
 {
     @Html.AntiForgeryToken()
 
@@ -20,30 +20,28 @@
         @Html.ValidationMessageFor(model => model.RaceId)
 
         <div class="table-responsive">
-
-            @{
-                var grid = new WebGrid(Model.Racers, defaultSort: "Name");
-            }
-
-                @grid.GetHtml(tableStyle: "table table-hover tablesorter",
-                    headerStyle: "header",
-                    alternatingRowStyle: "alt",
-                    selectedRowStyle: "select",
-                    columns: grid.Columns(
-                     grid.Column(header: "MenuId", format: (item) => item.Scout.Name, style: "description"),
-                     grid.Column(header: "Menu", format: (item) => item.CarNumber, style: "description", canSort: true),
-                     grid.Column(header: "Print?", format: @<text><input name="Add" type="checkbox" value="@item.Id" /></text>)
-                        )
-                )
+            <table id="dashboard-scouts" class="table table-hover tablesorter">
+                <thead>
+                    <tr>
+                        <th class="header">Select</th>
+                        <th class="header">Name</th>
+                        <th class="header">Car Number</th>
+                        <th class="header">Weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.EditorFor(model => model.Racers)
+                </tbody>
+            </table>
         </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
-                </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
         </div>
-        }
+    </div>
+    }
 
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

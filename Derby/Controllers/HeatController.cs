@@ -45,19 +45,21 @@ namespace Derby.Controllers
 
             ModifyHeatViewModel view = new ModifyHeatViewModel();
             view.RaceId = raceId;
-            view.Racers = new Collection<RacerViewModel>();
+            view.Racers = new Collection<RacerContestantViewModel>();
+            view.Competition = competition;
+            view.CurrentHeats = db.Heats.Where(x => x.RaceId == raceId).ToList();
 
             List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
             if (scouts.Any())
             {
-                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId))
+                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId).ToList())
                 {
-                    var racer = new RacerViewModel(item);
-                    racer.Scout = scouts.FirstOrDefault(x => x.Id == item.ScoutId);
+                    var racer = new RacerContestantViewModel(item);
+                    racer.ScoutName = scouts.FirstOrDefault(x => x.Id == item.ScoutId).Name;
+
                     view.Racers.Add(racer);
                 }
             }
-            view.Contestants = db.Contestants.Where(x => x.HeatId == view.Id).ToList();
 
             return View(view);
         }
@@ -67,12 +69,15 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,RaceId")] Heat heat, int[] selectedRacers)
+        public ActionResult Create([Bind(Include = "Id,RaceId,Racers")] ModifyHeatViewModel heat)
         {
             if (ModelState.IsValid)
             {
-                heat.CreatedDate = DateTime.Now;
-                db.Heats.Add(heat);
+                Heat _heat = new Heat();
+                _heat.CreatedDate = DateTime.Now;
+                _heat.RaceId = heat.RaceId;
+
+                db.Heats.Add(_heat);
                 db.SaveChanges();
 
                 Race race = db.Races.Find(heat.RaceId);
