@@ -80,7 +80,7 @@ namespace Derby.Infrastructure
         }
 
         // Heat count based off of numbers from known working spreadsheets (ugh spreadsheets) here: https://sites.google.com/site/pinewoodscore/Spreadsheets
-        private int GenerateHeatCount(int laneCount , int racersCount )
+        public static int GenerateHeatCount(int laneCount , int racersCount )
         {
             if (laneCount == 4)
                 return racersCount;

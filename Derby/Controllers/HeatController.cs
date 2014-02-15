@@ -61,6 +61,8 @@ namespace Derby.Controllers
                 }
             }
 
+            view.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(competition.LaneCount, view.Racers.Count());
+
             return View(view);
         }
 
