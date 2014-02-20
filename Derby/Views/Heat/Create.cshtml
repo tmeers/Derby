@@ -4,7 +4,6 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Create</h2>
 
 @using (Html.BeginForm("Create", "Heat", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
@@ -18,15 +17,18 @@
 
             @Html.HiddenFor(model => model.RaceId)
             @Html.ValidationMessageFor(model => model.RaceId)
+            @Html.ValidationMessageFor(model => model.Racers)
+            
+            @Html.HiddenFor(model => model.Competition.LaneCount)
             <div class="col-sm-6">
                 <div class="table-responsive">
                     <table id="dashboard-scouts" class="table table-hover tablesorter">
                         <thead>
                             <tr>
                                 <th class="header">Select</th>
+                                <th class="header">Lane <i class="fa fa-info-circle information" data-tip="Must be a number from 1 to 6. The upper limit is the number of lanes possible (@Model.Competition.LaneCount)"></i></th>
                                 <th class="header">Name</th>
                                 <th class="header">Car Number</th>
-                                <th class="header"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,6 +68,6 @@
     </div>
 }
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index", "Race", new { competitionId = Model.Competition.Id }, new { @class = "btn btn-xs btn-default" })
+</div>

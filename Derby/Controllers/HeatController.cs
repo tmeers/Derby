@@ -40,30 +40,7 @@ namespace Derby.Controllers
         // GET: /Heat/Create
         public ActionResult Create(int raceId)
         {
-            Race race = db.Races.Find(raceId);
-            Competition competition = db.Competitions.Find(race.CompetitionId);
-
-            ModifyHeatViewModel view = new ModifyHeatViewModel();
-            view.RaceId = raceId;
-            view.Racers = new Collection<RacerContestantViewModel>();
-            view.Competition = competition;
-            view.CurrentHeats = db.Heats.Where(x => x.RaceId == raceId).ToList();
-
-            List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
-            if (scouts.Any())
-            {
-                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId).ToList())
-                {
-                    var racer = new RacerContestantViewModel(item);
-                    racer.ScoutName = scouts.FirstOrDefault(x => x.Id == item.ScoutId).Name;
-
-                    view.Racers.Add(racer);
-                }
-            }
-
-            view.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(competition.LaneCount, view.Racers.Count());
-
-            return View(view);
+            return View(LoadCreateView(raceId));
         }
 
         // POST: /Heat/Create
@@ -88,9 +65,36 @@ namespace Derby.Controllers
                 return RedirectToAction("Index", "Race", new { competitionId = _competitionId });
             }
 
-            return View(heat);
+            return View(LoadCreateView(heat.RaceId));
         }
 
+        private ModifyHeatViewModel LoadCreateView(int raceId)
+        {
+            Race race = db.Races.Find(raceId);
+            Competition competition = db.Competitions.Find(race.CompetitionId);
+
+            ModifyHeatViewModel view = new ModifyHeatViewModel();
+            view.RaceId = raceId;
+            view.Racers = new Collection<RacerContestantViewModel>();
+            view.Competition = competition;
+            view.CurrentHeats = db.Heats.Where(x => x.RaceId == raceId).ToList();
+
+            List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
+            if (scouts.Any())
+            {
+                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId).ToList())
+                {
+                    var racer = new RacerContestantViewModel(item);
+                    racer.ScoutName = scouts.FirstOrDefault(x => x.Id == item.ScoutId).Name;
+
+                    view.Racers.Add(racer);
+                }
+            }
+
+            view.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(competition.LaneCount, view.Racers.Count());
+
+            return view;
+        }
         // GET: /Heat/Edit/5
         public ActionResult Edit(int? id)
         {
