@@ -41,10 +41,9 @@
         </td>
         <td>
             @pack.Scouts.Count()
-            @*@Html.ActionLink(pack.Scouts.Count().ToString(), "Index", "Scout", new { packId = pack.Id }, new { }) *@
         </td>
         <td>
-            @Html.ActionLink(pack.Competitions.Count().ToString(), "Index", "Competition", new { packId = pack.Id }, new { })
+            @pack.Competitions.Count().ToString()
         </td>
         <td>
             @if (pack.Membership != null)
