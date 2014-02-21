@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -17,13 +18,31 @@ namespace Derby.ViewModels
         public DateTime CreatedDate { get; set; }
 
         [Display(Name = "Completed Date")]
-        public DateTime CompletedDate { get; set; }
+        public DateTime? CompletedDate { get; set; }
 
         public int DenId { get; set; }
+        public Den Den { get; set; }
 
         public Competition Competition { get; set; }
         public ICollection<Den> Dens { get; set; }
 
-        public IList DenList { get; set; } 
+        public ICollection<Racer> Racers { get; set; }
+        public ICollection<Heat> Heats { get; set; }
+
+        public RaceViewModel() { }
+
+        public RaceViewModel(Race race)
+        {
+            Id = race.Id;
+            CompetitionId = race.CompetitionId;
+            CreatedDate = race.CreatedDate;
+            CompletedDate = race.CompletedDate;
+            DenId = race.DenId;
+            Den = new Den();
+            Competition = new Competition();
+            Dens = new Collection<Den>();
+            Racers = new Collection<Racer>();
+            Heats = new Collection<Heat>();
+        }
     }
 }

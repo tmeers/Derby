@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -29,14 +30,19 @@ namespace Derby.Controllers
             }
 
             var races = db.Races.Where(x => x.CompetitionId == competitionId).ToList();
-
+            var racesView = new List<RaceViewModel>();
 
             foreach (var race in races)
             {
-                race.Racers = db.Racers.Where(r => r.CompetitionId == competitionId).ToList();
+                var _race = new RaceViewModel(race);
+                _race.Den = db.Dens.Find(race.DenId);
+                _race.Competition = db.Competitions.Find(race.CompetitionId);
+                _race.Racers = db.Racers.Where(r => r.CompetitionId == competitionId).ToList();
+
+                racesView.Add(_race);
             }
 
-            return View(races);
+            return View(racesView);
         }
 
         // GET: /Race/Details/5
@@ -63,11 +69,11 @@ namespace Derby.Controllers
             var raceView = new RaceViewModel();
             raceView.Competition = db.Competitions.FirstOrDefault(c => c.Id == competitionId);
             raceView.Dens = db.Dens.Where(d => d.PackId == raceView.Competition.PackId).ToList();
-            raceView.DenList = new ArrayList();
-            foreach (var den in raceView.Dens)
-            {
-                raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
-            }
+            //raceView.DenList = new ArrayList();
+            //foreach (var den in raceView.Dens)
+            //{
+            //    raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
+            //}
 
             return View(raceView);
         }

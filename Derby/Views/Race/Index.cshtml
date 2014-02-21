@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Derby.Models.Race>
+﻿@model IEnumerable<Derby.ViewModels.RaceViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -13,7 +13,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CompetitionId)
+            @Html.DisplayNameFor(model => model.Competition.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
@@ -22,7 +22,7 @@
             @Html.DisplayNameFor(model => model.CompletedDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DenId)
+            @Html.DisplayNameFor(model => model.Den.Name)
         </th>
         <th></th>
     </tr>
@@ -30,7 +30,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CompetitionId)
+            @Html.DisplayFor(modelItem => item.Competition.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.CompletedDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DenId)
+            @Html.DisplayFor(modelItem => item.Den.Name)
         </td>
         <td>@Html.ActionLink("Create Heat", "Create", "Heat", new { raceId = item.Id }, new {@class = "btn btn-xs btn-success"})</td>
         <td>
