@@ -66,20 +66,8 @@ namespace Derby.Controllers
         // GET: /Race/Create
         public ActionResult Create(int competitionId, int? denId)
         {
-            var raceView = new RaceViewModel();
-            raceView.Competition = db.Competitions.FirstOrDefault(c => c.Id == competitionId);
-            raceView.Dens = db.Dens.Where(d => d.PackId == raceView.Competition.PackId).ToList();
-            //raceView.DenList = new ArrayList();
-            //foreach (var den in raceView.Dens)
-            //{
-            //    raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
-            //}
-            ViewBag.DenId = 0;
+            var raceView = BuildRaceCreateView(competitionId, denId);
 
-            if (denId != null)
-            {
-                ViewBag.DenId = denId;
-            }
 
             return View(raceView);
         }
@@ -93,6 +81,15 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
+                var check = db.Races.FirstOrDefault(x => x.DenId == race.DenId && x.CompetitionId == race.CompetitionId);
+                if (check != null || check.Id > 0)
+                {
+                    var raceView = BuildRaceCreateView(race.CompetitionId, race.DenId);
+                    raceView.Message = "A Race has already been created for this Den. Additional races will not save.";
+
+                    return View(raceView);
+                }
+
                 race.CreatedDate = DateTime.Now;
                 race.CompletedDate = DateTime.Now;
                 db.Races.Add(race);
@@ -101,6 +98,32 @@ namespace Derby.Controllers
             }
 
             return View(race);
+        }
+
+        private RaceViewModel BuildRaceCreateView(int competitionId, int? denId)
+        {
+            var raceView = new RaceViewModel();
+            raceView.Competition = db.Competitions.FirstOrDefault(c => c.Id == competitionId);
+            raceView.Dens = db.Dens.Where(d => d.PackId == raceView.Competition.PackId).ToList();
+            //raceView.DenList = new ArrayList();
+            //foreach (var den in raceView.Dens)
+            //{
+            //    raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
+            //}
+            ViewBag.DenId = 0;
+
+            if (denId != null)
+            {
+                ViewBag.DenId = denId;
+                var check = db.Races.FirstOrDefault(x => x.DenId == denId && x.CompetitionId == competitionId);
+                if (check != null || check.Id > 0)
+                {
+                    raceView.Message = "A Race has already been created for this Den. Additional races will not save.";
+                }
+
+            }
+
+
         }
 
         // GET: /Race/Edit/5
