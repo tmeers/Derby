@@ -51,11 +51,11 @@
                     <div>
                         <div class="list-group-item">
                             <span class="badge">@Model.Competition.LaneCount</span>
-                            <i class="fa fa-hand-o-up"></i> Number of Lanes
+                            <i class="fa fa-road"></i> Number of Lanes
                         </div>
                         <div class="list-group-item">
                             <span class="badge">@Model.HeatsNeeded</span>
-                            <i class="fa fa-tasks"></i> Heats Needed
+                            <i class="fa fa-tasks"></i> Heats Needed <i class="fa fa-info-circle information" data-tip="Calculated based on the number of Lanes and racers for the den. Each racer should race in each lane."></i>
                         </div>
                         <div class="list-group-item">
                             <span class="badge">@Model.CurrentHeats.Count</span>

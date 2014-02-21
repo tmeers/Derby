@@ -59,10 +59,19 @@ namespace Derby.Controllers
                 db.Heats.Add(_heat);
                 db.SaveChanges();
 
-                Race race = db.Races.Find(heat.RaceId);
-                var _competitionId = race.CompetitionId;
+                foreach (var racer in heat.Racers.Where(x => x.Selected == true))
+                {
+                    var _racer = racer;
+                    Contestant contestant = new Contestant();
+                    contestant.HeatId = _heat.Id;
+                    contestant.Lane = Convert.ToInt32(_racer.Lane);
+                    contestant.RacerId = _racer.RacerId;
 
-                return RedirectToAction("Index", "Race", new { competitionId = _competitionId });
+                    db.Contestants.Add(contestant);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index", "Race", new { competitionId = heat.Competition.Id });
             }
 
             return View(LoadCreateView(heat.RaceId));
