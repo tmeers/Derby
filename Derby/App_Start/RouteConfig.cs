@@ -125,14 +125,14 @@ namespace Derby
             );
             routes.MapRoute(
                 name: "Race-Create",
-                url: "race/create/{competitionId}",
-                defaults: new { controller = "Race", action = "Create", competitionId = UrlParameter.Optional }
+                url: "race/create/{competitionId}/{denId}",
+                defaults: new { controller = "Race", action = "Create", competitionId = UrlParameter.Optional, denId = UrlParameter.Optional  }
             );
-            routes.MapRoute(
-                name: "Race-Generate",
-                url: "race/generate/{competitionId}/{denId}",
-                defaults: new { controller = "Race", action = "Generate" }
-            );
+            //routes.MapRoute(
+            //    name: "Race-Generate",
+            //    url: "race/generate/{competitionId}/{denId}",
+            //    defaults: new { controller = "Race", action = "Generate" }
+            //);
 
             routes.MapRoute(
                 name: "Heat-Create",

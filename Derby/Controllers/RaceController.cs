@@ -64,7 +64,7 @@ namespace Derby.Controllers
         }
 
         // GET: /Race/Create
-        public ActionResult Create(int competitionId)
+        public ActionResult Create(int competitionId, int? denId)
         {
             var raceView = new RaceViewModel();
             raceView.Competition = db.Competitions.FirstOrDefault(c => c.Id == competitionId);
@@ -74,6 +74,12 @@ namespace Derby.Controllers
             //{
             //    raceView.DenList.Add(new SelectListItem {Text = den.Name, Value = den.Id.ToString(), Selected = false});
             //}
+            ViewBag.DenId = 0;
+
+            if (denId != null)
+            {
+                ViewBag.DenId = denId;
+            }
 
             return View(raceView);
         }
