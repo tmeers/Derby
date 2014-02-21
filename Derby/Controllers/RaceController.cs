@@ -123,7 +123,7 @@ namespace Derby.Controllers
 
             }
 
-
+            return raceView;
         }
 
         // GET: /Race/Edit/5
