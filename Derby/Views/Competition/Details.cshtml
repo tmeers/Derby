@@ -109,38 +109,51 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#">
-                        <div class="panel-footer announcement-bottom">
-                        @if (racerCount == 0)
-                        {
-                            <div class="row">
+                    
+                    <div class="panel-footer announcement-bottom">
+                    @if (racerCount == 0)
+                    {
+                        <div class="row">
+                            <div class="col-xs-6">
+                                Assign Scouts
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        </div>
+                    }
+                            
+                    @{
+                        var races = Model.Races.ToList();
+                    }
+                    @if (!races.Any() && racerCount != 0)
+                    {
+                        <div class="row">
+                            <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = den.Id})">
                                 <div class="col-xs-6">
-                                    Assign Scouts
+                                    Generate Heats for Den
                                 </div>
                                 <div class="col-xs-6 text-right">
                                     <i class="fa fa-arrow-circle-right"></i>
                                 </div>
-                            </div>
-                        }
-                            
-                        @{
-                            var races = Model.Races.ToList();
-                        }
-                        @if (!races.Any())
-                        {
-                            <div class="row">
-                                <a href="@Url.Action("Generate", "Race", new { competitionId = Model.Id, denId = den.Id })">
-                                    <div class="col-xs-6">
-                                        Generate Heats for Den
-                                    </div>
-                                    <div class="col-xs-6 text-right">
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        }
+                            </a>
                         </div>
-                    </a>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <a href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = den.Id})">
+                                <div class="col-xs-6">
+                                    Generate Heats for Den
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                    
                 </div>
             }
         </div>

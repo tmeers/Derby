@@ -26,8 +26,9 @@ namespace Derby.ViewModels
         public Competition Competition { get; set; }
         public ICollection<Den> Dens { get; set; }
 
-        public ICollection<Racer> Racers { get; set; }
-        public ICollection<Heat> Heats { get; set; }
+        public List<Racer> Racers { get; set; }
+        public List<Heat> Heats { get; set; }
+        public string Message { get; set; }
 
         public RaceViewModel() { }
 
@@ -41,8 +42,8 @@ namespace Derby.ViewModels
             Den = new Den();
             Competition = new Competition();
             Dens = new Collection<Den>();
-            Racers = new Collection<Racer>();
-            Heats = new Collection<Heat>();
+            Racers = new List<Racer>();
+            Heats = new List<Heat>();
         }
     }
 }

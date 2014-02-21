@@ -1,4 +1,5 @@
 ﻿@using Derby.Models
+@using Derby.ViewModels
 @using Microsoft.Ajax.Utilities
 @model Derby.ViewModels.CompetitionViewModel
 
@@ -112,14 +113,28 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer announcement-bottom">
+                <div class="panel-footer announcement-bottom">
                     @if (racerCount == 0)
                     {
                         <div class="row">
-                            <a>
+                            <div class="col-xs-6">
+                                Assign Scouts
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        </div>
+                    }
+
+                    @{
+                        var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
+                    }
+                    @if (race == null || racerCount != 0)
+                    {
+                        <div class="row">
+                            <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = den.Id})">
                                 <div class="col-xs-6">
-                                    Assign Scouts
+                                    Generate Heats for Den
                                 </div>
                                 <div class="col-xs-6 text-right">
                                     <i class="fa fa-arrow-circle-right"></i>
@@ -127,8 +142,16 @@
                             </a>
                         </div>
                     }
-                    </div>
-                </a>
+                    else
+                    {
+                        <div class="list-group-item">
+                            <span class="badge">@race.Heats.Count</span>
+                            <i class="fa fa-road"></i> Number of Heats
+                        </div>
+
+                    }
+                </div>
+
             </div>
         }
         @if (denCount == 0)
