@@ -12,7 +12,8 @@ namespace Derby.Models
         public int RaceId { get; set; }
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
-        // TODO Add TieBreaker property
+        [Display(Name = "Tie Breaker")]
+        public bool TieBreaker { get; set; }
 
         public virtual ICollection<Contestant> Contestants { get; set; }
     }

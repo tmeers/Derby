@@ -1,4 +1,5 @@
-﻿@model Derby.ViewModels.ModifyHeatViewModel
+﻿@using System.Web.UI.WebControls
+@model Derby.ViewModels.ModifyHeatViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -20,8 +21,10 @@
             @Html.ValidationMessageFor(model => model.Racers)
             
             @Html.HiddenFor(model => model.Competition.LaneCount)
+
             <div class="col-sm-6">
                 <div class="table-responsive">
+                    <h4>Racers</h4>
                     <table id="dashboard-scouts" class="table table-hover tablesorter">
                         <thead>
                             <tr>
@@ -35,12 +38,24 @@
                             @Html.EditorFor(model => model.Racers)
                         </tbody>
                     </table>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-success" />
-                        </div>
+                </div>
+                
+                <br/>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TieBreaker, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.TieBreaker)
+                        @Html.ValidationMessageFor(model => model.TieBreaker)
                     </div>
                 </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </div>
+                <br/>
             </div>
 
             <div class="col-sm-3">

@@ -48,13 +48,14 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RaceId,Racers")] ModifyHeatViewModel heat)
+        public ActionResult Create([Bind(Include = "Id,RaceId,Racers,TieBreaker")] ModifyHeatViewModel heat)
         {
             if (ModelState.IsValid)
             {
                 Heat _heat = new Heat();
                 _heat.CreatedDate = DateTime.Now;
                 _heat.RaceId = heat.RaceId;
+                _heat.TieBreaker = heat.TieBreaker;
 
                 db.Heats.Add(_heat);
                 db.SaveChanges();

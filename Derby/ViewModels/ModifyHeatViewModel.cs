@@ -16,6 +16,9 @@ namespace Derby.ViewModels
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
 
+        [Display(Name = "Tie Breaker")]
+        public bool TieBreaker { get; set; }
+
         public int HeatsNeeded { get; set; }
 
         public Competition Competition { get; set; }

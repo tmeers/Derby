@@ -235,6 +235,10 @@
     <Compile Include="Migrations\201401272001346_DenSystemFields.Designer.cs">
       <DependentUpon>201401272001346_DenSystemFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201402210312421_HeatTieBreaker.cs" />
+    <Compile Include="Migrations\201402210312421_HeatTieBreaker.Designer.cs">
+      <DependentUpon>201402210312421_HeatTieBreaker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -414,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401272001346_DenSystemFields.resx">
       <DependentUpon>201401272001346_DenSystemFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201402210312421_HeatTieBreaker.resx">
+      <DependentUpon>201402210312421_HeatTieBreaker.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
