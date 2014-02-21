@@ -42,10 +42,10 @@
             @Html.DisplayFor(modelItem => item.Den.Name)
         </td>
         <td>@Html.ActionLink("Create Heat", "Create", "Heat", new { raceId = item.Id }, new {@class = "btn btn-xs btn-success"})</td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        <td>            
+            <a href="@Url.Action("Details", "Heat", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-info"></i>&nbsp; Details</a> |
+            <a href="@Url.Action("Edit", "Heat", new { id = item.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i>&nbsp; Edit</a>&nbsp; | &nbsp;
+            <a href="@Url.Action("Delete", "Heat", new { id = item.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="fa fa-trash-o"></i>&nbsp; Delete</a>
         </td>
     </tr>
 }
