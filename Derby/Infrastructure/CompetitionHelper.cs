@@ -32,7 +32,9 @@ namespace Derby.Infrastructure
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
             view.Scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
 
-            foreach (var den in db.Dens.Where(p => p.PackId == competition.PackId))
+            var _dens = db.Dens.Where(p => p.PackId == competition.PackId);
+
+            foreach (var den in _dens)
             {
                 var _den = den;
                 //var denView = new DenCompetitionViewModel(_den);
@@ -47,6 +49,17 @@ namespace Derby.Infrastructure
                 }
 
                 view.Dens.Add(_den);
+            }
+
+            var races = db.Races.Where(x => x.CompetitionId == competition.Id).ToList();
+            var racesView = new List<RaceViewModel>();
+
+            foreach (var race in races)
+            {
+                var _race = new RaceViewModel(race);
+                _race.Heats = db.Heats.Where(x => x.RaceId == race.Id).ToList();
+
+                racesView.Add(_race);
             }
 
             return view;
