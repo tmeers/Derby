@@ -7,20 +7,7 @@
     ViewBag.Title = "Details";
 }
 
-<h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title)</h3>
-
-
-<p>
-    @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
-    @if (Model.Pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Guest)
-    {
-        @Html.ActionLink("Back to Pack", "Info", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
-    }
-    else
-    {
-        @Html.ActionLink("Back to Pack", "Details", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
-    }
-</p>
+<h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title) <span class="small text-right">Spectator Dashboard</span></h3>
 
 <div>
     <div class="row">
@@ -71,95 +58,130 @@
             </div>
         </div>
         <div class="col-md-5">
-        @{
-            int denCount = 0;
-        }
-        @foreach (var den in Model.Dens.Where(x => x.IsSystemPlaceholder == false))
-        {
-            int racerCount = Model.Racers.Count(x => x.Den.Id == den.Id);
-            if (racerCount <= 0)
-            {
-                continue;
+            @{
+                int denCount = 0;
             }
-            denCount++;
-                
-            string panelStatus = "panel-info";
-            bool denInError = false;
-            if (racerCount == 0)
+            @foreach (var den in Model.Dens.Where(x => x.IsSystemPlaceholder == false))
             {
-                panelStatus = "panel-danger";
-                denInError = true;
-            }
+                Den _den = den;
+                var _racers = Model.Racers.Where(x => x.Den.Id == _den.Id).ToList();
+
+                int racerCount = _racers.Count();
+                if (racerCount <= 0)
+                {
+                    continue;
+                }
+                var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
+
+                denCount++;
                 
-            <div class="panel @panelStatus">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6">
-                        @if (denInError)
-                        {
-                            <i class="fa fa-exclamation-triangle fa-4x"></i>
-                        }
-                        else
-                        {
-                            if (den.LogoPath != "")
-                            {
-                                <img src="@den.LogoPath" class="denlogo-small" />
-                            }
-                        }
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">@den.Name</p>
-                            <p class="announcement-text">Racers - @racerCount</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-footer announcement-bottom">
-                    @if (racerCount == 0)
-                    {
+                string panelStatus = "panel-info";
+                bool denInError = false;
+                if (racerCount == 0)
+                {
+                    panelStatus = "panel-danger";
+                    denInError = true;
+                }
+                
+                <div class="panel @panelStatus">
+                    <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                                Assign Scouts
+                                @if (denInError)
+                                {
+                                    <i class="fa fa-exclamation-triangle fa-4x"></i>
+                                }
+                                else
+                                {
+                                    if (_den.LogoPath != "")
+                                    {
+                                        <img src="@_den.LogoPath" class="denlogo-small" />
+                                    }
+                                }
                             </div>
                             <div class="col-xs-6 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
+                                <div class="announcement-heading">@_den.Name</div>
+                                <div class="announcement-text">Racers - @racerCount</div>
+                                <div class="announcement-text">Heats - @race.Heats.Count</div>
                             </div>
                         </div>
-                    }
-
-                    @{
-                        var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
-                    }
-                    @if (race == null || racerCount != 0)
-                    {
-                        <div class="row">
-                            <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = den.Id})">
+                    </div>
+                    <div class="panel-footer announcement-bottom">
+                        @if (racerCount == 0)
+                        {
+                            <div class="row">
                                 <div class="col-xs-6">
-                                    Generate Heats for Den
+                                    Assign Scouts
                                 </div>
                                 <div class="col-xs-6 text-right">
                                     <i class="fa fa-arrow-circle-right"></i>
                                 </div>
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="list-group-item">
-                            <span class="badge">@race.Heats.Count</span>
-                            <i class="fa fa-road"></i> Number of Heats
-                        </div>
+                            </div>
+                        }
 
-                    }
+
+                        @if (race == null)
+                        {
+                            <div class="row">
+                                <a href="@Url.Action("Create", "Race", new { competitionId = Model.Id, denId = _den.Id })">
+                                    <div class="col-xs-7">
+                                        Create Race and Heats for Den
+                                    </div>
+                                    <div class="col-xs-5 text-right">
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            if (race.Heats.Count != 0)
+                            {
+                                int heatCount = 0;
+                                
+                                <div class="row">
+                                    @foreach (var heat in race.Heats)
+                                    {
+                                        heatCount++;
+                                        <div>
+                                            <div class="col-xs-7">
+                                                Heat #@heatCount
+                                            </div>
+                                            <div class="col-xs-5 text-right">
+                                                Contestants - @heat.Contestants.Count
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+
                 </div>
-
-            </div>
-        }
-        @if (denCount == 0)
-        {
-            <div class="alert alert-dismissable alert-info text-center">
-                No Dens have joined the competition
-            </div>
-        }
+            }
+            @if (denCount == 0)
+            {
+                <div class="alert alert-dismissable alert-info text-center">
+                    No Dens have joined the competition
+                </div>
+            }
         </div>
     </div>
 </div>
+
+
+<p>
+    @if (Model.Pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Guest)
+    {
+        @Html.ActionLink("Back to Pack", "Info", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Edit Competition", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) @:|
+
+        <a href="@Url.Action("Details", "Competition", new { id = Model.Id })" class="btn btn-xs btn-info" title="Details"><i class="fa fa-cogs"></i>&nbsp; Admin Dashboard</a> @:|
+
+
+        @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+    }
+</p>

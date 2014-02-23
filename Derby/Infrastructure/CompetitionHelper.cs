@@ -59,6 +59,13 @@ namespace Derby.Infrastructure
                 var _race = new RaceViewModel(race);
                 _race.Heats = db.Heats.Where(x => x.RaceId == race.Id).ToList();
 
+                List<Contestant> _cont = db.Contestants.Where(x => x.RacerId == _race.Id).ToList();
+
+                foreach (var heat in _race.Heats)
+                {
+                    heat.Contestants.AddRange(_cont.Where(x => x.HeatId == heat.Id));   
+                }
+
                 view.Races.Add(_race);
             }
 

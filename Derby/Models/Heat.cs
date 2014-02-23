@@ -15,6 +15,6 @@ namespace Derby.Models
         [Display(Name = "Tie Breaker")]
         public bool TieBreaker { get; set; }
 
-        public virtual ICollection<Contestant> Contestants { get; set; }
+        public virtual List<Contestant> Contestants { get; set; }
     }
 }
