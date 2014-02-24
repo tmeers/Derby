@@ -1,4 +1,5 @@
-﻿@using Derby.Models
+﻿@using Derby.Infrastructure
+@using Derby.Models
 @using Microsoft.Ajax.Utilities
 @model Derby.ViewModels.CompetitionViewModel
 
@@ -6,13 +7,7 @@
     ViewBag.Title = "Details";
 }
 
-<h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title)</h3>
-
-
-<p>
-    @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
-    @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
-</p>
+<h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title) <small>Admin Dashboard</small></h3>
 
 <div>
     <div class="row">
@@ -77,7 +72,10 @@
         <div class="col-md-5">
             @foreach (var den in Model.Dens)
             {
-                int racerCount = Model.Racers.Count(x => x.Den.Id == den.Id);
+                Den _den = den;
+                var _racers = Model.Racers.Where(x => x.Den.Id == _den.Id).ToList();
+
+                int racerCount = _racers.Count();
                 string panelStatus = "panel-info";
                 bool denInError = false;
                 if (racerCount == 0)
@@ -85,7 +83,12 @@
                     panelStatus = "panel-danger";
                     denInError = true;
                 }
-                
+                var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
+                int heatCount = 0;
+                if (race != null)
+                {
+                    heatCount = race.Heats.Count;
+                }
                 <div class="panel @panelStatus">
                     <div class="panel-heading">
                         <div class="row">
@@ -96,62 +99,62 @@
                                 }
                                 else
                                 {
-                                    if (den.LogoPath != "")
+                                    if (_den.LogoPath != "")
                                     {
-                                        <img src="@den.LogoPath" class="denlogo-small" />
+                                        <img src="@_den.LogoPath" class="denlogo-small" />
                                     }
                                 }
                                 
                             </div>
                             <div class="col-xs-6 text-right">
-                                <p class="announcement-heading">@den.Name</p>
-                                <p class="announcement-text">Racers - @racerCount</p>
+                                <div class="announcement-heading">@_den.Name</div>
+                                <div class="announcement-text">Racers - @racerCount</div>
+                                <div class="announcement-text">Heats - @heatCount</div>
+                                <div class="announcement-text">Heats Needed - @HeatGenerator.GenerateHeatCount(Model.LaneCount, racerCount)</div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="panel-footer announcement-bottom">
-                    @if (racerCount == 0)
-                    {
-                        <div class="row">
-                            <div class="col-xs-6">
-                                Assign Scouts
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                            </div>
-                        </div>
-                    }
-                            
-                    @{
-                        var races = Model.Races.ToList();
-                    }
-                    @if (!races.Any() && racerCount != 0)
-                    {
-                        <div class="row">
-                            <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = den.Id})">
+                        @if (racerCount == 0)
+                        {
+                            <div class="row">
                                 <div class="col-xs-6">
-                                    Generate Heats for Den
+                                    Assign Scouts
                                 </div>
-                                <div class="col-xs-6 text-right">
-                                    <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        }
+                        else
+                        {
+                            var races = Model.Races.ToList();
+
+                            if (!races.Any() && racerCount != 0)
+                            {
+                                <div class="row">
+                                    <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id})">
+                                        <div class="col-xs-6">
+                                            Generate Heats for Den
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                        
+                                        </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="row">
-                            <a href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = den.Id})">
-                                <div class="col-xs-6">
-                                    Generate Heats for Den
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <a href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = _den.Id})">
+                                        <div class="col-xs-6">
+                                            Generate Heats for Den
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="col-xs-6 text-right">
-                                    <i class="fa fa-arrow-circle-right"></i>
-                                </div>
-                            </a>
-                        </div>
-                    }
+                            }
+                        }
                     </div>
                     
                 </div>
@@ -159,3 +162,9 @@
         </div>
     </div>
 </div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
+    @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+</p>
