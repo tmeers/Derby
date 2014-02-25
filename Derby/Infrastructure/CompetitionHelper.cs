@@ -57,21 +57,12 @@ namespace Derby.Infrastructure
             foreach (var race in races)
             {
                 var _race = new RaceViewModel(race);
-                _race.Heats = db.Heats.Where(x => x.RaceId == race.Id).ToList();
-
-                List<Contestant> _cont = db.Contestants.Where(x => x.RacerId == _race.Id).ToList();
-
-                foreach (var heat in _race.Heats)
-                {
-                    heat.Contestants.AddRange(_cont.Where(x => x.HeatId == heat.Id));   
-                }
+                _race.Heats.AddRange(db.Heats.Where(x => x.RaceId == race.Id).ToList());
 
                 view.Races.Add(_race);
             }
 
-
             return view;
         }
-
     }
 }
