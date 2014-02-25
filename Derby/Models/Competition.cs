@@ -32,5 +32,7 @@ namespace Derby.Models
         public Pack Pack { get; set; }
 
         public bool Completed { get; set; }
+
+        public bool RegistrationLocked { get; set; }
     }
 }

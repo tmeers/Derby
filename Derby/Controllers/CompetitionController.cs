@@ -93,6 +93,7 @@ namespace Derby.Controllers
                 competition.CreatedById = User.Identity.GetUserId();
                 competition.CreatedDate = DateTime.Now;
                 competition.PackId = packId;
+                competition.RegistrationLocked = false;
 
                 db.Competitions.Add(competition);
                 db.SaveChanges();
@@ -146,6 +147,49 @@ namespace Derby.Controllers
             return View(competition);
         }
 
+        public ActionResult Lock(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = User.Identity.GetUserId();
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            return View(competition);
+        }
+
+        [HttpPost, ActionName("Lock")]
+        [ValidateAntiForgeryToken]
+        public ActionResult LockConfirmed(int id)
+        {
+            PackAccess pa = new PackAccess();
+            var user = User.Identity.GetUserId();
+            Competition competition = db.Competitions.Find();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            if (ModelState.IsValid)
+            {
+                competition.RegistrationLocked = true;
+                db.Entry(competition).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Details", "Competition", new {id = competition.Id});
+            }
+
+            return RedirectToAction("Details", "Competition", new { id = id });
+        }
         // GET: /Competition/Delete/5
         public ActionResult Delete(int? id)
         {

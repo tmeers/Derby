@@ -37,6 +37,7 @@ namespace Derby.ViewModels
         public PackViewModel Pack { get; set; }
 
         public bool Completed { get; set; }
+        public bool RegistrationLocked { get; set; }
 
         public ICollection<Scout> Scouts { get; set; }
         public List<RacerViewModel> Racers { get; set; }
@@ -56,6 +57,7 @@ namespace Derby.ViewModels
             LaneCount = competition.LaneCount;
             CreatedById = competition.CreatedById;
             Completed = competition.Completed;
+            RegistrationLocked = competition.RegistrationLocked;
             Scouts = new List<Scout>();
             Racers = new List<RacerViewModel>();
             Dens = new List<Den>();
