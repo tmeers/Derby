@@ -225,6 +225,13 @@ namespace Derby.Controllers
             return RedirectToAction("Details", "Competition", new { id = competitionId });
         }
 
+        //[HttpGet]
+        //public ActionResult GetRace(int id)
+        //{
+        //    var model = db.Races.Find(id);// do whatever you need to get your model
+        //    return PartialView(model);
+        //}
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

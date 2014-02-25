@@ -19,7 +19,7 @@ namespace Derby.Models
 
         public int DenId { get; set; }
 
-        public ICollection<Racer> Racers { get; set; }
-        public ICollection<Heat> Heats { get; set; }
+        public virtual ICollection<Racer> Racers { get; set; }
+        public virtual ICollection<Heat> Heats { get; set; }
     }
 }

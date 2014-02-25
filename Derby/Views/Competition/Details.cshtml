@@ -77,40 +77,34 @@
 
                 int racerCount = _racers.Count();
                 string panelStatus = "panel-info";
-                bool denInError = false;
+
                 if (racerCount == 0)
                 {
                     panelStatus = "panel-danger";
-                    denInError = true;
                 }
+                
                 var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
                 int heatCount = 0;
                 if (race != null)
                 {
                     heatCount = race.Heats.Count;
                 }
+
+                var heatsNeeded = HeatGenerator.GenerateHeatCount(Model.LaneCount, racerCount);
+                
                 <div class="panel @panelStatus">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                                @if (denInError)
-                                {
-                                    <i class="fa fa-exclamation-triangle fa-4x"></i>
-                                }
-                                else
-                                {
-                                    if (_den.LogoPath != "")
-                                    {
-                                        <img src="@_den.LogoPath" class="denlogo-small" />
-                                    }
-                                }
-                                
+                            @if (_den.LogoPath != "")
+                            {
+                                <img src="@_den.LogoPath" class="denlogo-small" />
+                            }
                             </div>
                             <div class="col-xs-6 text-right">
-                                <div class="announcement-heading">@_den.Name</div>
                                 <div class="announcement-text">Racers - @racerCount</div>
                                 <div class="announcement-text">Heats - @heatCount</div>
-                                <div class="announcement-text">Heats Needed - @HeatGenerator.GenerateHeatCount(Model.LaneCount, racerCount)</div>
+                                <div class="announcement-text">Heats Needed - @heatsNeeded</div>
                             </div>
                         </div>
                     </div>
@@ -126,14 +120,14 @@
                         }
                         else
                         {
-                            var races = Model.Races.ToList();
+                            var heats = race.Heats;
 
-                            if (!races.Any() && racerCount != 0)
+                            if (!heats.Any())
                             {
                                 <div class="row">
                                     <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id})">
                                         <div class="col-xs-6">
-                                            Generate Heats for Den
+                                            Build Race/Heats for Den
                                         </div>
                                         <div class="col-xs-6 text-right">
                                         
@@ -143,16 +137,33 @@
                             }
                             else
                             {
-                                <div class="row">
-                                    <a href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = _den.Id})">
-                                        <div class="col-xs-6">
-                                            Generate Heats for Den
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </div>
-                                    </a>
-                                </div>
+                                if (heats.Count() != heatsNeeded)
+                                {
+                                    <div class="row">
+                                        <a href="@Url.Action("Create", "Heat", new {raceId = race.Id})">
+                                            <div class="col-xs-6">
+                                                Add Heat for Den
+                                            </div>
+                                            <div class="col-xs-6 text-right">
+                                                <i class="fa fa-arrow-circle-right"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    int heatLoopCount = 0;
+                                    <div class="list-group">
+                                        @foreach (var heat in heats)
+                                        {
+                                            heatLoopCount++;
+                                            <a class="list-group-item" href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = _den.Id})">
+                                                <span class="text-left">Heat #@heatLoopCount</span>
+                                                <span class="badge text-right"><i class="fa fa-chevron-right"></i></span>
+</a>
+                                        }
+                                    </div>
+                                }
                             }
                         }
                     </div>
@@ -162,7 +173,6 @@
         </div>
     </div>
 </div>
-
 
 <p>
     @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |

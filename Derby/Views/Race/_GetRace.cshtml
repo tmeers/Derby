@@ -1,0 +1,8 @@
+﻿@model Derby.Models.Race
+
+
+@Model.CreatedDate<br/>
+@foreach (var item in Model.Racers)
+{
+    @item.Id @:<br/>
+}
