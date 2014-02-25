@@ -21,6 +21,7 @@ namespace Derby.ViewModels
 
         public int HeatsNeeded { get; set; }
 
+        public int CompetitionId { get; set; }
         public Competition Competition { get; set; }
         public ICollection<Heat> CurrentHeats { get; set; } 
         public ICollection<RacerContestantViewModel> Racers { get; set; }

@@ -72,7 +72,7 @@ namespace Derby.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index", "Race", new { competitionId = heat.Competition.Id });
+                return RedirectToAction("Index", "Race", new { competitionId = heat.CompetitionId });
             }
 
             return View(LoadCreateView(heat.RaceId));
@@ -82,6 +82,7 @@ namespace Derby.Controllers
         {
             Race race = db.Races.Find(raceId);
             Competition competition = db.Competitions.Find(race.CompetitionId);
+            race.CompetitionId = competition.Id;
 
             ModifyHeatViewModel view = new ModifyHeatViewModel();
             view.RaceId = raceId;

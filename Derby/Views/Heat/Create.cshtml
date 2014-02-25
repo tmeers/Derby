@@ -21,6 +21,8 @@
             @Html.ValidationMessageFor(model => model.Racers)
             
             @Html.HiddenFor(model => model.Competition.LaneCount)
+            @Html.HiddenFor(model => model.Competition.Id)
+            @Html.HiddenFor(model => model.CompetitionId)
 
             <div class="col-sm-6">
                 <div class="table-responsive">
