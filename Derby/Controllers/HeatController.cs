@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Derby.Models;
 using Derby.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace Derby.Controllers
 {
@@ -38,8 +39,13 @@ namespace Derby.Controllers
         }
 
         // GET: /Heat/Create
-        public ActionResult Create(int raceId)
+        public ActionResult Create(int raceId, string returnPath)
         {
+            if (!string.IsNullOrEmpty(Request.QueryString["returnPath"]))
+            {
+                TempData["returnPath"] = Request.QueryString["returnPath"];
+            }
+            
             return View(LoadCreateView(raceId));
         }
 
@@ -48,7 +54,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RaceId,Racers,TieBreaker")] ModifyHeatViewModel heat)
+        public ActionResult Create([Bind(Include = "Id,RaceId,Racers,TieBreaker,CompetitionId")] ModifyHeatViewModel heat)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +78,15 @@ namespace Derby.Controllers
                     db.SaveChanges();
                 }
 
+                object returnPath = string.Empty;
+                TempData.TryGetValue("returnPath", out returnPath);
+                string returnPathStr = returnPath as string;
+
+                if (!string.IsNullOrEmpty(returnPathStr) && returnPathStr == "competition")
+                {
+                    return RedirectToAction("Details", "Competition", new { id = heat.CompetitionId });
+                }
+
                 return RedirectToAction("Index", "Race", new { competitionId = heat.CompetitionId });
             }
 
@@ -89,6 +104,7 @@ namespace Derby.Controllers
             view.Racers = new Collection<RacerContestantViewModel>();
             view.Competition = competition;
             view.CurrentHeats = db.Heats.Where(x => x.RaceId == raceId).ToList();
+            view.CompetitionId = competition.Id;
 
             List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
             if (scouts.Any())
