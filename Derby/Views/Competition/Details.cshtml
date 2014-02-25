@@ -64,11 +64,13 @@
                 <div class="alert alert-dismissable alert-success">
                     <h4>Registration Completed!</h4>
                     <p>
-                        @Html.ActionLink("Generate Races", "Generate", "Race", new { competitionId = Model.Id }, new { @class = "btn btn-xs btn-primary" })
+                        Next Step: Create Races
                     </p>
                 </div>
             }
         </div>
+        
+
         <div class="col-md-5">
             @foreach (var den in Model.Dens)
             {
@@ -78,7 +80,7 @@
                 int racerCount = _racers.Count();
                 string panelStatus = "panel-info";
 
-                if (racerCount == 0)
+                if (racerCount <= 1)
                 {
                     panelStatus = "panel-danger";
                 }
@@ -102,6 +104,7 @@
                             }
                             </div>
                             <div class="col-xs-6 text-right">
+                                <div class="announcement-text">@den.Name</div>
                                 <div class="announcement-text">Racers - @racerCount</div>
                                 <div class="announcement-text">Heats - @heatCount</div>
                                 <div class="announcement-text">Heats Needed - @heatsNeeded</div>
@@ -110,7 +113,7 @@
                     </div>
                     
                     <div class="panel-footer announcement-bottom">
-                        @if (racerCount == 0)
+                        @if (racerCount <= 1)
                         {
                             <div class="row">
                                 <div class="col-xs-6">
@@ -120,9 +123,7 @@
                         }
                         else
                         {
-                            var heats = race.Heats;
-
-                            if (!heats.Any())
+                            if (race == null)
                             {
                                 <div class="row">
                                     <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id})">
@@ -130,40 +131,49 @@
                                             Build Race/Heats for Den
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                        
+                                            <i class="fa fa-arrow-circle-right"></i>
                                         </div>
                                     </a>
                                 </div>
                             }
                             else
                             {
-                                if (heats.Count() != heatsNeeded)
-                                {
-                                    <div class="row">
-                                        <a href="@Url.Action("Create", "Heat", new {raceId = race.Id})">
-                                            <div class="col-xs-6">
-                                                Add Heat for Den
-                                            </div>
-                                            <div class="col-xs-6 text-right">
-                                                <i class="fa fa-arrow-circle-right"></i>
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
-                                else
+                                var heats = race.Heats;
+
+                                if (heats.Any())
                                 {
                                     int heatLoopCount = 0;
-                                    <div class="list-group">
-                                        @foreach (var heat in heats)
-                                        {
-                                            heatLoopCount++;
-                                            <a class="list-group-item" href="@Url.Action("Generate", "Race", new {competitionId = Model.Id, denId = _den.Id})">
-                                                <span class="text-left">Heat #@heatLoopCount</span>
-                                                <span class="badge text-right"><i class="fa fa-chevron-right"></i></span>
-</a>
-                                        }
-                                    </div>
+                                    foreach (var heat in heats)
+                                    {
+                                        var _heat = heat;
+                                        heatLoopCount++;
+                                        <div class="row">
+                                            <a href="@Url.Action("Details", "Heat", new { id = _heat.Id })">
+                                                <div class="col-xs-6">
+                                                    Heat #@heatLoopCount
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
                                 }
+                                string addHeat = "text-danger";
+                                if (heats.Any() && heats.Count() == heatsNeeded)
+                                {
+                                    addHeat = "text-muted";
+                                }
+                                <div class="row">
+                                    <a class="@addHeat" href="@Url.Action("Create", "Heat", new {raceId = race.Id, returnPath = "competition"})">
+                                        <div class="col-xs-6">
+                                            Add Heat for Den
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
                             }
                         }
                     </div>
