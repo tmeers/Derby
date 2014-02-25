@@ -26,6 +26,8 @@
                                 <tr>
                                     <th class="header">Name</th>
                                     <th class="header">Registered</th>
+                                    <th class="header">Car #</th>
+                                    <th class="header">Den</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,10 +42,12 @@
                                         @if (_racer != null)
                                         {
                                             <td><i class="success glyphicon glyphicon-ok"></i></td>
+                                            <td>@_racer.CarNumber</td>
+                                            <td><img src="@_racer.Den.LogoPath" class="denlogo-xxsmall" /></td>
                                         }
                                         else
                                         {
-                                            <td><a href="@Url.Action("Create", "Racer", new { competitionId = Model.Id, scoutId = _currentRacer.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-user"></i>&nbsp;Register Racer</a></td>
+                                            <td colspan="3"><a href="@Url.Action("Create", "Racer", new { competitionId = Model.Id, scoutId = _currentRacer.Id })" class="btn btn-xs btn-success" title="Races"><i class="fa fa-user"></i>&nbsp;Register Racer</a></td>
                                             
                                             registrationCompleted = false;
                                         }
@@ -61,11 +65,14 @@
             </div>            
             @if (registrationCompleted)
             {
-                <div class="alert alert-dismissable alert-success">
-                    <h4>Registration Completed!</h4>
-                    <p>
-                        Next Step: Create Races
-                    </p>
+                <div class="alert alert-success">
+                    <p><i class="fa fa-check-circle"></i> Registration Completed!</p>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <p><i class="fa fa-warning"></i> Complete Scout Registration</p>
                 </div>
             }
         </div>
@@ -104,7 +111,7 @@
                             }
                             </div>
                             <div class="col-xs-6 text-right">
-                                <div class="announcement-text">@den.Name</div>
+                                <div class="announcement-text"><strong>@den.Name</strong></div>
                                 <div class="announcement-text">Racers - @racerCount</div>
                                 <div class="announcement-text">Heats - @heatCount</div>
                                 <div class="announcement-text">Heats Needed - @heatsNeeded</div>
