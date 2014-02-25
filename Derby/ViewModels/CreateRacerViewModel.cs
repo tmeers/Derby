@@ -16,10 +16,12 @@ namespace Derby.ViewModels
         [Display(Name = "Car Weight")]
         public double Weight { get; set; }
 
-        public ICollection<Den> Dens { get; set; } 
+        public ICollection<Den> Dens { get; set; }
 
+        [Display(Name = "Den")]
         public int DenId { get; set; }
         public int ScoutId { get; set; }
         public int CompetitionId { get; set; }
+        public string ScoutName { get; set; }
     }
 }

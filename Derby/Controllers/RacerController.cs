@@ -41,12 +41,19 @@ namespace Derby.Controllers
         // GET: /Racer/Create
         public ActionResult Create(int competitionId, int scoutId)
         {
+            Scout _scout = db.Scouts.Find(scoutId);
+            if (_scout == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var packId = db.Competitions.FirstOrDefault(x => x.Id == competitionId).PackId;
             CreateRacerViewModel view = new CreateRacerViewModel();
             view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
 
             view.CompetitionId = competitionId;
             view.ScoutId = scoutId;
+            view.ScoutName = _scout.Name;
 
             return View(view);
         }
