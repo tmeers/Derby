@@ -263,9 +263,11 @@
     <Compile Include="ViewModels\DenCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ModifyHeatViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
+    <Compile Include="ViewModels\ContestantViewModel.cs" />
     <Compile Include="ViewModels\RacerContestantViewModel.cs" />
     <Compile Include="ViewModels\RacerViewModel.cs" />
     <Compile Include="ViewModels\RaceViewModel.cs" />
+    <Compile Include="ViewModels\RunHeatViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bear.jpg" />
