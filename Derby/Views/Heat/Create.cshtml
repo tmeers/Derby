@@ -45,10 +45,13 @@
                 <br/>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TieBreaker, new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
+                    <span class="col-md-3">Tie Breaker</span>
+                    <div class="col-md-9">
                         @Html.CheckBoxFor(model => model.TieBreaker)
                         @Html.ValidationMessageFor(model => model.TieBreaker)
+                    </div>
+                    <div class="col-lg-12 small text-muted">
+                        <em>Be sure to check to "Tie Breaker" box when creating a tie-breaking heat.<br />This is used only if there is the need for a tie-breaker</em>
                     </div>
                 </div>
                 <hr />

@@ -182,14 +182,16 @@
                                 }
                                 // Show this always, but "mute" it once all of the heats have been created
                                 string addHeat = "text-danger";
+                                string linkText = "Add Heat for Den";
                                 if (heats.Any() && heats.Count() == heatsNeeded)
                                 {
                                     addHeat = "text-muted";
+                                    linkText = "Add tie-breaker Heat";
                                 }
                                 <div class="row">
                                     <a class="@addHeat" href="@Url.Action("Create", "Heat", new {raceId = race.Id, returnPath = "competition"})">
                                         <div class="col-xs-6">
-                                            Add Heat for Den
+                                            @linkText
                                         </div>
                                         <div class="col-xs-6 text-right">
                                             <i class="fa fa-arrow-circle-right"></i>
