@@ -22,7 +22,7 @@ namespace Derby.ViewModels
         [StringLength(1, ErrorMessage = "The {0} must be at least {2} number long.", MinimumLength = 1)]
         [RegularExpression("([0-9]+)", ErrorMessage = "Enter only numbers")]
         public string Lane { get; set; }
-
+        public int Place { get; set; }
 
         public ContestantViewModel() { }
 
