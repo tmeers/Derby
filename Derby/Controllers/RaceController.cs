@@ -116,7 +116,7 @@ namespace Derby.Controllers
             {
                 ViewBag.DenId = denId;
                 var check = db.Races.FirstOrDefault(x => x.DenId == denId && x.CompetitionId == competitionId);
-                if (check != null || check.Id > 0)
+                if (check != null && check.Id > 0)
                 {
                     raceView.Message = "A Race has already been created for this Den. Additional races will not save.";
                 }
