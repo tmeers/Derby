@@ -5,37 +5,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>View1</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+            <h4>Heat</h4>
+    <hr />
+    <div class="rows">
+        <div class="form-horizontal col-sm-7">
 
-    <div class="form-horizontal col-sm-7">
-        <h4>Heat</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Contestants, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Contestants)
+            <div class="form-group">
+                @Html.LabelFor(model => model.Contestants, new { @class = "control-label col-md-2" })
+                <div class="table-responsive">
+                    <h4>Racers</h4>
+                    <table id="dashboard-scouts" class="table table-hover tablesorter">
+                        <thead>
+                            <tr>
+                                <th class="header">Scout</th>
+                                <th class="header">Car Number</th>
+                                <th class="header">Lane</th>
+                                <th class="header">Place</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @Html.EditorFor(model => model.Contestants)
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class=" btn btn-xs btn-default" />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class=" btn btn-xs btn-default" />
-            </div>
+        <div class="col-sm-2">
+            @{
+    var heatNumber = 0;
+    string row = "warning";
+    string statusIcon = "";
+    string rowTitle = "";
+            }
+            <table class="table">
+                <tr>
+                    <th class="header col-sm-1"></th>
+                    <th class="header col-sm-1">Heat</th>
+                    <th class="header col-sm-1">Racers</th>
+                </tr>
+                @foreach (var heat in Model.CurrentHeats)
+                {
+                    row = "warning";
+                    heatNumber++;
+                    if (heat.Id == Model.Id)
+                    {
+                        row = "success";
+                    }
+                    if (heat.IsCompleted)
+                    {
+                        row = "text-muted";
+                        statusIcon = "fa-check";
+                    }
+                    <tr class="@row" title="@rowTitle">
+                        <td class="col-sm-1"><i class="@statusIcon"></i> </td>
+                        <td class="col-sm-1">#@heatNumber </td>
+                        <td class="col-sm-1">@heat.Contestants.Count()</td>
+                    </tr>
+                }
+            </table>
         </div>
-    </div>
-    <div class="col-sm-1">
-        @foreach (var heat in Model.CurrentHeats)
-        {
-            <div>@heat.Contestants.Count()</div>
-        }
-
     </div>
 }
 
