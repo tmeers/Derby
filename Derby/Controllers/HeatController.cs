@@ -60,6 +60,11 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!heat.Racers.Any())
+                {
+                    return View(LoadCreateView(heat.RaceId));
+                }
+
                 Heat _heat = new Heat();
                 _heat.CreatedDate = DateTime.Now;
                 _heat.RaceId = heat.RaceId;
@@ -125,9 +130,9 @@ namespace Derby.Controllers
             return view;
         }
 
-        public ActionResult Run(int heatId)
+        public ActionResult Run(int id)
         {
-            Heat heat = db.Heats.FirstOrDefault(x => x.Id == heatId);
+            Heat heat = db.Heats.FirstOrDefault(x => x.Id == id);
             if (heat == null)
             {
                 return HttpNotFound();
@@ -145,7 +150,7 @@ namespace Derby.Controllers
             RunHeatViewModel runHeatView = new RunHeatViewModel(heat);
 
             runHeatView.CurrentHeats = db.Heats.Where(x => x.RaceId == _race.Id).ToList();
-            List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == heatId).ToList();
+            List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == id).ToList();
             foreach (var contestant in _contestants)
             {
                  
