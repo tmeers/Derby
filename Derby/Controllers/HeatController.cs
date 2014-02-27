@@ -7,9 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
@@ -122,6 +124,39 @@ namespace Derby.Controllers
 
             return view;
         }
+
+        public ActionResult Run(int heatId)
+        {
+            Heat heat = db.Heats.FirstOrDefault(x => x.Id == heatId);
+            if (heat == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = User.Identity.GetUserId();
+
+            PackAccess pa = new PackAccess();
+
+            if (!pa.CheckRaceMembership(heat.RaceId, user, OwnershipType.Contributor))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+            Race _race = db.Races.Find(heat.RaceId);
+            RunHeatViewModel runHeatView = new RunHeatViewModel(heat);
+
+            runHeatView.CurrentHeats = db.Heats.Where(x => x.RaceId == _race.Id).ToList();
+            List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == heatId).ToList();
+            foreach (var contestant in _contestants)
+            {
+                 
+            }
+            runHeatView.Competition = db.Competitions.Find(_race.CompetitionId);
+            runHeatView.CompetitionId = runHeatView.Competition.Id;
+            runHeatView.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(runHeatView.Competition.LaneCount,
+                _race.Racers.Count);
+            return View(runHeatView);
+        }
+
         // GET: /Heat/Edit/5
         public ActionResult Edit(int? id)
         {

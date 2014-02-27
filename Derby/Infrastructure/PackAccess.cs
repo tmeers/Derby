@@ -94,6 +94,13 @@ namespace Derby.Infrastructure
             return false;
         }
 
+        internal bool CheckRaceMembership(int? raceId, string user, OwnershipType minimuLevel)
+        {
+            Race race = db.Races.FirstOrDefault(x => x.Id == raceId);
+            return CheckCompetitionMembership(db.Competitions.FirstOrDefault(c => c.Id == race.CompetitionId).PackId,
+                user, minimuLevel);
+        }
+
         private IQueryable<PackMembership> getMemberships(string user)
         {
             return db.PackMemberships.Where(x => x.UserId == user);
