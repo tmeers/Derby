@@ -1,0 +1,13 @@
+﻿@model Derby.ViewModels.ContestantViewModel
+    
+<tr>
+    <td>
+        @Html.DisplayFor(model => model.ScoutName)
+        @Html.HiddenFor(model => model.RacerId)
+    </td>
+    <td>@Html.DisplayFor(model => model.CarNumber)</td>
+    <td>@Html.DisplayFor(model => model.Lane)</td>
+    <td>@Html.TextBoxFor(model => model.Place, new { @style = "width: 40px;", @autocomplete = "off" })</td>
+    @Html.ValidationMessageFor(model => model.Place)
+</tr>
+
