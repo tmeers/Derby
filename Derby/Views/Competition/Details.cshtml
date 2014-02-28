@@ -123,10 +123,10 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                            @if (_den.LogoPath != "")
-                            {
-                                <img src="@_den.LogoPath" class="denlogo-small" />
-                            }
+                                @if (_den.LogoPath != "")
+                                {
+                                    <img src="@_den.LogoPath" class="denlogo-small" />
+                                }
                             </div>
                             <div class="col-xs-6 text-right">
                                 <div class="announcement-text"><strong>@den.Name</strong></div>
@@ -152,11 +152,11 @@
                             {
                                 <div class="row">
                                     <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id})">
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-7">
                                             Build Race/Heats for Den
                                         </div>
-                                        <div class="col-xs-6 text-right">
-                                            <i class="fa fa-arrow-circle-right"></i>
+                                        <div class="text-right">
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;
                                         </div>
                                     </a>
                                 </div>
@@ -205,7 +205,7 @@
                                 // Show this always, but "mute" it once all of the heats have been created
                                 string addHeat = "text-danger";
                                 string linkText = "Add Heat for Den";
-                                if (heats.Any() && heats.Count() == heatsNeeded)
+                                if (heats.Any() && heats.Count() >= heatsNeeded)
                                 {
                                     addHeat = "text-muted";
                                     linkText = "Add tie-breaker Heat";
