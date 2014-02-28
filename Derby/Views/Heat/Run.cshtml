@@ -16,6 +16,7 @@
 
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.CompetitionId)
 
             <div class="form-group">
                 <div class="table-responsive">
@@ -45,7 +46,7 @@
         <div class="col-sm-2">
             @{
     var heatNumber = 0;
-    string row = "warning";
+    string row = "";
     string statusIcon = "";
     string rowTitle = "";
             }
@@ -57,16 +58,24 @@
                 </tr>
                 @foreach (var heat in Model.CurrentHeats)
                 {
-                    row = "warning";
+                    row = "";
+                    statusIcon = "";
+                    rowTitle = "";
                     heatNumber++;
                     if (heat.Id == Model.Id)
                     {
                         row = "success";
+                        statusIcon = "fa fa-arrow-circle-right";
+                        rowTitle = "Active Heat";
                     }
                     if (heat.IsCompleted)
                     {
                         row = "text-muted";
-                        statusIcon = "fa-check";
+                        if (heat.Id == Model.Id)
+                        {
+                            row = "success text-muted";
+                        }
+                        statusIcon = "fa fa-check";
                     }
                     if (heat.TieBreaker)
                     {

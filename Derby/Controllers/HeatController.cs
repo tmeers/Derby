@@ -149,14 +149,25 @@ namespace Derby.Controllers
 
             Race _race = db.Races.Find(heat.RaceId);
 
+
+            return View(loadHeatRun(heat, _race));
+        }
+
+        private RunHeatViewModel loadHeatRun(Heat heat, Race race)
+        {
             RunHeatViewModel runHeatView = new RunHeatViewModel(heat);
-            runHeatView.Competition = db.Competitions.Find(_race.CompetitionId);
+            runHeatView.Competition = db.Competitions.Find(race.CompetitionId);
             runHeatView.CompetitionId = runHeatView.Competition.Id;
 
-            runHeatView.CurrentHeats = db.Heats.Where(x => x.RaceId == _race.Id).ToList();
-            List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == id).ToList();
+            runHeatView.CurrentHeats = db.Heats.Where(x => x.RaceId == race.Id).ToList();
+            List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == heat.Id).ToList();
             var _scouts = db.Scouts.Where(s => s.PackId == runHeatView.Competition.PackId);
             var _racers = db.Racers.Where(s => s.CompetitionId == runHeatView.Competition.Id);
+            SortedDictionary<string, string> _places = new SortedDictionary<string, string>();
+            for (var i = 1; i <= runHeatView.Competition.LaneCount; i++)
+            {
+                _places.Add(Convert.ToString(i), Convert.ToString(i));
+            }
 
             foreach (var contestant in _contestants)
             {
@@ -173,15 +184,62 @@ namespace Derby.Controllers
                 _contestantView.ScoutName = _scout.Name;
                 _contestantView.CarNumber = _racer.CarNumber;
                 _contestantView.Lane = _contestant.Lane;
+                _contestantView.Place = Convert.ToString(_contestant.Place);
+                _contestantView.Places = new SortedDictionary<string, string>(_places);
 
                 runHeatView.Contestants.Add(_contestantView);
             }
 
 
             runHeatView.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(runHeatView.Competition.LaneCount,
-                _racers.Count(x => x.DenId == _race.DenId));
+                _racers.Count(x => x.DenId == race.DenId));
 
-            return View(runHeatView);
+            return runHeatView;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Run([Bind(Include = "Id,CompetitionId,Contestants")] RunHeatViewModel heat)
+        {
+            if (ModelState.IsValid)
+            {
+                if (heat.Contestants.Any(x => Convert.ToString(x.Place) == ""))
+                {
+                    Heat _heatError = db.Heats.FirstOrDefault(x => x.Id == heat.Id);
+                    Race _race = db.Races.Find(heat.RaceId);
+
+                    RunHeatViewModel _runHeatViewError = new RunHeatViewModel(_heatError);
+                    _runHeatViewError.Message = "Some or all of your contestants did not have a Place assigned.";
+
+                    return View(loadHeatRun(_heatError, _race));
+                }
+
+                foreach (var contestant in heat.Contestants)
+                {
+                    Contestant _contestant = db.Contestants.Find(contestant.Id);
+
+                    if (_contestant == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    _contestant.Place = Convert.ToInt32(contestant.Place);
+
+                    db.Entry(_contestant).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                Heat _heat = db.Heats.Find(heat.Id);
+
+                _heat.IsCompleted = true;
+
+                db.Entry(_heat).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Details", "Competition", new {id = heat.CompetitionId});
+            }
+
+            return RedirectToAction("Details", "Competition", new { id = heat.CompetitionId });
         }
 
         // GET: /Heat/Edit/5

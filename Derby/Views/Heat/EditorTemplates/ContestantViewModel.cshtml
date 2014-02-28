@@ -4,10 +4,13 @@
     <td>
         @Html.DisplayFor(model => model.ScoutName)
         @Html.HiddenFor(model => model.RacerId)
+        @Html.HiddenFor(model => model.Id)
     </td>
     <td>@Html.DisplayFor(model => model.CarNumber)</td>
     <td>@Html.DisplayFor(model => model.Lane)</td>
-    <td>@Html.TextBoxFor(model => model.Place, new { @style = "width: 40px;", @autocomplete = "off" })</td>
+    <td>@Html.DropDownListFor(model => model.Place, new SelectList(Model.Places, "Key", "Value", Model.Place))
+        
+    </td>
     @Html.ValidationMessageFor(model => model.Place)
 </tr>
 

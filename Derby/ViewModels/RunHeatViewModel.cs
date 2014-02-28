@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Derby.Models;
+using Glimpse.AspNet.AlternateType;
 
 namespace Derby.ViewModels
 {
@@ -27,6 +28,10 @@ namespace Derby.ViewModels
         public ICollection<Heat> CurrentHeats { get; set; }
         public ICollection<ContestantViewModel> Contestants { get; set; }
 
+        public string Message { get; set; }
+
+        public RunHeatViewModel() { }
+        
         public RunHeatViewModel(Heat heat)
         {
             Id = heat.Id;

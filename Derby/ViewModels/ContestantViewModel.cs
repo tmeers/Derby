@@ -23,7 +23,9 @@ namespace Derby.ViewModels
 
         [StringLength(1, ErrorMessage = "The {0} must be at least {2} number long.", MinimumLength = 1)]
         [RegularExpression("([0-9]+)", ErrorMessage = "Enter only numbers")]
-        public int Place { get; set; }
+        public string Place { get; set; }
+
+        public SortedDictionary<string, string> Places { get; set; } 
 
         public ContestantViewModel() { }
 
