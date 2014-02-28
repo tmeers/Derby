@@ -9,25 +9,23 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-            <h4>Heat</h4>
+    <h4>Heat</h4>
     <hr />
-    <div class="rows">
+    <div class="row">
         <div class="form-horizontal col-sm-7">
 
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Contestants, new { @class = "control-label col-md-2" })
                 <div class="table-responsive">
-                    <h4>Racers</h4>
                     <table id="dashboard-scouts" class="table table-hover tablesorter">
                         <thead>
                             <tr>
-                                <th class="header">Scout</th>
-                                <th class="header">Car Number</th>
-                                <th class="header">Lane</th>
-                                <th class="header">Place</th>
+                                <th class="header col-sm-3">Scout</th>
+                                <th class="header col-sm-1">Car Number</th>
+                                <th class="header col-sm-1">Lane</th>
+                                <th class="header col-sm-2">Place</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +38,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class=" btn btn-xs btn-default" />
+                    <input type="submit" value="Save" class=" btn btn-xs btn-success" />
                 </div>
             </div>
         </div>
@@ -51,7 +49,7 @@
     string statusIcon = "";
     string rowTitle = "";
             }
-            <table class="table">
+            <table class="table table-hover table-responsive">
                 <tr>
                     <th class="header col-sm-1"></th>
                     <th class="header col-sm-1">Heat</th>
@@ -70,6 +68,11 @@
                         row = "text-muted";
                         statusIcon = "fa-check";
                     }
+                    if (heat.TieBreaker)
+                    {
+                        <tr class="" title=""></tr>
+                    }
+
                     <tr class="@row" title="@rowTitle">
                         <td class="col-sm-1"><i class="@statusIcon"></i> </td>
                         <td class="col-sm-1">#@heatNumber </td>
@@ -81,6 +84,7 @@
     </div>
 }
 
+<br/><br/><br/>
 <div>
-    @Html.ActionLink("Back to Competiton", "Index")
+    @Html.ActionLink("Back to Competiton", "Details", "Competition", new { id = Model.CompetitionId}, new {@class = "btn btn-xs btn-default"})
 </div>
