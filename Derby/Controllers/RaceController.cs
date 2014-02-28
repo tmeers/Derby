@@ -66,6 +66,16 @@ namespace Derby.Controllers
         // GET: /Race/Create
         public ActionResult Create(int competitionId, int? denId)
         {
+            var check = db.Races.FirstOrDefault(x => x.DenId == denId && x.CompetitionId == competitionId);
+            if (check != null)
+            {
+                var raceViewError = BuildRaceCreateView(competitionId, denId);
+                raceViewError.Message = "A Race has already been created for this Den. Additional races will not save.";
+
+                return View(raceViewError);
+            }
+
+
             var raceView = BuildRaceCreateView(competitionId, denId);
 
 
@@ -82,7 +92,7 @@ namespace Derby.Controllers
             if (ModelState.IsValid)
             {
                 var check = db.Races.FirstOrDefault(x => x.DenId == race.DenId && x.CompetitionId == race.CompetitionId);
-                if (check != null || check.Id > 0)
+                if (check != null)
                 {
                     var raceView = BuildRaceCreateView(race.CompetitionId, race.DenId);
                     raceView.Message = "A Race has already been created for this Den. Additional races will not save.";
