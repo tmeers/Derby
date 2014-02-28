@@ -72,7 +72,12 @@
                     continue;
                 }
                 var race = Model.Races.FirstOrDefault(x => x.DenId == den.Id);
-
+                int heatCount = 0;
+                if (race != null)
+                {
+                    heatCount = race.Heats.Count;
+                }
+                
                 denCount++;
                 
                 string panelStatus = "panel-info";
@@ -102,7 +107,7 @@
                             <div class="col-xs-6 text-right">
                                 <div class="announcement-heading">@_den.Name</div>
                                 <div class="announcement-text">Racers - @racerCount</div>
-                                <div class="announcement-text">Heats - @race.Heats.Count</div>
+                                <div class="announcement-text">Heats - @heatCount</div>
                             </div>
                         </div>
                     </div>
@@ -123,29 +128,28 @@
                         @if (race == null)
                         {
                             <div class="row">
-                                <a href="@Url.Action("Create", "Race", new { competitionId = Model.Id, denId = _den.Id })">
-                                    <div class="col-xs-7">
-                                        Create Race and Heats for Den
-                                    </div>
-                                    <div class="col-xs-5 text-right">
-                                        <i class="fa fa-arrow-circle-right"></i>
-                                    </div>
-                                </a>
+                                <div class="col-xs-7">
+                                    Create Race and Heats for Den
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </div>
+                                
                             </div>
                         }
                         else
                         {
                             if (race.Heats.Count != 0)
                             {
-                                int heatCount = 0;
+                                int heatNumber = 0;
                                 
                                 <div class="row">
                                     @foreach (var heat in race.Heats)
                                     {
-                                        heatCount++;
+                                        heatNumber++;
                                         <div>
                                             <div class="col-xs-7">
-                                                Heat #@heatCount
+                                                Heat #@heatNumber
                                             </div>
                                             <div class="col-xs-5 text-right">
                                                 Contestants - @heat.Contestants.Count
