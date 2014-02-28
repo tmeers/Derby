@@ -19,7 +19,7 @@ namespace Derby.ViewModels
         public string CarNumber { get; set; }
         public bool Selected { get; set; }
        
-        public string Lane { get; set; }
+        public int Lane { get; set; }
 
         [StringLength(1, ErrorMessage = "The {0} must be at least {2} number long.", MinimumLength = 1)]
         [RegularExpression("([0-9]+)", ErrorMessage = "Enter only numbers")]

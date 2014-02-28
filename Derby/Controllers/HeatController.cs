@@ -146,19 +146,41 @@ namespace Derby.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+
             Race _race = db.Races.Find(heat.RaceId);
+
             RunHeatViewModel runHeatView = new RunHeatViewModel(heat);
+            runHeatView.Competition = db.Competitions.Find(_race.CompetitionId);
+            runHeatView.CompetitionId = runHeatView.Competition.Id;
 
             runHeatView.CurrentHeats = db.Heats.Where(x => x.RaceId == _race.Id).ToList();
             List<Contestant> _contestants = db.Contestants.Where(x => x.HeatId == id).ToList();
+            var _scouts = db.Scouts.Where(s => s.PackId == runHeatView.Competition.PackId);
+            var _racers = db.Racers.Where(s => s.CompetitionId == runHeatView.Competition.Id);
+
             foreach (var contestant in _contestants)
             {
-                 
+                var _contestant = contestant;
+                var _contestantView = new ContestantViewModel();
+                _contestantView.Id = _contestant.Id;
+                _contestantView.RacerId = _contestant.RacerId;
+
+                var _racer = _racers.FirstOrDefault(x => x.Id == _contestant.RacerId);
+                var _scout = _scouts.FirstOrDefault(x => x.Id == _racer.ScoutId);
+
+                _contestantView.ScoutId = _racer.ScoutId;
+                _contestantView.RaceId = heat.RaceId;
+                _contestantView.ScoutName = _scout.Name;
+                _contestantView.CarNumber = _racer.CarNumber;
+                _contestantView.Lane = _contestant.Lane;
+
+                runHeatView.Contestants.Add(_contestantView);
             }
-            runHeatView.Competition = db.Competitions.Find(_race.CompetitionId);
-            runHeatView.CompetitionId = runHeatView.Competition.Id;
+
+
             runHeatView.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(runHeatView.Competition.LaneCount,
-                _race.Racers.Count);
+                _racers.Count(x => x.DenId == _race.DenId));
+
             return View(runHeatView);
         }
 
