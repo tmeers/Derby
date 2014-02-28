@@ -7,8 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
@@ -77,18 +79,36 @@ namespace Derby.Controllers
         }
 
         // GET: /Racer/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Racer racer = db.Racers.Find(id);
-            if (racer == null)
+            if (racer == null) { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+
+            var user = User.Identity.GetUserId();
+
+            PackAccess pa = new PackAccess();
+            if (!pa.CheckScoutMembership(racer.ScoutId, user, OwnershipType.Contributor))
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-            return View(racer);
+
+
+            Scout _scout = db.Scouts.Find(racer.ScoutId);
+            if (_scout == null) { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+
+            var packId = db.Competitions.FirstOrDefault(x => x.Id == racer.CompetitionId).PackId;
+            CreateRacerViewModel view = new CreateRacerViewModel();
+            view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
+
+            view.CompetitionId = racer.CompetitionId;
+            view.ScoutId = racer.ScoutId;
+            view.ScoutName = _scout.Name;
+            view.Id = racer.Id;
+            view.CarNumber = racer.CarNumber;
+            view.Weight = racer.Weight;
+            view.DenId = racer.DenId;
+
+            return View(view);
         }
 
         // POST: /Racer/Edit/5
@@ -96,13 +116,14 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,CarNumber,Weight,DenId,ScoutId,CompetitionId")] Racer racer)
+        public ActionResult Edit([Bind(Include = "Id,CarNumber,Weight,DenId,ScoutId,CompetitionId")] Racer racer)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(racer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("details", "Competition", new { id = racer.CompetitionId });
             }
             return View(racer);
         }
