@@ -168,16 +168,34 @@
                                     {
                                         var _heat = heat;
                                         heatLoopCount++;
-                                        <div class="row">
-                                            <a href="@Url.Action("Run", "Heat", new { id = _heat.Id })">
+                                        if (!_heat.IsCompleted)
+                                        {
+                                            <div class="row">
+                                                <a href="@Url.Action("Run", "Heat", new {id = _heat.Id})">
+                                                    <div class="col-xs-6">
+                                                        Heat #@heatLoopCount
+                                                    </div>
+                                                    <div class="col-xs-6 text-right">
+                                                        <i class="fa fa-arrow-circle-right"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                
                                                 <div class="col-xs-6">
                                                     Heat #@heatLoopCount
                                                 </div>
                                                 <div class="col-xs-6 text-right">
-                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                    <a href="@Url.Action("Run", "Heat", new {id = _heat.Id, message = "editing"})" title="Edit results">
+                                                        <i class="fa fa-wrench"></i>
+                                                    </a>
                                                 </div>
-                                            </a>
-                                        </div>
+                                                
+                                            </div>
+                                        }
                                     }
                                 }
                                 // Show this always, but "mute" it once all of the heats have been created
