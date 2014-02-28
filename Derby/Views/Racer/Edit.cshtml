@@ -5,14 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Racer</h4>
+        <h2>Edit Racer</h2>
+        <h4><em>&nbsp; &nbsp; @Model.ScoutName</em></h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
@@ -44,7 +43,7 @@
         @Html.HiddenFor(model => model.CompetitionId)
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-sm-offset-2 col-sm-10">
                 <input type="submit" value="Save" class="btn btn-xs btn-success" />
             </div>
         </div>
