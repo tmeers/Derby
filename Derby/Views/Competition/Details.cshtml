@@ -134,6 +134,11 @@
                     <p><i class="fa fa-warning"></i> Complete Scout Registration</p>
                 </div>
             }
+            <div class="alert alert-info">
+                <a href="@Url.Action("Leaders", "Competition", new { id = Model.Id })">
+                    <i class="fa fa-rotate-90 fa-sitemap"></i> See Leaderboard
+                </a>
+            </div>
         </div>
         
 
@@ -186,11 +191,43 @@
                     <div class="panel-footer announcement-bottom">
                         @if (racerCount <= 1)
                         {
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    Assign Scouts
+                            if (den.IsSystemPlaceholder)
+                            {
+                                if (race == null)
+                                {
+                                    <div class="row">
+                                        <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                            <div class="col-xs-7">
+                                                Create Race for Finals
+                                            </div>
+                                            <div class="text-right">
+                                                <i class="fa fa-arrow-circle-right denheat-go"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                            <div class="col-xs-7">
+                                                Create Race for Finals
+                                            </div>
+                                            <div class="text-right">
+                                                <i class="fa fa-arrow-circle-right denheat-go"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        Assign Scouts
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                         else
                         {

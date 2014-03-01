@@ -1,99 +1,64 @@
-﻿@model Derby.Models.Competition
+﻿@using Derby.Infrastructure
+@using Derby.Models
+@model Derby.ViewModels.CompetitionViewModel
 
 @{
     ViewBag.Title = "Leaders";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var _leaders = new List<LeaderViewModel>();
+    foreach (var racer in Model.Racers)
+    {
+        var _leader = new LeaderViewModel();
+
+        var _racer = racer;
+        List<Heat> _racerHeats = Model.Races.Where(x => x.DenId == _racer.Den.Id).SelectMany(h => h.Heats).ToList();
+        List<Contestant> _contestants = _racerHeats.SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
+        int _points = 0;
+        foreach (var item in _contestants)
+        {
+            if (item.Place != 0)
+            {
+                _points = _points + PointsCalculator.Calculate(Model.LaneCount, item.Place);
+            }
+        }
+        _leader.Name = _racer.Scout.Name;
+        _leader.DenId = _racer.Den.Id;
+        _leader.CarNumber = _racer.CarNumber;
+        _leader.Points = _points;
+        _leader.DenLogo = _racer.Den.LogoPath;
+        
+        _leaders.Add(_leader);
+    }
 }
 
-<h2>Leaders</h2>
+<h2>Leader Board</h2>
 
 <div>
-    <h4>Competition</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Pack.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pack.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RaceType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RaceType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EventDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EventDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LaneCount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LaneCount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedById)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedById)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Completed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Completed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationLocked)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationLocked)
-        </dd>
-
-    </dl>
+    
+    <h4>@Model.Title</h4>
+    <hr />
+    <table id="dashboard-scouts" class="table table-hover tablesorter table-condensed ">
+        <thead>
+            <tr>
+                <th class="header">Name</th>
+                <th class="header">Car #</th>
+                <th class="header">Points</th>
+                <th class="header">Den</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leader in _leaders.OrderBy(y => y.DenId).OrderByDescending(x => x.Points))
+            {
+                <tr>
+                    <td>@leader.Name</td>
+                    <td>@leader.CarNumber</td>
+                    <td>@leader.Points</td>
+                    <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Competition", "Details", "Competition", new { ID = Model.Id }, new { @class = "btn btn-xs btn-default" })
 </p>

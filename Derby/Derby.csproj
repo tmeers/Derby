@@ -252,6 +252,7 @@
     <Compile Include="Models\DerbyDb.cs" />
     <Compile Include="Models\Heat.cs" />
     <Compile Include="Models\Lane.cs" />
+    <Compile Include="Models\LeaderViewModel.cs" />
     <Compile Include="Models\Pack.cs" />
     <Compile Include="Models\PackMembership.cs" />
     <Compile Include="Models\Race.cs" />

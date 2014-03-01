@@ -73,6 +73,30 @@ namespace Derby.Controllers
             return View(view);
         }
 
+        public ActionResult Leaders(int? id)
+        {
+            if (id == null || !Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var user = User.Identity.GetUserId();
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            CompetitionHelper helper = new CompetitionHelper();
+            CompetitionViewModel view = helper.LoadCompetition(competition, user);
+
+
+            return View(view);
+        }
+
         public ActionResult Results(int id, int? raceId)
         {
             if (id == null || !Request.IsAuthenticated)
