@@ -78,6 +78,43 @@ namespace Derby.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //public ActionResult Final(int competitionId, int )
+        //{
+        //    Scout _scout = db.Scouts.Find(scoutId);
+        //    if (_scout == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+
+        //    var packId = db.Competitions.FirstOrDefault(x => x.Id == competitionId).PackId;
+        //    CreateRacerViewModel view = new CreateRacerViewModel();
+        //    view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
+
+        //    view.CompetitionId = competitionId;
+        //    view.ScoutId = scoutId;
+        //    view.ScoutName = _scout.Name;
+
+        //    return View(view);
+        //}
+
+        //// POST: /Racer/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Final([Bind(Include = "Id,CarNumber,Weight,DenId,ScoutId,CompetitionId")] Racer racer)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Racers.Add(racer);
+        //        db.SaveChanges();
+
+        //        return RedirectToAction("details", "Competition", new { id = racer.CompetitionId });
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+
         // GET: /Racer/Edit/5
         public ActionResult Edit(int id)
         {

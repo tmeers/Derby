@@ -209,14 +209,31 @@
                                 else
                                 {
                                     <div class="row">
-                                        <a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                        <a href="@Url.Action("Leaders", "Competition", new {id = Model.Id, returnPath = "competition"})" target="_blank">
+                                            <div class="col-xs-7">
+                                                See Leader Board
+                                            </div>
+                                            <div class="text-right">
+                                                <i class="fa fa-arrow-circle-right denheat-go"></i>
+                                            </div>
+                                        </a>
+                                        
+                                        <a href="@Url.Action("Create", "Competition", new {id = Model.Id})">
+                                            <div class="col-xs-7">
+                                                Create New Competition
+                                            </div>
+                                            <div class="text-right">
+                                                <i class="fa fa-arrow-circle-right denheat-go"></i>
+                                            </div>
+                                        </a>
+                                        @*<a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
                                             <div class="col-xs-7">
                                                 Create Race for Finals
                                             </div>
                                             <div class="text-right">
                                                 <i class="fa fa-arrow-circle-right denheat-go"></i>
                                             </div>
-                                        </a>
+                                        </a>*@
                                     </div>
                                 }
                             }
