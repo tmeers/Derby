@@ -391,6 +391,7 @@
     <Content Include="Views\Competition\Lock.cshtml" />
     <Content Include="Views\Heat\EditorTemplates\ContestantViewModel.cshtml" />
     <Content Include="Views\Heat\Run.cshtml" />
+    <Content Include="Views\Competition\Results.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
