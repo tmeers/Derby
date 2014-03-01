@@ -29,6 +29,7 @@
                                     <th class="header">Name</th>
                                     <th class="header">Registered</th>
                                     <th class="header">Car #</th>
+                                    <th class="header">Points</th>
                                     <th class="header">Den</th>
                                     <th class="header"></th>
                                 </tr>
@@ -46,6 +47,11 @@
                                         {
                                             <td><i class="success glyphicon glyphicon-ok"></i></td>
                                             <td>@_racer.CarNumber</td>
+                                            <td>
+                                                
+
+                                            </td>
+                                            
                                             <td><img src="@_racer.Den.LogoPath" class="denlogo-xxsmall" /></td>
                                             <td>
                                                 <a href="@Url.Action("Edit", "Racer", new { id = _racer.Id })">
@@ -57,7 +63,7 @@
                                         {
                                             if (!Model.RegistrationLocked)
                                             {
-                                                <td colspan="3">
+                                                <td colspan="5">
                                                     <a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, scoutId = _currentRacer.Id})" class="btn btn-xs btn-success" title="Register Racer">
                                                         <i class="fa fa-user"></i>&nbsp;Register Racer
                                                     </a>
