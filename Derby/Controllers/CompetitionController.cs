@@ -93,6 +93,13 @@ namespace Derby.Controllers
             CompetitionHelper helper = new CompetitionHelper();
             CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
+            int? _raceId = 0;
+            if (raceId != null)
+            {
+                _raceId = raceId;
+            }
+
+            ViewBag.RaceId = _raceId;
 
             return View(view);
         }
