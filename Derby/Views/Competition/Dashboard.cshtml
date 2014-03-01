@@ -1,4 +1,5 @@
-﻿@using Derby.Models
+﻿@using Derby.Infrastructure
+@using Derby.Models
 @using Derby.ViewModels
 @using Microsoft.Ajax.Utilities
 @model Derby.ViewModels.CompetitionViewModel
@@ -6,7 +7,7 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<meta http-equiv="refresh" content="60">
 <h3><i class="fa fa-trophy"></i>  - @Html.DisplayFor(model => model.Title) <span class="small text-right">Spectator Dashboard</span></h3>
 
 <div>
@@ -37,14 +38,18 @@
                                         <td>@_currentRacer.Weight</td>
                                         <td>
                                             @{
-                                                //int points = 0;
-                                                //foreach (var race in Model.Races.Where(x => x.DenId == _currentRacer.Den.Id))
-                                                //{
-                                                //    var _race = race;
-                                                //    var heats = race.Heats.Where(x => x.RaceId == _race.Id).ToList();
-                                                //    var desePoints = (from c in heats.Contestants)
-                                                //}
+                                                List<Heat> _racerHeats = Model.Races.Where(x => x.DenId == _currentRacer.Den.Id).SelectMany(h => h.Heats).ToList();
+                                                List<Contestant> _contestants = _racerHeats.SelectMany(x => x.Contestants.Where(y => y.RacerId == _currentRacer.Id)).ToList();
+                                                int _points = 0;
+                                                foreach (var item in _contestants)
+                                                {
+                                                    if (item.Place != 0)
+                                                    {
+                                                        _points = _points + PointsCalculator.Calculate(Model.LaneCount, item.Place);
+                                                    }
+                                                }
                                             }
+                                            @_points
                                         </td>
                                     </tr>
                                 }
@@ -77,9 +82,9 @@
                 {
                     heatCount = race.Heats.Count;
                 }
-                
+
                 denCount++;
-                
+
                 string panelStatus = "panel-info";
                 bool denInError = false;
                 if (racerCount == 0)
@@ -87,7 +92,7 @@
                     panelStatus = "panel-danger";
                     denInError = true;
                 }
-                
+
                 <div class="panel @panelStatus">
                     <div class="panel-heading">
                         <div class="row">
@@ -142,7 +147,7 @@
                             if (race.Heats.Count != 0)
                             {
                                 int heatNumber = 0;
-                                
+
                                 <div class="row">
                                     @foreach (var heat in race.Heats)
                                     {
@@ -177,15 +182,17 @@
 <p>
     @if (Model.Pack.Membership.AccessLevel == Derby.Infrastructure.OwnershipType.Guest)
     {
-        @Html.ActionLink("Back to Pack", "Info", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+        @Html.ActionLink("Back to Pack", "Info", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
     }
     else
     {
-        @Html.ActionLink("Edit Competition", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) @:|
+        @Html.ActionLink("Edit Competition", "Edit", "Competition", new {id = Model.Id}, new {@class = "btn btn-xs btn-primary"})
+        @:|
 
-        <a href="@Url.Action("Details", "Competition", new { id = Model.Id })" class="btn btn-xs btn-info" title="Details"><i class="fa fa-cogs"></i>&nbsp; Admin Dashboard</a> @:|
+        <a href="@Url.Action("Details", "Competition", new {id = Model.Id})" class="btn btn-xs btn-info" title="Details"><i class="fa fa-cogs"></i>&nbsp; Admin Dashboard</a>
+        @:|
 
 
-        @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
+        @Html.ActionLink("Back to Pack", "Details", "Pack", new {id = Model.PackId}, new {@class = "btn btn-xs btn-default"})
     }
 </p>
