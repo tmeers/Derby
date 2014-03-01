@@ -251,10 +251,8 @@
                                 </div>
                                 if (heats.Count() >= heatsNeeded)
                                 {
-                                    addHeat = "text-success";
-                                    linkText = "Add tie-breaker Heat";
                                     <div class="row">
-                                        <a class="@addHeat" href="@Url.Action("Results", "Competiton", new { competitionId = Model.Id, raceId = race.Id, returnPath = "competition" })">
+                                        <a class="text-success" href="@Url.Action("Results", "Competition", new { id = Model.Id, raceId = race.Id, returnPath = "competition" })">
                                             <div class="col-xs-6">
                                                 View Results
                                             </div>
