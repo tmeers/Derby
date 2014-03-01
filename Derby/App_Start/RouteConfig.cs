@@ -113,6 +113,12 @@ namespace Derby
             );
 
             routes.MapRoute(
+                name: "Competition-Results",
+                url: "competition/results/{id}/{raceId}",
+                defaults: new { controller = "Competition", action = "Results", raceId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Racer-Create",
                 url: "racer/create/{competitionId}/{scoutId}",
                 defaults: new { controller = "Racer", action = "Create" }
