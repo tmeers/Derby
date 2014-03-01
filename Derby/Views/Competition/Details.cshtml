@@ -3,6 +3,7 @@
 @using Derby.Infrastructure
 @using Derby.Models
 @using Microsoft.Ajax.Utilities
+@using Microsoft.Web.Infrastructure
 @model Derby.ViewModels.CompetitionViewModel
 
 @{
@@ -45,11 +46,21 @@
                                         }
                                         @if (_racer != null)
                                         {
+                                            List<Heat> _racerHeats = Model.Races.Where(x => x.DenId == _racer.Den.Id).SelectMany(h => h.Heats).ToList();
+                                            List<Contestant> _contestants = _racerHeats.SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
+                                            int _points = 0;
+                                            foreach (var item in _contestants)
+                                            {
+                                                if (item.Place != 0)
+                                                {
+                                                    _points = _points + PointsCalculator.Calculate(Model.LaneCount, item.Place);
+                                                }
+                                            }
                                             <td><i class="success glyphicon glyphicon-ok"></i></td>
                                             <td>@_racer.CarNumber</td>
                                             <td>
                                                 
-
+                                                @_points
                                             </td>
                                             
                                             <td><img src="@_racer.Den.LogoPath" class="denlogo-xxsmall" /></td>

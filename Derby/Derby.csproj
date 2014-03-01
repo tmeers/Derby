@@ -191,6 +191,7 @@
     <Compile Include="Infrastructure\OwnershipType.cs" />
     <Compile Include="Infrastructure\PackAccess.cs" />
     <Compile Include="Infrastructure\DerbyType.cs" />
+    <Compile Include="Infrastructure\PointsCalculator.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
