@@ -66,6 +66,11 @@ namespace Derby.Controllers
         // GET: /Race/Create
         public ActionResult Create(int competitionId, int? denId)
         {
+            if (!string.IsNullOrEmpty(Request.QueryString["returnPath"]))
+            {
+                TempData["returnPath"] = Request.QueryString["returnPath"];
+            }
+
             var check = db.Races.FirstOrDefault(x => x.DenId == denId && x.CompetitionId == competitionId);
             if (check != null)
             {
@@ -104,6 +109,16 @@ namespace Derby.Controllers
                 race.CompletedDate = DateTime.Now;
                 db.Races.Add(race);
                 db.SaveChanges();
+
+                object returnPath = string.Empty;
+                TempData.TryGetValue("returnPath", out returnPath);
+                string returnPathStr = returnPath as string;
+
+                if (!string.IsNullOrEmpty(returnPathStr) && returnPathStr == "competition")
+                {
+                    return RedirectToAction("Details", "Competition", new { id = race.CompetitionId });
+                }
+
                 return RedirectToAction("Index", "Race", new { competitionId = race.CompetitionId });
             }
 
