@@ -47,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var leader in _leaders.OrderBy(y => y.DenId).OrderByDescending(x => x.Points))
+            @foreach (var leader in _leaders.OrderBy(y => y.DenId).ThenByDescending(x => x.Points))
             {
                 <tr>
                     <td>@leader.Name</td>
