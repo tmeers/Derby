@@ -211,6 +211,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\BlobCloudService.cs" />
     <Compile Include="Infrastructure\CompetitionHelper.cs" />
     <Compile Include="Infrastructure\HeatGenerator.cs" />
     <Compile Include="Infrastructure\OwnershipType.cs" />
@@ -504,9 +505,7 @@
   <Target Name="AfterBuild">
   </Target> -->
   <Target Name="AfterBuild">
-    <Copy SourceFiles="HiddenSettings.Template.config" 
-    DestinationFiles="HiddenSettings.config" SkipUnchangedFiles="true" 
-    Condition="!Exists('HiddenSettings.config')">
+    <Copy SourceFiles="HiddenSettings.Template.config" DestinationFiles="HiddenSettings.config" SkipUnchangedFiles="true" Condition="!Exists('HiddenSettings.config')">
     </Copy>
   </Target>
 </Project>
