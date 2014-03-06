@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @Html.EditorFor(model => model.Contestants)
+                            @Html.EditorFor(model => model.Contestants.OrderBy(x => x.Lane))
                         </tbody>
                     </table>
                 </div>
