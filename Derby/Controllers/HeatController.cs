@@ -169,7 +169,7 @@ namespace Derby.Controllers
                 _places.Add(Convert.ToString(i), Convert.ToString(i));
             }
 
-            foreach (var contestant in _contestants)
+            foreach (var contestant in _contestants.OrderBy(x => x.Lane))
             {
                 var _contestant = contestant;
                 var _contestantView = new ContestantViewModel();
