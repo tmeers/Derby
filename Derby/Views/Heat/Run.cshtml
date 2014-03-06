@@ -30,7 +30,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @Html.EditorFor(model => model.Contestants.OrderBy(x => x.Lane))
+                            @{
+                                var _contestants = Model.Contestants.OrderBy(x => x.Lane);
+                            }
+                            @Html.EditorFor(model => _contestants)
                         </tbody>
                     </table>
                 </div>
