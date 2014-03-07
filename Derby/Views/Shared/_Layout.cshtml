@@ -13,6 +13,7 @@
     <title>@ViewBag.Title - Derby v0.1</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Html.Partial("_Analytics")
 
 </head>
 <body>
@@ -54,6 +55,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    @Html.Partial("_Analytics")
 </body>
 </html>
