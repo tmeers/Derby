@@ -289,6 +289,10 @@
     <Compile Include="Migrations\201403290150347_Identity-2-0-Update.Designer.cs">
       <DependentUpon>201403290150347_Identity-2-0-Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201404020231326_PackInvitations.cs" />
+    <Compile Include="Migrations\201404020231326_PackInvitations.Designer.cs">
+      <DependentUpon>201404020231326_PackInvitations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -299,6 +303,7 @@
     <Compile Include="Models\Lane.cs" />
     <Compile Include="Models\LeaderViewModel.cs" />
     <Compile Include="Models\Pack.cs" />
+    <Compile Include="Models\PackInvitation.cs" />
     <Compile Include="Models\PackMembership.cs" />
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\Racer.cs" />
@@ -495,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201403290150347_Identity-2-0-Update.resx">
       <DependentUpon>201403290150347_Identity-2-0-Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201404020231326_PackInvitations.resx">
+      <DependentUpon>201404020231326_PackInvitations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

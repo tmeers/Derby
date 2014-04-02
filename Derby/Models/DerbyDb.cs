@@ -30,14 +30,12 @@ namespace Derby.Models
         public DbSet<Contestant> Contestants { get; set; }
 
         public DbSet<PackMembership> PackMemberships { get; set; }
+        public DbSet<PackInvitation> PackInvitations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
-
-
-
 	}
 }
