@@ -41,14 +41,19 @@ namespace Derby.Controllers
         }
 
         // GET: /Heat/Create
-        public ActionResult Create(int raceId, string returnPath)
+        public ActionResult Create(int? raceId, string returnPath)
         {
+            if (raceId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             if (!string.IsNullOrEmpty(Request.QueryString["returnPath"]))
             {
                 TempData["returnPath"] = Request.QueryString["returnPath"];
             }
             
-            return View(LoadCreateView(raceId));
+            return View(LoadCreateView(raceId.Value));
         }
 
         // POST: /Heat/Create
