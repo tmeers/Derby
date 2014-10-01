@@ -218,6 +218,7 @@
     <Compile Include="Controllers\DenController.cs" />
     <Compile Include="Controllers\HeatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\PackController.cs" />
     <Compile Include="Controllers\RaceController.cs" />
     <Compile Include="Controllers\RacerController.cs" />
@@ -346,8 +347,12 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="HiddenSettings.config" />
-    <Content Include="HiddenSettings.template.config" />
+    <Content Include="HiddenSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="HiddenSettings.template.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -450,12 +455,16 @@
     <Content Include="Views\Competition\Results.cshtml" />
     <Content Include="Views\Competition\Leaders.cshtml" />
     <Content Include="Views\Shared\_Analytics.cshtml" />
+    <Content Include="Views\Shared\_PacksPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Layout\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Derby.ViewModels.PackViewModel>
+
+<li class="dropdown">
+    <a href="#"><i class="fa fa-cogs dropdown-toggle" data-toggle="dropdown"></i>&nbsp;Packs <b class="caret"></b></a>
+    <ul class="dropdown-menu" role="menu">
+        @if (!Model.Any())
+        {
+            <li><a href="#">No Packs have been added yet!</a></li>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <li>
+                    @Html.ActionLink(item.Name, "Index", "pack", new { id = item.Id }, null)
+                </li>
+            }
+        }
+    </ul>
+</li>
