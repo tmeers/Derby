@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Derby.ViewModels.PackViewModel>
 
 <li class="dropdown">
-    <a href="#"><i class="fa fa-cogs dropdown-toggle" data-toggle="dropdown"></i>&nbsp;Packs <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i>&nbsp;Packs <b class="caret"></b></a>
     <ul class="dropdown-menu" role="menu">
         @if (!Model.Any())
         {
@@ -12,7 +12,7 @@
             foreach (var item in Model)
             {
                 <li>
-                    @Html.ActionLink(item.Name, "Index", "pack", new { id = item.Id }, null)
+                    @Html.ActionLink(item.Name + " - " + item.Region, "Index", "pack", new { id = item.Id }, null)
                 </li>
             }
         }
