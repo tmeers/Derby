@@ -5,14 +5,15 @@
     <ul class="dropdown-menu" role="menu">
         @if (!Model.Any())
         {
-            <li><a href="#">No Packs have been added yet!</a></li>
+            <li><a href="#">Register a Pack</a></li>
         }
         else
         {
             foreach (var item in Model)
             {
+                <li>@Html.ActionLink("All Packs", "Index", "pack", null, null)</li>
                 <li>
-                    @Html.ActionLink(item.Name + " - " + item.Region, "Index", "pack", new { id = item.Id }, null)
+                    @Html.ActionLink(item.Name + " - " + item.Region, "details", "pack", new { id = item.Id }, null)
                 </li>
             }
         }
