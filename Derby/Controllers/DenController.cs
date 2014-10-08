@@ -39,6 +39,8 @@ namespace Derby.Controllers
         // GET: /Den/Create
         public ActionResult Create(int packId)
         {
+            ViewBag.PackId = packId;
+
             return View();
         }
 
