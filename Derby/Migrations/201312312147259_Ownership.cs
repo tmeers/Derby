@@ -16,8 +16,8 @@ namespace Derby.Migrations
                     UserId = c.String(),
                     AccessLevel = c.Int(nullable: false),
                 })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Packs", t => t.PackId, cascadeDelete: true);
+                .PrimaryKey(t => t.Id);
+                //.ForeignKey("dbo.Packs", t => t.PackId, cascadeDelete: true);
             //.ForeignKey("dbo.AspNetUsers", t => t.UserId, );
 
         }
