@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Derby.Models.PackMembership>
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -18,10 +17,10 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PackId)
+                @Html.DisplayNameFor(model => model.Pack.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                User Name
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AccessLevel)
@@ -32,10 +31,10 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PackId)
+                @Html.DisplayFor(modelItem => item.Pack.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AccessLevel)

@@ -31,7 +31,7 @@
                     @if (Request.IsAuthenticated)
                     {
                         @Html.Action("GetPacks", "Layout")
-                        <li><a href="#"><i class="fa fa-users"></i> Membership</a></li>
+                        <li><a href="@Url.Action("Index", "Membership", null)" title="Membership area"><i class="fa fa-pencil-square-o"></i>&nbsp;Membership</a></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

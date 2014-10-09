@@ -4,12 +4,15 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 
 namespace Derby.Controllers
 {
@@ -79,18 +82,20 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name,Region")] Pack pack)
+        public async Task<Pack> Create([Bind(Include = "Id,Name,Region")] Pack pack)
         {
             if (ModelState.IsValid && Request.IsAuthenticated)
             {
+                AccountController ac = new AccountController();
                 pack.CreatedById = User.Identity.GetUserId();
                 pack.CreateDateTime = DateTime.Now;
                 db.Packs.Add(pack);
                 db.SaveChanges();
-                
+
+                var user = await ac.UserManager.FindByIdAsync(pack.CreatedById);
                 var member = new PackMembership();
-                member.PackId = pack.Id;
-                member.UserId = pack.CreatedById;
+                member.Pack = pack;
+                member.User = user;
                 member.AccessLevel = OwnershipType.Owner;
                 
                 db.PackMemberships.Add(member);
@@ -104,10 +109,11 @@ namespace Derby.Controllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                RedirectToAction("Index");
+                Response.End();
             }
 
-            return View(pack);
+            return pack;
         }
 
         // GET: /Pack/Edit/5

@@ -29,7 +29,7 @@ namespace Derby.Infrastructure
             }
             else
             {
-                packs.AddRange(getMemberships(user).Select(item => db.Packs.FirstOrDefault(x => x.Id == item.PackId)));
+                packs.AddRange(getMemberships(user).Select(item => db.Packs.FirstOrDefault(x => x.Id == item.Pack.Id)));
             }
 
             var packsView = new List<PackViewModel>();
@@ -39,7 +39,7 @@ namespace Derby.Infrastructure
 
                 view.Dens = db.Dens.Where(d => d.PackId == pack.Id).ToList();
                 view.Scouts = db.Scouts.Where(s => s.PackId == pack.Id).ToList();
-                view.Membership = db.PackMemberships.FirstOrDefault(x => x.UserId == user);
+                view.Membership = db.PackMemberships.FirstOrDefault(x => x.User.Id == user);
                 view.Competitions = db.Competitions.Where(c => c.PackId == pack.Id).ToList();
 
                 packsView.Add(view);
@@ -64,7 +64,7 @@ namespace Derby.Infrastructure
         internal bool CheckCompetitionMembership(int? packId, string user, OwnershipType minimuLevel)
         {
             //Competition comp = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
-            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == packId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.Pack.Id == packId);
 
             if (member != null && checkAccess(member.AccessLevel, minimuLevel))
                 return true;
@@ -75,7 +75,7 @@ namespace Derby.Infrastructure
         internal bool CheckDenMembership(int? denId, string user, OwnershipType minimuLevel)
         {
             Den den = db.Dens.FirstOrDefault(x => x.Id == denId);
-            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == den.PackId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.Pack.Id == den.PackId);
 
             if (member != null && checkAccess(member.AccessLevel, minimuLevel))
                 return true;
@@ -86,7 +86,7 @@ namespace Derby.Infrastructure
         internal bool CheckScoutMembership(int? scoutId, string user, OwnershipType minimuLevel)
         {
             Scout den = db.Scouts.FirstOrDefault(x => x.Id == scoutId);
-            PackMembership member = getMemberships(user).FirstOrDefault(m => m.PackId == den.PackId);
+            PackMembership member = getMemberships(user).FirstOrDefault(m => m.Pack.Id == den.PackId);
 
             if (member != null && checkAccess(member.AccessLevel, minimuLevel))
                 return true;
@@ -103,7 +103,7 @@ namespace Derby.Infrastructure
 
         private IQueryable<PackMembership> getMemberships(string user)
         {
-            return db.PackMemberships.Where(x => x.UserId == user);
+            return db.PackMemberships.Where(x => x.User.Id == user);
         }
 
         private bool checkAccess(OwnershipType given, OwnershipType minimum)
