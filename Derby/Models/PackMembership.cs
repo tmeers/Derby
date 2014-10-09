@@ -15,6 +15,9 @@ namespace Derby.Models
         public string UserId { get; set; }
         public OwnershipType AccessLevel { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
+
         public PackMembership()
         {
             AccessLevel = OwnershipType.None;
