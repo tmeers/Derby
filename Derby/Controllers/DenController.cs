@@ -88,9 +88,12 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(den).State = EntityState.Modified;
+                Den updated = db.Dens.FirstOrDefault(x => x.Id == den.Id);
+                updated.Name = den.Name;
+
+                db.Entry(updated).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Pack", new {id = den.PackId});
             }
             return View(den);
         }
