@@ -125,5 +125,26 @@ namespace Derby.Infrastructure
                 return false;
             }
         }
+
+        internal void AddMembership(int id, string user, OwnershipType ownership)
+        {
+            var member = new PackMembership();
+            Pack newPack = db.Packs.FirstOrDefault(x => x.Id == id);
+            ApplicationUser currentUser = db.ApplicationUsers.FirstOrDefault(x => x.Id == user);
+
+            //newPack.Id = pack.Id;
+            //newPack.Name = pack.Name;
+            //newPack.Region = pack.Region;
+            //newPack.CreatedById = pack.CreatedById;
+            //newPack.CreateDateTime = pack.CreateDateTime;
+
+            member.Pack = newPack;
+
+            member.User = currentUser;
+            member.AccessLevel = ownership;
+
+            db.PackMemberships.Add(member);
+            db.SaveChanges();
+        }
     }
 }

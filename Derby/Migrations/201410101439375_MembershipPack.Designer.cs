@@ -13,7 +13,7 @@ namespace Derby.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201410092022322_MembershipPack"; }
+            get { return "201410101439375_MembershipPack"; }
         }
         
         string IMigrationMetadata.Source

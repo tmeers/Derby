@@ -299,9 +299,9 @@
     <Compile Include="Migrations\201410091815047_UserMembership.Designer.cs">
       <DependentUpon>201410091815047_UserMembership.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201410092022322_MembershipPack.cs" />
-    <Compile Include="Migrations\201410092022322_MembershipPack.Designer.cs">
-      <DependentUpon>201410092022322_MembershipPack.cs</DependentUpon>
+    <Compile Include="Migrations\201410101439375_MembershipPack.cs" />
+    <Compile Include="Migrations\201410101439375_MembershipPack.Designer.cs">
+      <DependentUpon>201410101439375_MembershipPack.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -533,8 +533,8 @@
     <EmbeddedResource Include="Migrations\201410091815047_UserMembership.resx">
       <DependentUpon>201410091815047_UserMembership.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201410092022322_MembershipPack.resx">
-      <DependentUpon>201410092022322_MembershipPack.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201410101439375_MembershipPack.resx">
+      <DependentUpon>201410101439375_MembershipPack.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

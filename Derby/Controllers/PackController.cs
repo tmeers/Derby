@@ -82,7 +82,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<Pack> Create([Bind(Include = "Id,Name,Region")] Pack pack)
+        public ActionResult Create([Bind(Include = "Id,Name,Region")] Pack pack)
         {
             if (ModelState.IsValid && Request.IsAuthenticated)
             {
@@ -92,14 +92,10 @@ namespace Derby.Controllers
                 db.Packs.Add(pack);
                 db.SaveChanges();
 
-                var user = await ac.UserManager.FindByIdAsync(pack.CreatedById);
-                var member = new PackMembership();
-                member.Pack = pack;
-                member.User = user;
-                member.AccessLevel = OwnershipType.Owner;
-                
-                db.PackMemberships.Add(member);
-                db.SaveChanges();
+                string currentUserId = User.Identity.GetUserId();
+
+                PackAccess member = new PackAccess();
+                member.AddMembership(pack.Id, currentUserId, OwnershipType.Owner);
 
                 db.Dens.Add(new Den() { Name = "Tigers", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/tiger.jpg"});
                 db.Dens.Add(new Den() { Name = "Wolves", CreatedDateTime = DateTime.Now, PackId = pack.Id, InactiveStatus = false, CanCompeteInFinals = true, IsSystemPlaceholder = false, LogoPath = "/content/wolf.jpg" });
@@ -109,11 +105,10 @@ namespace Derby.Controllers
 
                 db.SaveChanges();
 
-                RedirectToAction("Index");
-                Response.End();
+                return RedirectToAction("Index");
             }
 
-            return pack;
+            return View(pack);
         }
 
         // GET: /Pack/Edit/5
