@@ -14,10 +14,10 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
+    <table class="table table-hover ">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Pack.Name)
+                @Html.DisplayNameFor(model => model.Pack.Name) - @Html.DisplayNameFor(model => model.Pack.Region)
             </th>
             <th>
                 User Name
@@ -27,11 +27,12 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
+
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Pack.Name)
+                @Html.DisplayFor(modelItem => item.Pack.Name) - @Html.DisplayFor(modelItem => item.Pack.Region)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserName)
@@ -40,13 +41,16 @@
                 @Html.DisplayFor(modelItem => item.AccessLevel)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
+
+                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
             </td>
+                
         </tr>
-    }
-    
+        }
+
     </table>
 </body>
 </html>
