@@ -11,46 +11,71 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
-<body>
-    <a href="@Url.Action("CreateInvite", "Invitation", null)" class="modal-link btn btn-xs btn-success" title="Delete"><i class="fa fa-envelope"></i><span class="hidden-sm hidden-xs">&nbsp; Send New Invitation</span><span class="hidden-md hidden-lg">&nbsp; New Invite</span></a>
+    <body>
+        <p>
+            <a href="@Url.Action("CreateInvite", "Invitation", null)" class="modal-link btn btn-xs btn-success" title="Delete"><i class="fa fa-envelope"></i><span class="hidden-sm hidden-xs">&nbsp; Send New Invitation</span><span class="hidden-md hidden-lg">&nbsp; New Invite</span></a>
+        </p>
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#home" role="tab" data-toggle="tab">Members</a></li>
+            <li><a href="#profile" role="tab" data-toggle="tab">Invites</a></li>
 
-    <table class="table table-hover ">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Pack.Name) - @Html.DisplayNameFor(model => model.Pack.Region)
-            </th>
-            <th>
-                User Name
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AccessLevel)
-            </th>
-            <th></th>
-        </tr>
+        </ul>
 
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pack.Name) - @Html.DisplayFor(modelItem => item.Pack.Region)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AccessLevel)
-            </td>
-            <td>
-                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary icon-button-min" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <table class="table table-hover ">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Pack.Name) - @Html.DisplayNameFor(model => model.Pack.Region)
+                        </th>
+                        <th>
+                            User Name
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AccessLevel)
+                        </th>
+                        <th></th>
+                    </tr>
 
-                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default icon-button-min" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
-                &nbsp;&nbsp;&nbsp;
-                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger icon-button-min" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
-            </td>
-                
-        </tr>
-        }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pack.Name) - @Html.DisplayFor(modelItem => item.Pack.Region)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccessLevel)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary icon-button-min" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
 
-    </table>
-</body>
+                                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default icon-button-min" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger icon-button-min" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            <div class="tab-pane" id="profile">
+            
+            </div>
+
+        </div>
+        <script>
+            $(function () {
+                $('#myTab a').click(function (e) {
+                    e.preventDefault();
+                    $(this).tab('show');
+                })
+            });
+
+        </script>
+    </body>
 </html>

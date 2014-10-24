@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Derby.Infrastructure;
+using Derby.Models;
 
-namespace Derby.Models
+namespace Derby.ViewModels
 {
-    public class PackInvitation
+    public class PackInvitationViewModel
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public int ExpiryOffset { get; set; }
 
-        [Index("InvitationCode", IsUnique = true) ]
+        [Index("InvitationCode", IsUnique = true)]
         [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 10)]
         public string Code { get; set; }
         public virtual ApplicationUser InvitedBy { get; set; }
@@ -22,5 +23,15 @@ namespace Derby.Models
         public bool Accepted { get; set; }
         public string AcceptedUserId { get; set; }
         public virtual Pack Pack { get; set; }
-    } 
+        public virtual List<PackViewModel> PackList { get; set; }
+
+        public PackInvitationViewModel(string user)
+        {
+            Pack = new Pack();
+            PackList = new List<PackViewModel>();
+            Infrastructure.PackAccess packs = new PackAccess();
+
+            PackList = packs.BuildPackListing(user);
+        }
+    }
 }

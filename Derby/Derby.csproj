@@ -236,6 +236,7 @@
     <Compile Include="Infrastructure\PackAccess.cs" />
     <Compile Include="Infrastructure\DerbyType.cs" />
     <Compile Include="Infrastructure\PointsCalculator.cs" />
+    <Compile Include="Infrastructure\GuidEncoder.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.cs" />
     <Compile Include="Migrations\201312270426471_Initial-Configuration.Designer.cs">
       <DependentUpon>201312270426471_Initial-Configuration.cs</DependentUpon>
@@ -304,6 +305,14 @@
     <Compile Include="Migrations\201410101439375_MembershipPack.Designer.cs">
       <DependentUpon>201410101439375_MembershipPack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410241909084_PackInvite-PackId.cs" />
+    <Compile Include="Migrations\201410241909084_PackInvite-PackId.Designer.cs">
+      <DependentUpon>201410241909084_PackInvite-PackId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201410241923485_SomethingSomethingPack.cs" />
+    <Compile Include="Migrations\201410241923485_SomethingSomethingPack.Designer.cs">
+      <DependentUpon>201410241923485_SomethingSomethingPack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -325,6 +334,7 @@
     <Compile Include="ViewModels\CreateRacerViewModel.cs" />
     <Compile Include="ViewModels\DenCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ModifyHeatViewModel.cs" />
+    <Compile Include="ViewModels\PackInvitationViewModel.cs" />
     <Compile Include="ViewModels\PackViewModel.cs" />
     <Compile Include="ViewModels\ContestantViewModel.cs" />
     <Compile Include="ViewModels\RacerContestantViewModel.cs" />
@@ -542,6 +552,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410101439375_MembershipPack.resx">
       <DependentUpon>201410101439375_MembershipPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410241909084_PackInvite-PackId.resx">
+      <DependentUpon>201410241909084_PackInvite-PackId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410241923485_SomethingSomethingPack.resx">
+      <DependentUpon>201410241923485_SomethingSomethingPack.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
