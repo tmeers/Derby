@@ -218,6 +218,7 @@
     <Compile Include="Controllers\DenController.cs" />
     <Compile Include="Controllers\HeatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\PackController.cs" />
@@ -473,6 +474,12 @@
     <Content Include="Views\Membership\Details.cshtml" />
     <Content Include="Views\Membership\Edit.cshtml" />
     <Content Include="Views\Membership\Index.cshtml" />
+    <Content Include="Views\Invitation\Create.cshtml" />
+    <Content Include="Views\Invitation\Delete.cshtml" />
+    <Content Include="Views\Invitation\Details.cshtml" />
+    <Content Include="Views\Invitation\Edit.cshtml" />
+    <Content Include="Views\Invitation\Index.cshtml" />
+    <Content Include="Views\Invitation\_InvitePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

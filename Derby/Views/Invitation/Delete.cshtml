@@ -1,0 +1,80 @@
+﻿@model Derby.Models.PackInvitation
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>PackInvitation</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpiryOffset)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ExpiryOffset)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.InvitedEmail)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.InvitedEmail)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Accepted)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Accepted)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AcceptedUserId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AcceptedUserId)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

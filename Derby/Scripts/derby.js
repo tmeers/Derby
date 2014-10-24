@@ -11,4 +11,29 @@
         }
 
     });
+
+    $('body').on('click', '.modal-link', function (e) {
+        e.preventDefault();
+        $(this).attr('data-target', '#modal-container');
+        $(this).attr('data-toggle', 'modal');
+    });
+
+    $('#modal-container').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    //$('.modal-link').click(function (e) {
+    //    console.log(this);
+    //    //e.preventDefault();
+    //    $(this).attr('data-target', '#modal-container');
+    //    $(this).attr('data-toggle', 'modal');
+
+    //    $('.modal')
+    //     .prop('class', 'modal fade') // revert to default
+    //     .addClass($(this).data('direction'));
+
+        
+    //    $('.modal').modal('show');
+    //});
+
 });

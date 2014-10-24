@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Derby.Models.PackMembership>
 
 @{
+    ViewBag.Title = "Membership";
 }
 
 <!DOCTYPE html>
@@ -11,9 +12,8 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    <a href="@Url.Action("CreateInvite", "Invitation", null)" class="modal-link btn btn-xs btn-success" title="Delete"><i class="fa fa-envelope"></i><span class="hidden-sm hidden-xs">&nbsp; Send New Invitation</span><span class="hidden-md hidden-lg">&nbsp; New Invite</span></a>
+
     <table class="table table-hover ">
         <tr>
             <th>
@@ -41,11 +41,11 @@
                 @Html.DisplayFor(modelItem => item.AccessLevel)
             </td>
             <td>
-                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
+                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary icon-button-min" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
 
-                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
+                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default icon-button-min" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
                 &nbsp;&nbsp;&nbsp;
-                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
+                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger icon-button-min" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
             </td>
                 
         </tr>

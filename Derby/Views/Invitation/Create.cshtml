@@ -1,0 +1,84 @@
+﻿@model Derby.Models.PackInvitation
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>PackInvitation</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreatedDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreatedDate)
+                    @Html.ValidationMessageFor(model => model.CreatedDate)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpiryOffset, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ExpiryOffset)
+                    @Html.ValidationMessageFor(model => model.ExpiryOffset)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Code)
+                    @Html.ValidationMessageFor(model => model.Code)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.InvitedEmail, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InvitedEmail)
+                    @Html.ValidationMessageFor(model => model.InvitedEmail)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Accepted, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Accepted)
+                    @Html.ValidationMessageFor(model => model.Accepted)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.AcceptedUserId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AcceptedUserId)
+                    @Html.ValidationMessageFor(model => model.AcceptedUserId)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

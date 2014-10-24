@@ -1,0 +1,74 @@
+﻿@model Derby.Models.PackInvitation
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>PackInvitation</h4>
+    	<hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreatedDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ExpiryOffset)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ExpiryOffset)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Code)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Code)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.InvitedEmail)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.InvitedEmail)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Accepted)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Accepted)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AcceptedUserId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AcceptedUserId)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
