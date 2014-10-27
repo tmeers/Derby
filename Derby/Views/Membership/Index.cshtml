@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Derby.Models.PackMembership>
+﻿@using Derby.Infrastructure
+@model Derby.ViewModels.PackMembershipViewModel
 
 @{
     ViewBag.Title = "Membership";
@@ -16,65 +17,68 @@
             <a href="@Url.Action("CreateInvite", "Invitation", null)" class="modal-link btn btn-xs btn-success" title="Delete"><i class="fa fa-envelope"></i><span class="hidden-sm hidden-xs">&nbsp; Send New Invitation</span><span class="hidden-md hidden-lg">&nbsp; New Invite</span></a>
         </p>
         <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="#home" role="tab" data-toggle="tab">Members</a></li>
-            <li><a href="#profile" role="tab" data-toggle="tab">Invites</a></li>
+            <li class="active"><a href="#memberships" role="tab" data-toggle="tab">Members by Pack</a></li>
+            <li><a href="#invitations" role="tab" data-toggle="tab">Invites</a></li>
 
         </ul>
 
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane active" id="home">
-                <table class="table table-hover ">
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Pack.Name) - @Html.DisplayNameFor(model => model.Pack.Region)
-                        </th>
-                        <th>
-                            User Name
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.AccessLevel)
-                        </th>
-                        <th></th>
-                    </tr>
-
-                    @foreach (var item in Model)
-                    {
+            <div class="tab-pane active" id="memberships">
+                @foreach (var pack in Model.Packs)
+                {
+                    <h4>@Html.DisplayFor(modelItem => pack.Name) - @Html.DisplayFor(modelItem => pack.Region)</h4>
+                    <table class="table table-hover ">
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Pack.Name) - @Html.DisplayFor(modelItem => item.Pack.Region)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AccessLevel)
-                            </td>
-                            <td>
-                                <a href="@Url.Action("Edit", "Membership", new { id = item.Id })" class="btn btn-xs btn-primary icon-button-min" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
-
-                                <a href="@Url.Action("Details", "Membership", new { id = item.Id })" class="btn btn-xs btn-default icon-button-min" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
-                                &nbsp;&nbsp;&nbsp;
-                                <a href="@Url.Action("Delete", "Membership", new { id = item.Id })" class="btn btn-xs btn-danger icon-button-min" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
-                            </td>
-
+                            <th>
+                                User Name
+                            </th>
+                            <th>
+                                Access Level
+                            </th>
+                            <th></th>
                         </tr>
-                    }
 
-                </table>
+                        @foreach (var item in Model.PackMemberships.Where(x => x.Pack.Id == pack.Id))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AccessLevel)
+                                </td>
+                                <td>
+                                    @if (pack.Membership.AccessLevel == OwnershipType.Owner || pack.Membership.AccessLevel == OwnershipType.Contributor)
+                                    {
+                                        <a href="@Url.Action("Edit", "Membership", new {id = item.Id})" class="btn btn-xs btn-primary icon-button-min" title="Edit"><i class="fa fa-pencil"></i><span class="hidden-sm hidden-xs">&nbsp; Edit</span></a>
+
+                                        <a href="@Url.Action("Details", "Membership", new {id = item.Id})" class="btn btn-xs btn-default icon-button-min" title="Details"><i class="fa fa-info"></i><span class="hidden-sm hidden-xs">&nbsp; Details</span></a>
+                                        @:&nbsp;
+                                        @:&nbsp;
+                                        @:&nbsp;
+                                        <a href="@Url.Action("Delete", "Membership", new {id = item.Id})" class="btn btn-xs btn-danger icon-button-min" title="Delete"><i class="fa fa-trash-o"></i><span class="hidden-sm hidden-xs">&nbsp; Delete</span></a>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+
+                    </table>
+                }
             </div>
-            <div class="tab-pane" id="profile">
+            <div class="tab-pane" id="invitations">
             
             </div>
 
         </div>
         <script>
-            $(function () {
-                $('#myTab a').click(function (e) {
-                    e.preventDefault();
-                    $(this).tab('show');
-                })
-            });
+            //$(function () {
+            //    $('#myTab a').click(function (e) {
+            //        e.preventDefault();
+            //        $(this).tab('show');
+            //    })
+            //});
 
         </script>
     </body>

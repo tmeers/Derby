@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
+using Derby.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace Derby.Controllers
 {
@@ -17,7 +20,12 @@ namespace Derby.Controllers
         // GET: /Membership/
         public ActionResult Index()
         {
-            return View(db.PackMemberships.ToList());
+            PackMembershipViewModel memberships = new PackMembershipViewModel();
+            Infrastructure.PackAccess packs = new PackAccess();
+            memberships.Packs = packs.BuildPackListing(User.Identity.GetUserId());
+            memberships.PackMemberships = db.PackMemberships.ToList();
+
+            return View(memberships);
         }
 
         // GET: /Membership/Details/5
