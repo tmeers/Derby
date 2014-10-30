@@ -342,6 +342,7 @@
     <Compile Include="ViewModels\RacerViewModel.cs" />
     <Compile Include="ViewModels\RaceViewModel.cs" />
     <Compile Include="ViewModels\RunHeatViewModel.cs" />
+    <Compile Include="ViewModels\SentInvitationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bear.jpg" />
@@ -491,6 +492,7 @@
     <Content Include="Views\Invitation\Edit.cshtml" />
     <Content Include="Views\Invitation\Index.cshtml" />
     <Content Include="Views\Invitation\_InvitePartial.cshtml" />
+    <Content Include="Views\Invitation\_InviteListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Derby.ViewModels.SentInvitationViewModel>
+
+@if (!Model.Any())
+{
+    @:<br/><h4>No invites have been sent yet.&nbsp;</h4>
+}
+else
+{
+    foreach (var pack in Model.Select(x => x.Pack).Distinct())
+    {
+        var _pack = pack;
+        <h4>@_pack.Name</h4>
+        <table>
+            <tr>
+                <th>Created Date</th>
+                <th>Expiration Date</th>
+                <th>Invited By</th>
+                <th>Invited Email</th>
+                <th>Pack</th>
+            </tr>
+            @foreach (var item in Model.Where(x => x.Pack.Id == _pack.Id))
+            {
+                <tr>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.CreatedDate.AddDays(item.ExpiryOffset)</td>
+                    <td>@item.InvitedBy</td>
+                    <td>@item.InvitedEmail</td>
+                    <td>@item.Pack.Name</td>
+                </tr>
+            }
+        </table>
+    }
+}

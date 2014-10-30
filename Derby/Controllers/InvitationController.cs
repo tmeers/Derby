@@ -37,6 +37,26 @@ namespace Derby.Controllers
             return View(packinvitation);
         }
 
+        public PartialViewResult SentInvitations()
+        {
+            string user = User.Identity.GetUserId();
+            List<SentInvitationViewModel> packinvitation = new List<SentInvitationViewModel>();
+            packinvitation.AddRange((from invite in db.PackInvitations
+                                        where invite.InvitedBy.Id == user
+                                    select new SentInvitationViewModel
+                                    {
+                                        Id = invite.Id,
+                                        CreatedDate = invite.CreatedDate,
+                                        ExpiryOffset = invite.ExpiryOffset,
+                                        InvitedBy = invite.InvitedBy,
+                                        InvitedEmail = invite.InvitedEmail,
+                                        Accepted = invite.Accepted,
+                                        Pack = invite.Pack
+                                    }).ToList());
+
+            return PartialView("_InviteListPartial", packinvitation);
+        }
+
         public PartialViewResult Create()
         {
             PackInvitationViewModel packinvitation = new PackInvitationViewModel(User.Identity.GetUserId());
@@ -48,7 +68,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,InvitedEmail")] PackInvitation invite)
+        public ActionResult Create([Bind(Include="Id,InvitedEmail,PackId")] PackInvitation invite)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +78,8 @@ namespace Derby.Controllers
                 invite.AcceptedUserId = string.Empty;
                 invite.CreatedDate = DateTime.Now;
                 invite.Code = Infrastructure.GuidEncoder.Encode(Guid.NewGuid().ToString());
+                invite.InvitedBy = new ApplicationUser();
+                invite.InvitedBy.Id = User.Identity.GetUserId();
 
                 db.PackInvitations.Add(invite);
                 db.SaveChanges();
