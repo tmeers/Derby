@@ -25,6 +25,10 @@ namespace Derby.ViewModels
         public virtual Pack Pack { get; set; }
         public virtual List<PackViewModel> PackList { get; set; }
 
+        public PackInvitationViewModel()
+        {
+        }
+
         public PackInvitationViewModel(string user)
         {
             Pack = new Pack();

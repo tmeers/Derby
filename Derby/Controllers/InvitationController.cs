@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Derby.Models;
 using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Derby.Controllers
 {
@@ -68,20 +69,24 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,InvitedEmail,PackId")] PackInvitation invite)
+        public ActionResult Create([Bind(Include = "Id,InvitedEmail,PackList")] PackInvitationViewModel invite)
         {
             if (ModelState.IsValid)
             {
+                PackInvitation _invite = new PackInvitation();
+                UserManager<ApplicationUser> manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                 // TODO Will need to move this into an admin setting at some point
-                invite.ExpiryOffset = 365;
-                invite.Accepted = false;
-                invite.AcceptedUserId = string.Empty;
-                invite.CreatedDate = DateTime.Now;
-                invite.Code = Infrastructure.GuidEncoder.Encode(Guid.NewGuid().ToString());
-                invite.InvitedBy = new ApplicationUser();
-                invite.InvitedBy.Id = User.Identity.GetUserId();
+                _invite.ExpiryOffset = 365;
+                _invite.Accepted = false;
+                _invite.AcceptedUserId = string.Empty;
+                _invite.CreatedDate = DateTime.Now;
+                _invite.Code = Infrastructure.GuidEncoder.Encode(Guid.NewGuid().ToString());
+                _invite.InvitedBy = manager.FindById(User.Identity.GetUserId());
+                string _id = ViewBag.PackId.ToString();
+                var date = invite.PackList;
+                _invite.Pack.Id = 1;
 
-                db.PackInvitations.Add(invite);
+                db.PackInvitations.Add(_invite);
                 db.SaveChanges();
 
                 return RedirectToAction("Index", "Membership");
