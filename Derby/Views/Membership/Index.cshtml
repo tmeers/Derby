@@ -1,4 +1,5 @@
 ﻿@using Derby.Infrastructure
+@using WebGrease
 @model Derby.ViewModels.PackMembershipViewModel
 
 @{
@@ -27,7 +28,8 @@
             <div class="tab-pane active" id="memberships">
                 @foreach (var pack in Model.Packs)
                 {
-                    <h4>@Html.DisplayFor(modelItem => pack.Name) - @Html.DisplayFor(modelItem => pack.Region)</h4>
+                    var _pack = pack;
+                    <h4>@Html.DisplayFor(modelItem => _pack.Name) - @Html.DisplayFor(modelItem => _pack.Region)</h4>
                     <table class="table table-hover ">
                         <tr>
                             <th>
@@ -72,11 +74,33 @@
             </div>
 
         </div>
+        @section Scripts {
+            <script type="text/javascript">
+                $(function () {
+                    $('#inviteTab').click(function (e) {
+                        e.preventDefault();
+                        $('#invitations').empty();
+                        $('#invitations').html('<p>Loading content...<i class="fa fa-cog fa-spin"></i></p>');
+                        $(this).tab('show');
+                        setTimeout(function () {
+                            $.ajax({
+                                url: "/@Html.Action("SentInvitations", "Invitation")",
+                                cache: false,
+                                type: "get",
+                                dataType: "html",
+                                success: function (result) {
+                                    $("#invitations").html(result);
+                                }
+                            });
+                        }, 2000);
+                    });
+                });
+            </script>
+        }
         <script>
             //$(function() {
 
             //});
-
         </script>
     </body>
 </html>
