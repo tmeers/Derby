@@ -69,7 +69,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,InvitedEmail,PackList")] PackInvitationViewModel invite)
+        public ActionResult Create([Bind(Include = "Id,InvitedEmail,PackId")] PackInvitationViewModel invite)
         {
             if (ModelState.IsValid)
             {
@@ -82,9 +82,9 @@ namespace Derby.Controllers
                 _invite.CreatedDate = DateTime.Now;
                 _invite.Code = Infrastructure.GuidEncoder.Encode(Guid.NewGuid().ToString());
                 _invite.InvitedBy = manager.FindById(User.Identity.GetUserId());
-                string _id = ViewBag.PackId.ToString();
-                var date = invite.PackList;
-                _invite.Pack.Id = 1;
+                //string _id = ViewBag.PackId.ToString();
+                //var date = invite.PackList;
+                _invite.Pack = db.Packs.FirstOrDefault(x => x.Id == invite.PackId);
 
                 db.PackInvitations.Add(_invite);
                 db.SaveChanges();

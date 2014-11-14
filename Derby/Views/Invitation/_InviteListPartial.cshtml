@@ -6,28 +6,34 @@
 }
 else
 {
-    foreach (var pack in Model.Select(x => x.Pack).Distinct())
-    {
-        var _pack = pack;
-        <h4>@_pack.Name</h4>
-        <table>
+    <div class="fixed-table-loading" style="top: 37px; display: block;">Loading, please wait…</div>
+    <table id="membership-invited" class="table table-hover tablesorter">
+        <thead>
             <tr>
-                <th>Created Date</th>
-                <th>Expiration Date</th>
-                <th>Invited By</th>
-                <th>Invited Email</th>
-                <th>Pack</th>
+                <th class="header">Created Date</th>
+                <th class="header">Expiration Date</th>
+                <th class="header">Invited By</th>
+                <th class="header">Invited Email</th>
+                <th class="header">Pack</th>
             </tr>
-            @foreach (var item in Model.Where(x => x.Pack.Id == _pack.Id))
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderBy(x => x.Pack.Id))
             {
-                <tr>
-                    <td>@item.CreatedDate</td>
-                    <td>@item.CreatedDate.AddDays(item.ExpiryOffset)</td>
-                    <td>@item.InvitedBy</td>
-                    <td>@item.InvitedEmail</td>
-                    <td>@item.Pack.Name</td>
-                </tr>
+                var status = "";
+                if (item.CreatedDate.AddDays(item.ExpiryOffset) <= DateTime.Now)
+                {
+                    status = "active invite-expired";
+                }
+
+                <tr class="@status">
+                <td>@item.CreatedDate</td>
+                <td>@item.CreatedDate.AddDays(item.ExpiryOffset)</td>
+                <td>@item.InvitedBy.Email</td>
+                <td>@item.InvitedEmail</td>
+                <td>@item.Pack.Name</td>
+            </tr>
             }
-        </table>
-    }
+        </tbody>
+    </table>
 }
