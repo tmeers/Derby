@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     //$('.date').datepicker({ dateFormat: "dd/mm/yy" });
-    $("#dashboard-scouts").tablesorter({ debug: true });
+    $("#dashboard-scouts").tablesorter({ debug: false });
 
     $('i.information').click(function () {
         console.log(this);

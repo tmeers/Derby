@@ -95,6 +95,11 @@
                             });
                         }, 2000);
                     });
+
+
+                });
+                $(document).ajaxSuccess(function () {
+                    $("#membership-invited").tablesorter({ debug: false });
                 });
             </script>
         }
