@@ -89,12 +89,23 @@ namespace Derby.Controllers
                 db.PackInvitations.Add(_invite);
                 db.SaveChanges();
 
+                Send(_invite);
+
                 return RedirectToAction("Index", "Membership");
             }
 
             return View(invite);
         }
-
+        public void Send(PackInvitation invite)
+        {
+            var email = new InviteEmail
+            {
+                To = invite.InvitedEmail,
+                Subject = "You've been invited to join Derby",
+                UniqueCode = invite.Code
+            };
+            email.Send();
+        }
         // GET: /Invitation/Delete/5
         public ActionResult Delete(int? id)
         {

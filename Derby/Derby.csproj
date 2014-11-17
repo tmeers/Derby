@@ -326,6 +326,7 @@
     <Compile Include="Models\Den.cs" />
     <Compile Include="Models\DerbyDb.cs" />
     <Compile Include="Models\Heat.cs" />
+    <Compile Include="Models\InviteEmail.cs" />
     <Compile Include="Models\Lane.cs" />
     <Compile Include="Models\LeaderViewModel.cs" />
     <Compile Include="Models\Pack.cs" />
@@ -501,6 +502,7 @@
     <Content Include="Views\Invitation\_InviteListPartial.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Invite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
