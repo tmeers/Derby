@@ -85,6 +85,7 @@ namespace Derby.Controllers
                 //string _id = ViewBag.PackId.ToString();
                 //var date = invite.PackList;
                 _invite.Pack = db.Packs.FirstOrDefault(x => x.Id == invite.PackId);
+                _invite.InvitedEmail = invite.InvitedEmail;
 
                 db.PackInvitations.Add(_invite);
                 db.SaveChanges();
