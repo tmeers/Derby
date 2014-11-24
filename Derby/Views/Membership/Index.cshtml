@@ -69,43 +69,33 @@
                 }
             </div>
             <div class="tab-pane" id="invitations">
-                
+                <div id="invitations-records"></div>
             </div>
 
         </div>
         @section Scripts {
             <script type="text/javascript">
                 $(function () {
-                    $('#inviteTab').click(function (e) {
+                    $('#inviteTab').click(function(e) {
                         e.preventDefault();
-                        $('#invitations').empty();
+                        $('#invitations-records').empty();
 
-                        $('#invitations').html('<p>Loading content...<i class="fa fa-cog fa-spin"></i></p>');
+                        $('#invitations-records').html('<p>Loading content...<i class="fa fa-cog fa-spin"></i></p>');
                         $(this).tab('show');
-                        setTimeout(function () {
-                            $.ajax({
-                                url: "/invitation/sentinvitations",
-                                cache: false,
-                                type: "get",
-                                dataType: "html",
-                                success: function (result) {
-                                    $("#invitations").html(result);
-                                }
-                            });
-                        }, 2000);
+                        $.ajax({
+                            url: "/invitation/sentinvitations",
+                            cache: false,
+                            type: "get",
+                            dataType: "html",
+                            success: function(result) {
+                                $('#invitations-records').empty();
+                                $("#invitations-records").html(result);
+                                $("#membership-invited").tablesorter({ debug: false });
+                            }
+                        });
                     });
-
-
-                });
-                $(document).ajaxSuccess(function () {
-                    $("#membership-invited").tablesorter({ debug: false });
                 });
             </script>
         }
-        <script>
-            //$(function() {
-
-            //});
-        </script>
     </body>
 </html>

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Derby.Infrastructure;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Derby.Models
@@ -22,5 +23,8 @@ namespace Derby.Models
         public bool Accepted { get; set; }
         public string AcceptedUserId { get; set; }
         public virtual Pack Pack { get; set; }
+
+        public DateTime? ResentDate { get; set; }
+        public EmailStatus Status { get; set; }
     } 
 }

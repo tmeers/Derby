@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using Derby.Infrastructure;
 using Derby.Models;
 
 namespace Derby.ViewModels
@@ -18,5 +19,6 @@ namespace Derby.ViewModels
         public string InvitedEmail { get; set; }
         public bool Accepted { get; set; }
         public virtual Pack Pack { get; set; }
+        public EmailStatus Status { get; set; }
     }
 }

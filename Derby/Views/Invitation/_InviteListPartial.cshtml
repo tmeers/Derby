@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Derby.ViewModels.SentInvitationViewModel>
+﻿@using Derby.Infrastructure
+@model IEnumerable<Derby.ViewModels.SentInvitationViewModel>
 
 @if (!Model.Any())
 {
@@ -6,15 +7,15 @@
 }
 else
 {
-    <div class="fixed-table-loading" style="top: 37px; display: block;">Loading, please wait…</div>
     <table id="membership-invited" class="table table-hover tablesorter">
         <thead>
             <tr>
                 <th class="header">Created Date</th>
-                <th class="header">Expiration Date</th>
-                <th class="header">Invited By</th>
+                <th class="header hidden-sm hidden-xs">Expiration Date</th>
+                <th class="header hidden-sm hidden-xs">Invited By</th>
                 <th class="header">Invited Email</th>
                 <th class="header">Pack</th>
+                <th class="header"></th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +26,26 @@ else
                 {
                     status = "active invite-expired";
                 }
-
+                
                 <tr class="@status">
-                <td>@item.CreatedDate</td>
-                <td>@item.CreatedDate.AddDays(item.ExpiryOffset)</td>
-                <td>@item.InvitedBy.Email</td>
+                <td><span>@item.CreatedDate.Date.ToString("MM/dd/yyyy")</span> <span class="hidden-sm hidden-xs">@item.CreatedDate.ToString("hh:mm tt")</span></td>
+                <td class="hidden-sm hidden-xs">@item.CreatedDate.AddDays(item.ExpiryOffset).ToString("MM/dd/yyyy hh:mm tt")</td>
+                <td class="hidden-sm hidden-xs">@item.InvitedBy.Email</td>
                 <td>@item.InvitedEmail</td>
                 <td>@item.Pack.Name</td>
+                @if (item.Status == EmailStatus.Sent || item.Status == EmailStatus.Resent)
+                {
+                    <td class="invite-sent" title="Invite sent successfully - Click to resend"><i class="text-success fa fa-refresh"></i></td>
+                }
+                else if (item.Status == EmailStatus.Failed)
+                {
+                    <td class="invite-failed" title="Invite failed to send - Click to resend"><i class="text-danger fa fa-refresh"></i></td>
+                }
+                else if (item.Status == EmailStatus.Pending)
+                {
+                    <td class="invite-pending" title="Invite is pending in the queue"><i class="text-warning fa fa-circle-o-notch fa-spin"></i></td>
+                }
+                
             </tr>
             }
         </tbody>

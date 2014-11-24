@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Derby.Infrastructure;
 using Derby.Models;
 using Derby.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -52,7 +53,8 @@ namespace Derby.Controllers
                                         InvitedBy = invite.InvitedBy,
                                         InvitedEmail = invite.InvitedEmail,
                                         Accepted = invite.Accepted,
-                                        Pack = invite.Pack
+                                        Pack = invite.Pack,
+                                        Status = invite.Status
                                     }).ToList());
 
             return PartialView("_InviteListPartial", packinvitation);
@@ -86,27 +88,20 @@ namespace Derby.Controllers
                 //var date = invite.PackList;
                 _invite.Pack = db.Packs.FirstOrDefault(x => x.Id == invite.PackId);
                 _invite.InvitedEmail = invite.InvitedEmail;
+                _invite.Status = EmailStatus.Pending;
 
                 db.PackInvitations.Add(_invite);
                 db.SaveChanges();
 
-                Send(_invite);
-
-                return RedirectToAction("Index", "Membership");
+                if (Services.Email.EmailSender.Send(_invite))
+                {
+                    return RedirectToAction("Index", "Membership");
+                }
             }
 
             return View(invite);
         }
-        public void Send(PackInvitation invite)
-        {
-            var email = new InviteEmail
-            {
-                To = invite.InvitedEmail,
-                Subject = "You've been invited to join Derby",
-                UniqueCode = invite.Code
-            };
-            email.Send();
-        }
+
         // GET: /Invitation/Delete/5
         public ActionResult Delete(int? id)
         {

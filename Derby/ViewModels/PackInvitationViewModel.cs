@@ -25,6 +25,7 @@ namespace Derby.ViewModels
         public virtual Pack Pack { get; set; }
         public virtual List<PackViewModel> PackList { get; set; }
         public int PackId { get; set; }
+        public EmailStatus Status { get; set; }
 
         public PackInvitationViewModel()
         {
