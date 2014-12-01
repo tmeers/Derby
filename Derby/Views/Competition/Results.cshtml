@@ -51,7 +51,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var contestant in _heat.Contestants.OrderBy(x => x.Place))
+                    @foreach (var contestant in _heat.Contestants.OrderBy(x => x.Lane))
                     {
                         var _racer = Model.Racers.FirstOrDefault(x => x.Id == contestant.RacerId);
                         <tr>
