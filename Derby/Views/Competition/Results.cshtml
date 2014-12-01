@@ -28,12 +28,8 @@
 {
     var _race = race;
     int heatNumber = 0;
-    <div class="row">
-        @if (_race.Id == ViewBag.RaceId)
-        {
-            <h3><a name="derby" class="anchor" href="#race"></a>@_race.Den.Name</h3>
-        }
-        <h3>@_race.Den.Name</h3>
+    <div>
+        <h3><a name="derby" class="anchor" href="#race"></a>@Model.Dens.FirstOrDefault(x => x.Id == _race.DenId).Name</h3>
 
         @foreach (var heat in _race.Heats)
         {
