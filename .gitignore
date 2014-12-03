@@ -110,3 +110,4 @@ Backup*/
 UpgradeLog*.XML
 Derby/HiddenSettings.config
 Derby/Views/Shared/_Analytics.cshtml
+Derby/email.config
