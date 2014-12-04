@@ -1,0 +1,57 @@
+﻿@using Derby.Infrastructure
+@using Derby.Models
+@model Derby.ViewModels.CompetitionViewModel
+
+@{
+    var _leaders = new List<LeaderViewModel>();
+    foreach (var racer in Model.Racers)
+    {
+        var _leader = new LeaderViewModel();
+
+        var _racer = racer;
+        List<Heat> _racerHeats = Model.Races.Where(x => x.DenId == _racer.Den.Id).SelectMany(h => h.Heats).ToList();
+        List<Contestant> _contestants = _racerHeats.SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
+        int _points = 0;
+        foreach (var item in _contestants)
+        {
+            if (item.Place != 0)
+            {
+                _points = _points + PointsCalculator.Calculate(Model.LaneCount, item.Place);
+            }
+        }
+        _leader.Name = _racer.Scout.Name;
+        _leader.DenId = _racer.Den.Id;
+        _leader.CarNumber = _racer.CarNumber;
+        _leader.Points = _points;
+        _leader.DenLogo = _racer.Den.LogoPath;
+
+        _leaders.Add(_leader);
+    }
+}
+
+<h2>Leader Board</h2>
+
+<div>
+    <hr />
+    <table id="dashboard-scouts" class="table table-hover tablesorter table-condensed">
+        <thead>
+            <tr>
+                <th class="header">Name</th>
+                <th class="header">Car #</th>
+                <th class="header">Points</th>
+                <th class="header">Den</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leader in _leaders.OrderBy(y => y.DenId).ThenByDescending(x => x.Points))
+            {
+                <tr>
+                    <td>@leader.Name</td>
+                    <td>@leader.CarNumber</td>
+                    <td>@leader.Points</td>
+                    <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -73,6 +73,40 @@ namespace Derby.Controllers
             return View(view);
         }
 
+        private CompetitionViewModel loadCompetitionViewModel(Competition competition)
+        {
+            var user = User.Identity.GetUserId();
+            
+            PackAccess pa = new PackAccess();
+
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
+            {
+                return null;
+            }
+
+            CompetitionHelper helper = new CompetitionHelper();
+            CompetitionViewModel view = helper.LoadCompetition(competition, user);
+
+            return view;
+        }
+
+        public PartialViewResult Leaderboard(int? id)
+        {
+            if (id == null || !Request.IsAuthenticated)
+            {
+                return null;
+            }
+
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
+            CompetitionViewModel view = loadCompetitionViewModel(competition);
+
+            if (competition == null || view == null)
+            {
+                return null;
+            }
+
+            return PartialView("_LeaderboardPartial", view);
+        }
         public ActionResult Leaders(int? id)
         {
             if (id == null || !Request.IsAuthenticated)
@@ -80,19 +114,13 @@ namespace Derby.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var user = User.Identity.GetUserId();
-
             Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
-            PackAccess pa = new PackAccess();
+            CompetitionViewModel view = loadCompetitionViewModel(competition);
 
-            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
+            if (competition == null || view == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-
-            CompetitionHelper helper = new CompetitionHelper();
-            CompetitionViewModel view = helper.LoadCompetition(competition, user);
-
 
             return View(view);
         }
