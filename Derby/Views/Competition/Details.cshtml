@@ -194,9 +194,10 @@
                         {
                             if (den.IsSystemPlaceholder)
                             {
-                                // Build the Finals "den". This is frist, but really it builds last. Because oh idk, tequila. 
+                                // Build the Finals "den". This is first, but really it builds last. Because oh idk, tequila. 
                                 if (race == null)
                                 {
+                                    // Even though this doesn't show, just in case someone deleted it.
                                     <div class="row">
                                         <a href="@Url.Action("Create", "Race", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
                                             <div class="col-xs-7">
@@ -220,9 +221,9 @@
                                             </div>
                                         </a>
                                         
-                                        <a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                        <a href="@Url.Action("Finals", "Race", new { competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
                                             <div class="col-xs-7">
-                                                Create Race for Finals
+                                                Select Finals Racers
                                             </div>
                                             <div class="text-right">
                                                 <i class="fa fa-arrow-circle-right denheat-go"></i>
@@ -246,9 +247,9 @@
                             if (race == null)
                             {
                                 <div class="row">
-                                    <a href="@Url.Action("Create", "Race", new { competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                    <a href="@Url.Action("Create", "Race", new { competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})" title="Will create the Race stub for heats to be created under">
                                         <div class="col-xs-7">
-                                            Build Race/Heats for Den
+                                            Build Race for Den
                                         </div>
                                         <div class="text-right">
                                             <i class="fa fa-arrow-circle-right denheat-go"></i>
