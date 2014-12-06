@@ -134,6 +134,13 @@ namespace Derby
                 url: "race/create/{competitionId}/{denId}",
                 defaults: new { controller = "Race", action = "Create", competitionId = UrlParameter.Optional, denId = UrlParameter.Optional  }
             );
+
+            routes.MapRoute(
+                name: "Racer-Finals-Create",
+                url: "racer/finals/{competitionId}/{raceId}",
+                defaults: new { controller = "Racer", action = "Finals", competitionId = UrlParameter.Optional, denId = UrlParameter.Optional }
+            );
+
             //routes.MapRoute(
             //    name: "Race-Generate",
             //    url: "race/generate/{competitionId}/{denId}",

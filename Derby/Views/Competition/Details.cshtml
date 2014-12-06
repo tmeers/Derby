@@ -221,9 +221,9 @@
                                             </div>
                                         </a>
                                         
-                                        <a href="@Url.Action("Finals", "Race", new { competitionId = Model.Id, denId = _den.Id, returnPath = "competition"})">
+                                        <a href="@Url.Action("Finals", "Racer", new { competitionId = Model.Id, raceId = race.Id, returnPath = "competition"})">
                                             <div class="col-xs-7">
-                                                Select Finals Racers
+                                                Select Racers for Finals
                                             </div>
                                             <div class="text-right">
                                                 <i class="fa fa-arrow-circle-right denheat-go"></i>

@@ -78,24 +78,45 @@ namespace Derby.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //public ActionResult Final(int competitionId, int )
-        //{
-        //    Scout _scout = db.Scouts.Find(scoutId);
-        //    if (_scout == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+        public ActionResult Finals(int? competitionId, int? raceId)
+        {
+            if (competitionId == null || raceId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-        //    var packId = db.Competitions.FirstOrDefault(x => x.Id == competitionId).PackId;
-        //    CreateRacerViewModel view = new CreateRacerViewModel();
-        //    view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
+            var user = User.Identity.GetUserId();
 
-        //    view.CompetitionId = competitionId;
-        //    view.ScoutId = scoutId;
-        //    view.ScoutName = _scout.Name;
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == competitionId);
+            PackAccess pa = new PackAccess();
 
-        //    return View(view);
-        //}
+            if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            CompetitionHelper helper = new CompetitionHelper();
+            CompetitionViewModel view = helper.LoadCompetition(competition, user);
+
+            return View(view);
+
+
+            //Scout _scout = db.Scouts.Find(scoutId);
+            //if (_scout == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+
+            //var packId = db.Competitions.FirstOrDefault(x => x.Id == competitionId).PackId;
+            //CreateRacerViewModel view = new CreateRacerViewModel();
+            //view.Dens = db.Dens.Where(x => x.PackId == packId).ToList();
+
+            //view.CompetitionId = competitionId;
+            //view.ScoutId = scoutId;
+            //view.ScoutName = _scout.Name;
+
+            //return View(view);
+        }
 
         //// POST: /Racer/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 

@@ -37,5 +37,9 @@ namespace Derby.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
+
+        public System.Data.Entity.DbSet<Derby.ViewModels.CompetitionViewModel> CompetitionViewModels { get; set; }
+
+        public System.Data.Entity.DbSet<Derby.ViewModels.PackViewModel> PackViewModels { get; set; }
 	}
 }
