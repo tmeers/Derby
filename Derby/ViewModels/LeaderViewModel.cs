@@ -15,5 +15,7 @@ namespace Derby.ViewModels
         public int Points { get; set; }
         public int DenId { get; set; }
         public string DenLogo { get; set; }
+
+        public bool Selected { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿@model Derby.ViewModels.CompetitionViewModel
+﻿@using Microsoft.Ajax.Utilities
+@using Microsoft.Data.OData.Query.SemanticAst
+@model Derby.ViewModels.CompetitionViewModel
 
 @{
     ViewBag.Title = "Finals";
@@ -15,7 +17,23 @@
         <h4>Racer Registration</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        @foreach (var den in Model.Dens.Where(x => !x.IsSystemPlaceholder))
+        {
+            var _den = den;
+            <h3>@_den.Name</h3>
+            <table class="table table-hover tablesorter table-condensed">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Car Number</th>
+                    <th>Name</th>
+                    <th>Points</th>
+                </tr>
+                @foreach (var leader in Model.Leaderboard.Where(x => x.DenId == _den.Id).OrderBy(o => o.Points))
+                {
+                    @Html.EditorFor(model => leader)
+                }
+            </table>
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
