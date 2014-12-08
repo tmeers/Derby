@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Web;
 using Derby.Models;
@@ -19,6 +20,8 @@ namespace Derby.ViewModels
         public Den Den { get; set; }
         public Scout Scout { get; set; }
         public int CompetitionId { get; set; }
+
+        public int Points { get; set; }
 
         public RacerViewModel(Racer racer)
         {

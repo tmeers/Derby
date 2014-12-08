@@ -26,8 +26,7 @@ namespace Derby.Infrastructure
             PackAccess access = new PackAccess();
             PackViewModel pack = access.BuildPackListing(user).Find(x => x.Id == competition.PackId);
 
-            view.Pack = pack;//db.Packs.FirstOrDefault(p => p.Id == view.PackId);
-
+            view.Pack = pack;
 
             var _racers = db.Racers.Where(r => r.CompetitionId == view.Id).ToList();
             view.Scouts = db.Scouts.Where(r => r.PackId == view.PackId).ToList();
@@ -62,6 +61,9 @@ namespace Derby.Infrastructure
                 view.Races.Add(_race);
             }
 
+            LeaderboardHelper.GenerateLeaderboard(view);
+
+            db.Dispose();
             return view;
         }
     }

@@ -12,19 +12,19 @@ namespace Derby.Models
     {
     }
 
-	public class DerbyDb : IdentityDbContext
-	{
+    public class DerbyDb : IdentityDbContext
+    {
         public DerbyDb() : base("name=DerbyDb") { }
 
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        
+
         public DbSet<Pack> Packs { get; set; }
-		public DbSet<Den> Dens { get; set; }
+        public DbSet<Den> Dens { get; set; }
         public DbSet<Scout> Scouts { get; set; }
 
         public DbSet<Competition> Competitions { get; set; }
-		public DbSet<Racer> Racers { get; set; }
+        public DbSet<Racer> Racers { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Heat> Heats { get; set; }
         public DbSet<Contestant> Contestants { get; set; }
@@ -39,7 +39,8 @@ namespace Derby.Models
         }
 
         public System.Data.Entity.DbSet<Derby.ViewModels.CompetitionViewModel> CompetitionViewModels { get; set; }
+        public System.Data.Entity.DbSet<Derby.ViewModels.LeaderViewModel> LeaderViewModels { get; set; }
 
         public System.Data.Entity.DbSet<Derby.ViewModels.PackViewModel> PackViewModels { get; set; }
-	}
+    }
 }

@@ -44,6 +44,7 @@ namespace Derby.ViewModels
         public List<Den> Dens { get; set; }
 
         public List<RaceViewModel> Races { get; set; }
+        public List<LeaderViewModel> Leaderboard { get; set; }
 
         public CompetitionViewModel(Competition competition)
         {

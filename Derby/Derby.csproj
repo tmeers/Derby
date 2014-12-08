@@ -239,6 +239,7 @@
     <Compile Include="Infrastructure\CompetitionHelper.cs" />
     <Compile Include="Infrastructure\EmailStatus.cs" />
     <Compile Include="Infrastructure\HeatGenerator.cs" />
+    <Compile Include="Infrastructure\LeaderboardHelper.cs" />
     <Compile Include="Infrastructure\OwnershipType.cs" />
     <Compile Include="Infrastructure\PackAccess.cs" />
     <Compile Include="Infrastructure\DerbyType.cs" />
@@ -333,7 +334,7 @@
     <Compile Include="Models\Heat.cs" />
     <Compile Include="Models\InviteEmail.cs" />
     <Compile Include="Models\Lane.cs" />
-    <Compile Include="Models\LeaderViewModel.cs" />
+    <Compile Include="ViewModels\LeaderViewModel.cs" />
     <Compile Include="Models\Pack.cs" />
     <Compile Include="Models\PackInvitation.cs" />
     <Compile Include="Models\PackMembership.cs" />
@@ -513,6 +514,7 @@
     <Content Include="Views\Emails\Invite.cshtml" />
     <Content Include="Views\Competition\_LeaderboardPartial.cshtml" />
     <Content Include="Views\Racer\Finals.cshtml" />
+    <Content Include="Views\Racer\EditorTemplates\LeaderViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
