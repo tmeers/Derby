@@ -118,23 +118,23 @@ namespace Derby.Controllers
             //return View(view);
         }
 
-        //// POST: /Racer/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Final([Bind(Include = "Id,CarNumber,Weight,DenId,ScoutId,CompetitionId")] Racer racer)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Racers.Add(racer);
-        //        db.SaveChanges();
+        // POST: /Racer/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Finals([Bind(Include = "Leaderboard")] CompetitionViewModel racer)
+        {
+            if (ModelState.IsValid)
+            {
+                //db.Racers.Add(racer);
+                //db.SaveChanges();
 
-        //        return RedirectToAction("details", "Competition", new { id = racer.CompetitionId });
-        //    }
+                //return RedirectToAction("details", "Competition", new { id = racer.CompetitionId });
+            }
 
-        //    return RedirectToAction("Index", "Home");
-        //}
+            return RedirectToAction("Index", "Home");
+        }
 
         // GET: /Racer/Edit/5
         public ActionResult Edit(int id)

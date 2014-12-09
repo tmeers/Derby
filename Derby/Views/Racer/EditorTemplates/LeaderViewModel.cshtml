@@ -1,13 +1,16 @@
 ﻿@model Derby.ViewModels.LeaderViewModel
 
-<tr>
-    <td>
-        @Html.CheckBoxFor(model => model.Selected)
-        @Html.HiddenFor(model => model.Id)
-    </td>
-    <td>@Html.DisplayFor(model => model.Name)</td>
-    <td>@Html.DisplayFor(model => model.CarNumber)</td>
-    <td>
-        @Model.Points
-    </td>
-</tr>
+
+    <tr id="row-@Model.Id">
+        <td>
+            @Html.CheckBoxFor(model => model.Selected, new { @class = "row-select" })
+            @Html.HiddenFor(model => model.Id)
+        </td>
+        <td>@Html.DisplayFor(model => model.Name)</td>
+        <td>@Html.DisplayFor(model => model.CarNumber)</td>
+        <td>
+            @Model.Points
+        </td>
+        <td>
+            <img src="@Model.DenLogo" class="denlogo-xxsmall" /></td>
+    </tr>

@@ -46,6 +46,8 @@ namespace Derby.ViewModels
         public List<RaceViewModel> Races { get; set; }
         public List<LeaderViewModel> Leaderboard { get; set; }
 
+        public CompetitionViewModel() { }
+
         public CompetitionViewModel(Competition competition)
         {
             Id = competition.Id;
