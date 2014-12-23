@@ -76,3 +76,8 @@ div.alert {font-size: 15px;}
 .denheat-go{ padding-right: 10px;}
 
 .icon-button-min{ min-width: 28px;}
+.useraddbutton{text-align: right;}
+.adduser.fa-xs {
+    font-size: 8px;
+    vertical-align: top;
+}

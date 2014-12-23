@@ -515,6 +515,7 @@
     <Content Include="Views\Competition\_LeaderboardPartial.cshtml" />
     <Content Include="Views\Racer\Finals.cshtml" />
     <Content Include="Views\Racer\EditorTemplates\LeaderViewModel.cshtml" />
+    <Content Include="Views\Scout\_AddScoutPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -68,6 +68,12 @@ namespace Derby
             );
 
             routes.MapRoute(
+                name: "Scout-QuickCreate",
+                url: "scout/addscout/{id}",
+                defaults: new { controller = "Scout", action = "AddScout", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Scout-Details",
                 url: "scout/{id}",
                 defaults: new { controller = "Scout", action = "Details", id = UrlParameter.Optional }

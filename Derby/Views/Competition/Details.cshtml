@@ -17,11 +17,22 @@
         <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-group"></i> Scouts</h3>
+                    <div class="row">
+
+                        <div class="col-xs-3">
+                            <h3 class="panel-title"><i class="fa fa-group fa-2x"></i> Scouts</h3>
+                        </div>
+                        <div>
+                            <a class="modal-link btn btn-success btn-xs pull-right" title="Quick Add Scout" href="@Url.Action("AddScout", "scout", new { id = Model.Pack.Id })">
+                                <i class="fa fa-user"><i class="adduser fa fa-plus fa-xs"></i></i>
+                            </a> &nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         @{
+                            //, returnPath = "competition"
                             bool registrationCompleted = true;
                             Den finalsDen = Model.Dens.FirstOrDefault(x => x.IsSystemPlaceholder == true);
                         }
@@ -131,7 +142,7 @@
             }
             else
             {
-                <div class="alert alert-info">
+                <div class="alert alert-warning">
                     <p><i class="fa fa-warning"></i> Complete Scout Registration</p>
                 </div>
             }

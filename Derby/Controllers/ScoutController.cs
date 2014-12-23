@@ -38,6 +38,25 @@ namespace Derby.Controllers
             return View(scout);
         }
 
+        public PartialViewResult AddScout(int id)
+        {
+            ViewBag.PackId = id;
+            return PartialView("_AddScoutPartial", new Scout() { PackId = id });
+        }
+        // TODO: this sucks. 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddScout([Bind(Include = "Id,Name,PackId")] Scout scout)
+        {
+            if (ModelState.IsValid)
+            {
+                saveScout(scout);
+                return PartialView("_AddScoutPartial", scout);
+            }
+
+            return PartialView("_AddScoutPartial", scout);
+        }
+
         // GET: /Scout/Create
         public ActionResult Create(int packId)
         {
@@ -54,15 +73,20 @@ namespace Derby.Controllers
         {
             if (ModelState.IsValid)
             {
-                scout.CreateDateTime = DateTime.Now;
-                scout.Inactive = false;
-
-                db.Scouts.Add(scout);
-                db.SaveChanges();
+                saveScout(scout);
                 return RedirectToAction("Index", new { packId = scout.PackId });
             }
 
             return View(scout);
+        }
+
+        private void saveScout(Scout scout)
+        {
+            scout.CreateDateTime = DateTime.Now;
+            scout.Inactive = false;
+
+            db.Scouts.Add(scout);
+            db.SaveChanges();
         }
 
         // GET: /Scout/Edit/5
