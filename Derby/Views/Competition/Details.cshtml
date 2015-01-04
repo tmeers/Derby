@@ -20,10 +20,10 @@
                     <div class="row">
 
                         <div class="col-xs-3">
-                            <h3 class="panel-title"><i class="fa fa-group fa-2x"></i> Scouts</h3>
+                            <h4 class="panel-title"><i class="fa fa-group fa-1x"></i> Scouts</h4>
                         </div>
                         <div>
-                            <a class="modal-link btn btn-success btn-xs pull-right" title="Quick Add Scout" href="@Url.Action("AddScout", "scout", new { id = Model.Pack.Id })">
+                            <a class="modal-link btn btn-success btn-xs pull-right addscout-pad" title="Quick Add Scout" href="@Url.Action("AddScout", "scout", new { id = Model.Pack.Id })">
                                 <i class="fa fa-user"><i class="adduser fa fa-plus fa-xs"></i></i>
                             </a> &nbsp;&nbsp;&nbsp;
                         </div>
@@ -48,6 +48,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @{
+                                    // TODO Pull this out into another partial or user control, or whatever the hell is used now, something able to be reloaded easily
+                                }
                                 @foreach (var scout in Model.Scouts)
                                 {
                                     // TODO This is all wrong and isn't good. Something is still wrong in the data model. I think. Or maybe I'm wrong and it's just late. 
@@ -354,3 +357,23 @@
     @Html.ActionLink("Edit", "Edit", "Competition", new { id = Model.Id }, new { @class = "btn btn-xs btn-primary" }) |
     @Html.ActionLink("Back to Pack", "Details", "Pack", new { id = Model.PackId }, new { @class = "btn btn-xs btn-default" })
 </p>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ajaxSuccess(function() {
+            $('#scoutAddPartial').click(function(e) {
+                console.log(this);
+                e.preventDefault();
+                var f = $("#scoutAddForm");
+                var _url = f.attr("action");
+                var _formData = f.serialize();
+                $.post(_url, _formData, function(data) {
+                    if (data == "false") {
+                        //TODO pop up some failed notification
+                    }
+                });
+            });
+        });
+    </script>
+}
+

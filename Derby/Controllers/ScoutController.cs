@@ -40,21 +40,21 @@ namespace Derby.Controllers
 
         public PartialViewResult AddScout(int id)
         {
-            ViewBag.PackId = id;
             return PartialView("_AddScoutPartial", new Scout() { PackId = id });
         }
         // TODO: this sucks. 
         [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
         [ValidateAntiForgeryToken]
         public ActionResult AddScout([Bind(Include = "Id,Name,PackId")] Scout scout)
         {
             if (ModelState.IsValid)
             {
                 saveScout(scout);
-                return PartialView("_AddScoutPartial", scout);
+                return Json(scout);
             }
 
-            return PartialView("_AddScoutPartial", scout);
+            return Json("false");
         }
 
         // GET: /Scout/Create

@@ -2,39 +2,36 @@
     
 @{
     ViewBag.Title = "Create";
-    Model.PackId = ViewBag.PackId;
 }
 
-<h3>Create</h3>
-
-@using (Html.BeginForm("Create", "Scout"))
-{
+<form id="scoutAddForm" action="@Url.Action("AddScout", "Scout")" method="post">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Scout</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+        <div class="modal-header">
+            <h4 class="modal-title">Add Scout</h4>
+        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
+        <div class="modal-body">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.HiddenFor(model => model.PackId)
+                @Html.ValidationMessageFor(model => model.PackId)
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.HiddenFor(model => model.PackId)
-            @Html.ValidationMessageFor(model => model.PackId)
-        </div>
-
-        <div class="form-group">
+        <div class="modal-footer form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="submit" value="Create" class="btn btn-success" id="scoutAddPartial" />
             </div>
         </div>
     </div>
-}
-
-
+</form>
