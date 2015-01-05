@@ -44,6 +44,7 @@
                                     <th class="header">Car #</th>
                                     <th class="header">Points</th>
                                     <th class="header">Den</th>
+                                    <th class="header"><i class="fa fa-trophy" title="Finals"></i></th>
                                     <th class="header"></th>
                                 </tr>
                             </thead>
@@ -74,11 +75,18 @@
                                             <td><i class="success glyphicon glyphicon-ok"></i></td>
                                             <td>@_racer.CarNumber</td>
                                             <td>
-                                                
                                                 @_points
                                             </td>
                                             
                                             <td><img src="@_racer.Den.LogoPath" class="denlogo-xxsmall" /></td>
+                                            
+                                            <td>
+                                                @if (Model.Racers.Where(y => y.Den.IsSystemPlaceholder).Any(x => x.Scout.Id == _currentRacer.Id))
+                                                {
+                                                    <i class="success glyphicon glyphicon-ok"></i>
+                                                }
+                                            </td>
+                                            
                                             <td>
                                                 <a href="@Url.Action("Edit", "Racer", new { id = _racer.Id })">
                                                     <i class="fa fa-pencil text-muted"></i>
@@ -89,7 +97,7 @@
                                         {
                                             if (!Model.RegistrationLocked)
                                             {
-                                                <td colspan="5">
+                                                <td colspan="6">
                                                     <a href="@Url.Action("Create", "Racer", new {competitionId = Model.Id, scoutId = _currentRacer.Id})" class="btn btn-xs btn-success" title="Register Racer">
                                                         <i class="fa fa-user"></i>&nbsp;Register Racer
                                                     </a>
@@ -365,15 +373,15 @@
                 console.log(this);
                 e.preventDefault();
                 var f = $("#scoutAddForm");
-                var _url = f.attr("action");
-                var _formData = f.serialize();
-                $.post(_url, _formData, function(data) {
+                var url = f.attr("action");
+                var formData = f.serialize();
+                $.post(url, formData, function(data) {
                     if (data == "false") {
                         //TODO pop up some failed notification
                     }
+
                 });
             });
         });
     </script>
 }
-
