@@ -370,7 +370,6 @@
     <script type="text/javascript">
         $(document).ajaxSuccess(function() {
             $('#scoutAddPartial').click(function(e) {
-                console.log(this);
                 e.preventDefault();
                 var f = $("#scoutAddForm");
                 var url = f.attr("action");
@@ -379,6 +378,12 @@
                     if (data == "false") {
                         //TODO pop up some failed notification
                     }
+                    $('#modal-container').modal('hide');
+                    toastr.success('You added ' + data.Name);
+
+                }).fail(function () {
+                    
+                    toastr.error('Scout has not been added');
 
                 });
             });
