@@ -311,6 +311,14 @@
                                                     Heat #@heatLoopCount
                                                 </div>
                                                 <div class="col-xs-6 text-right">
+                                                    @if (heat.TieBreaker)
+                                                    {
+                                                        <span class="text-warning" title="Tie breaker">
+                                                            <i class="fa fa-flag-checkered"></i>
+                                                            &nbsp;
+                                                            &nbsp;
+                                                        </span>
+                                                    }
                                                     <a href="@Url.Action("Run", "Heat", new {id = _heat.Id, message = "editing"})" title="Edit results">
                                                         <i class="fa fa-wrench"></i>
                                                     </a>
