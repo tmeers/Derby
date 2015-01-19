@@ -1,7 +1,7 @@
 ﻿@model Derby.ViewModels.LeaderViewModel
 
 
-    <tr id="row-@Model.Id">
+    <tr id="row-@Model.Id" class="@Html.DisplayTextFor(model => model.DenId)">
         <td>
             @Html.CheckBoxFor(model => model.Selected, new { @class = "row-select" })
             @Html.HiddenFor(model => model.Id)

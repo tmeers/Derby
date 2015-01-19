@@ -12,10 +12,10 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.Id)
     <div class="form-horizontal">
         <h4>Racer Registration</h4>
-        <table class="table table-hover table-condensed">
+        <table class="table table-hover table-condensed col-md-6">
             <tr>
                 <th>&nbsp;</th>
                 <th>Name</th>
@@ -24,15 +24,8 @@
                 <th>&nbsp;</th>
             </tr>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @*@foreach (var den in Model.Dens.Where(x => !x.IsSystemPlaceholder))
-            {
-                var _den = den;*@
 
-                //foreach (var leader in Model.Leaderboard.Where(x => x.DenId == _den.Id).OrderBy(o => o.Points))
-                //{
-                    @Html.EditorFor(model => model.Leaderboard)
-                //}
-            @*}*@
+            @Html.EditorFor(model => model.Leaderboard)
         </table>
 
         <div class="form-group">

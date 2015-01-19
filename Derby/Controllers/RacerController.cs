@@ -123,14 +123,31 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Finals([Bind(Include = "Leaderboard")] CompetitionViewModel racer)
+        public ActionResult Finals([Bind(Include = "Id, Leaderboard")] CompetitionViewModel racers)
         {
             if (ModelState.IsValid)
             {
+                var user = User.Identity.GetUserId();
+
+                Competition competition = db.Competitions.FirstOrDefault(x => x.Id == racers.Id);
+                PackAccess pa = new PackAccess();
+
+                if (!pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+
+                CompetitionHelper helper = new CompetitionHelper();
+                CompetitionViewModel view = helper.LoadCompetition(competition, user);
+
+                List<LeaderViewModel> finalists = racers.Leaderboard.Where(x => x.Selected).ToList();
+
+                finalists.RemoveAll(x => view.Leaderboard.Where(y => y.Selected).Contains(x));
+
                 //db.Racers.Add(racer);
                 //db.SaveChanges();
 
-                //return RedirectToAction("details", "Competition", new { id = racer.CompetitionId });
+                return RedirectToAction("details", "Competition", new { id = Id });
             }
 
             return RedirectToAction("Index", "Home");
