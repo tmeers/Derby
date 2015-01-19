@@ -21,7 +21,7 @@
     $('#modal-container').on('hidden.bs.modal', function () {
         $(this).removeData('bs.modal');
     });
-
+    toastr.options = { "positionClass": "toast-bottom-right" }
     //$('.modal-link').click(function (e) {
     //    console.log(this);
     //    //e.preventDefault();

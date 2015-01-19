@@ -23,12 +23,14 @@ namespace Derby
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/jquery.tablesorter.min.js",
+                      "~/Scripts/toastr.min.js",
                       "~/Scripts/derby.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-theme-yeti.min.css",
                       "~/Content/font-awesome.min.css",
+                      "~/Content/toastr.min.css",
                       "~/Content/site.css"));
         }
     }
