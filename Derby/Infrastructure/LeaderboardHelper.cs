@@ -35,6 +35,8 @@ namespace Derby.Infrastructure
                 _leader.CarNumber = _racer.CarNumber;
                 _leader.Points = _points;
                 _leader.DenLogo = _racer.Den.LogoPath;
+                _leader.ScoutId = _racer.Scout.Id;
+                _leader.Weight = _racer.Weight;
 
                 competition.Leaderboard.Add(_leader);
             }
