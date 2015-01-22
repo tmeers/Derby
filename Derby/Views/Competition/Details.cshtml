@@ -122,16 +122,16 @@
             @{
                 var _startFinals = false;
 
-                foreach (var item in Model.Races.Where(x => !x.Den.IsSystemPlaceholder).SelectMany(b => b.Heats).Distinct().ToList())
-                {
-                    if (item.IsCompleted)
-                    {
+                //foreach (var item in Model.Races.Where(x => !x.Den.IsSystemPlaceholder).SelectMany(b => b.Heats).Distinct().ToList())
+                //{
+                //    if (item.IsCompleted)
+                //    {
                         _startFinals = true;
-                        continue;
-                    }
+                //        continue;
+                //    }
 
-                    _startFinals = false;
-                }
+                //    _startFinals = false;
+                //}
             }
             @if (registrationCompleted)
             {
@@ -212,7 +212,7 @@
                     </div>
                     
                     <div class="panel-footer announcement-bottom">
-                        @if (racerCount <= 1)
+                        @if ((den.IsSystemPlaceholder && racerCount == 0) || racerCount <= 1)
                         {
                             if (den.IsSystemPlaceholder)
                             {
@@ -243,7 +243,7 @@
                                             </div>
                                         </a>
                                         
-                                        <a href="@Url.Action("Finals", "Racer", new { competitionId = Model.Id, raceId = race.Id, returnPath = "competition"})">
+                                        <a href="@Url.Action("Finals", "Racer", new { competitionId = Model.Id, denId = _den.Id, returnPath = "competition" })">
                                             <div class="col-xs-7">
                                                 Select Racers for Finals
                                             </div>

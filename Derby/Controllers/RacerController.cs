@@ -18,6 +18,7 @@ namespace Derby.Controllers
     public class RacerController : Controller
     {
         private DerbyDb db = new DerbyDb();
+        private Racer _racer;
 
         // GET: /Racer/
         public ActionResult Index()
@@ -78,9 +79,9 @@ namespace Derby.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Finals(int? competitionId, int? raceId)
+        public ActionResult Finals(int? competitionId, int? denId)
         {
-            if (competitionId == null || raceId == null)
+            if (competitionId == null || denId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -123,7 +124,7 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Finals([Bind(Include = "Id, Leaderboard")] CompetitionViewModel racers)
+        public ActionResult Finals(int denId, [Bind(Include = "Id, Leaderboard")] CompetitionViewModel racers)
         {
             if (ModelState.IsValid)
             {
@@ -140,14 +141,27 @@ namespace Derby.Controllers
                 CompetitionHelper helper = new CompetitionHelper();
                 CompetitionViewModel view = helper.LoadCompetition(competition, user);
 
+                Den finalsDen = view.Dens.FirstOrDefault(x => x.IsSystemPlaceholder);
+
                 List<LeaderViewModel> finalists = racers.Leaderboard.Where(x => x.Selected).ToList();
 
-                finalists.RemoveAll(x => view.Leaderboard.Where(y => y.Selected).Contains(x));
+                finalists.RemoveAll(x => view.Leaderboard.Where(y => y.DenId == finalsDen.Id).Contains(x));
 
-                //db.Racers.Add(racer);
-                //db.SaveChanges();
+                foreach (var leader in finalists)//.Where(x => x.DenId == finalsDen.Id))
+                {
+                    var _leader = leader;
+                    _racer = new Racer();
+                    _racer.CarNumber = _leader.CarNumber;
+                    _racer.CompetitionId = racers.Id;
+                    _racer.DenId = finalsDen.Id;
+                    _racer.ScoutId = _leader.ScoutId;
+                    _racer.Weight = _leader.Weight;
 
-                return RedirectToAction("details", "Competition", new { id = Id });
+                    db.Racers.Add(_racer);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("details", "Competition", new { id = racers.Id });
             }
 
             return RedirectToAction("Index", "Home");

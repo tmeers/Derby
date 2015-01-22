@@ -5,12 +5,19 @@
         <td>
             @Html.CheckBoxFor(model => model.Selected, new { @class = "row-select" })
             @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.ScoutId)
+            @Html.HiddenFor(model => model.Weight)
         </td>
         <td>@Html.DisplayFor(model => model.Name)</td>
-        <td>@Html.DisplayFor(model => model.CarNumber)</td>
+        <td>
+            @Html.DisplayFor(model => model.CarNumber)
+            @Html.HiddenFor(model => model.CarNumber)
+        </td>
         <td>
             @Model.Points
         </td>
         <td>
-            <img src="@Model.DenLogo" class="denlogo-xxsmall" /></td>
+            <img src="@Model.DenLogo" class="denlogo-xxsmall" />
+            @Html.HiddenFor(model => model.DenId)
+        </td>
     </tr>
