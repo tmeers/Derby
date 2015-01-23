@@ -298,6 +298,14 @@
                                                         Heat #@heatLoopCount
                                                     </div>
                                                     <div class="col-xs-6 text-right">
+                                                        @if (heat.TieBreaker)
+                                                        {
+                                                            <span class="text-warning" title="Tie breaker">
+                                                                <i class="fa fa-flag-checkered"></i>
+                                                                &nbsp;
+                                                                &nbsp;
+                                                            </span>
+                                                        }
                                                         <i class="fa fa-arrow-circle-right"></i>
                                                     </div>
                                                 </a>
@@ -349,7 +357,7 @@
                                 if (heats.Count() >= heatsNeeded)
                                 {
                                     <div class="row">
-                                        <a class="text-success" href="@Url.Action("Results", "Competition", new { id = Model.Id, raceId = race.Id, returnPath = "competition" })">
+                                        <a class="text-success" href="@Url.Action("Results", "Competition", new {id = Model.Id, raceId = race.Id, returnPath = "competition"})">
                                             <div class="col-xs-6">
                                                 View Results
                                             </div>
