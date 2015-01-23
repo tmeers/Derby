@@ -20,15 +20,33 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var leader in Model.Leaderboard.OrderBy(y => y.DenId).ThenByDescending(x => x.Points))
+            @{
+                List<int> dens = Model.Leaderboard.Select(x => x.DenId).Distinct().ToList();
+            }
+
+            @foreach (var den in dens)
             {
-                <tr>
-                    <td>@leader.Name</td>
-                    <td>@leader.CarNumber</td>
-                    <td>@leader.Points</td>
-                    <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
-                </tr>
+                int _denId = den;
+
+                foreach (var leader in Model.Leaderboard.Where(d => d.DenId == _denId).OrderBy(y => y.DenId).ThenByDescending(x => x.Points))
+                {
+                    <tr>
+                        <td>@leader.Name</td>
+                        <td>@leader.CarNumber</td>
+                        <td>@leader.Points</td>
+                        <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
+                    </tr>
+                }
+                <tr class="pad"><td colspan="4">&nbsp;</td></tr>
             }
         </tbody>
     </table>
 </div>
+<a href="@Url.Action("Leaders", "Competition", new {id = Model.Id, returnPath = "competition"})" target="_blank">
+    <div class="col-xs-7">
+        See Leaderboard
+    </div>
+    <div class="text-right">
+        <i class="fa fa-arrow-circle-right denheat-go"></i>
+    </div>
+</a>
