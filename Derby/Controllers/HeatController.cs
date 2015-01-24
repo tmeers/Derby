@@ -135,6 +135,45 @@ namespace Derby.Controllers
             return view;
         }
 
+        private ModifyHeatViewModel LoadEditView(int raceId, int heatId)
+        {
+            Race race = db.Races.Find(raceId);
+            Competition competition = db.Competitions.Find(race.CompetitionId);
+            race.CompetitionId = competition.Id;
+
+            ModifyHeatViewModel view = new ModifyHeatViewModel();
+            view.RaceId = raceId;
+            view.Racers = new Collection<RacerContestantViewModel>();
+            view.Competition = competition;
+            view.CurrentHeats = db.Heats.Where(x => x.RaceId == raceId).ToList();
+            view.CompetitionId = competition.Id;
+            view.TieBreaker = db.Heats.FirstOrDefault(x => x.Id == heatId).TieBreaker;
+
+            List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
+            if (scouts.Any())
+            {
+                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId).ToList())
+                {
+                    var racer = new RacerContestantViewModel(item);
+                    racer.ScoutName = scouts.FirstOrDefault(x => x.Id == item.ScoutId).Name;
+                    
+                    // Check to see if Racer was already selected
+                    var _existingContestant = db.Contestants.FirstOrDefault(x => x.HeatId == heatId && x.RacerId == racer.RacerId);
+                    if (_existingContestant != null && _existingContestant.Id != 0)
+                    {
+                        racer.Selected = true;
+                        racer.Lane = _existingContestant.Lane.ToString();
+                    }
+
+                    view.Racers.Add(racer);
+                }
+            }
+
+            view.HeatsNeeded = Infrastructure.HeatGenerator.GenerateHeatCount(competition.LaneCount, view.Racers.Count());
+
+            return view;
+        }
+
         public ActionResult Run(int id)
         {
             Heat heat = db.Heats.FirstOrDefault(x => x.Id == id);
@@ -248,18 +287,19 @@ namespace Derby.Controllers
         }
 
         // GET: /Heat/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int? raceId)
         {
-            if (id == null)
+            if (raceId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Heat heat = db.Heats.Find(id);
-            if (heat == null)
+
+            if (!string.IsNullOrEmpty(Request.QueryString["returnPath"]))
             {
-                return HttpNotFound();
+                TempData["returnPath"] = Request.QueryString["returnPath"];
             }
-            return View(heat);
+
+            return View(LoadEditView(raceId.Value, id.Value));
         }
 
         // POST: /Heat/Edit/5
@@ -267,15 +307,54 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,RaceId")] Heat heat)
+        public ActionResult Edit([Bind(Include = "Id,RaceId,Racers,TieBreaker,CompetitionId")] ModifyHeatViewModel heat)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(heat).State = EntityState.Modified;
+                if (!heat.Racers.Any())
+                {
+                    return View(LoadCreateView(heat.RaceId));
+                }
+
+                Heat _existingHeat = db.Heats.FirstOrDefault(x => x.Id == heat.Id);
+                var _newHeat = _existingHeat;
+                _newHeat.TieBreaker = heat.TieBreaker;
+
+                db.Heats.Attach(_existingHeat);
+
+                var entry = db.Entry(_newHeat);
+                entry.State = EntityState.Modified;
+
+                entry.Property(e => e.CreatedDate).IsModified = false;
+                entry.Property(e => e.IsCompleted).IsModified = false;
+
+                db.SaveChanges(); 
+
+                // First kill all the existing records just because it's easier
+                db.Contestants.RemoveRange(db.Contestants.Where(x => x.HeatId == heat.Id));
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                
+                foreach (var racer in heat.Racers.Where(x => x.Selected == true))
+                {
+                    var _racer = racer;
+                    Contestant contestant = new Contestant();
+                    contestant.HeatId = heat.Id;
+                    contestant.Lane = Convert.ToInt32(_racer.Lane);
+                    contestant.RacerId = _racer.RacerId;
+
+                    db.Contestants.Add(contestant);
+                    db.SaveChanges();
+                }
+
+                object returnPath = string.Empty;
+                TempData.TryGetValue("returnPath", out returnPath);
+                string returnPathStr = returnPath as string;
+
+                return RedirectToAction("Details", "Competition", new { competitionId = heat.CompetitionId });
             }
-            return View(heat);
+
+            return View(LoadCreateView(heat.RaceId));
         }
 
         // GET: /Heat/Delete/5

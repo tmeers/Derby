@@ -1,4 +1,4 @@
-﻿@model Derby.Models.Heat
+﻿@model Derby.ViewModels.ModifyHeatViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -10,32 +10,80 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Heat</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RaceId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RaceId)
-                @Html.ValidationMessageFor(model => model.RaceId)
+    <div class="row">
+        <div class="form-horizontal">
+            <h4>Heat</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.RaceId)
+            @Html.ValidationMessageFor(model => model.RaceId)
+            @Html.ValidationMessageFor(model => model.Racers)
+
+            @Html.HiddenFor(model => model.Competition.LaneCount)
+            @Html.HiddenFor(model => model.Competition.Id)
+            @Html.HiddenFor(model => model.CompetitionId)
+
+            <div class="col-sm-6">
+                <div class="table-responsive">
+                    <h4>Racers</h4>
+                    <table id="dashboard-scouts" class="table table-hover tablesorter">
+                        <thead>
+                            <tr>
+                                <th class="header">Select</th>
+                                <th class="header">Lane <i class="fa fa-info-circle information" data-tip="Must be a number from 1 to 6. The upper limit is the number of lanes possible (@Model.Competition.LaneCount)"></i></th>
+                                <th class="header">Name</th>
+                                <th class="header">Car Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @Html.EditorFor(model => model.Racers)
+                        </tbody>
+                    </table>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <span class="col-md-3">Tie Breaker</span>
+                    <div class="col-md-9">
+                        @Html.CheckBoxFor(model => model.TieBreaker)
+                        @Html.ValidationMessageFor(model => model.TieBreaker)
+                    </div>
+                    <div class="col-lg-12 small text-muted">
+                        <em>Be sure to check to "Tie Breaker" box when creating a tie-breaking heat.<br />This is used only if there is the need for a tie-breaker</em>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </div>
+                <br />
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate)
-                @Html.ValidationMessageFor(model => model.CreatedDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-sm-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Race Info</h3>
+                    </div>
+                    <div>
+                        <div class="list-group-item">
+                            <span class="badge">@Model.Competition.LaneCount</span>
+                            <i class="fa fa-road"></i> Number of Lanes
+                        </div>
+                        <div class="list-group-item">
+                            <span class="badge">@Model.HeatsNeeded</span>
+                            <i class="fa fa-tasks"></i> Heats Needed <i class="fa fa-info-circle information" data-tip="Calculated based on the number of Lanes and racers for the den. Each racer should race in each lane."></i>
+                        </div>
+                        <div class="list-group-item">
+                            <span class="badge">@Model.CurrentHeats.Count</span>
+                            <i class="fa fa-keyboard-o"></i> Heats Entered
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
