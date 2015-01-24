@@ -294,10 +294,10 @@
                                         {
                                             <div class="row">
                                                 <a href="@Url.Action("Run", "Heat", new {id = _heat.Id})">
-                                                    <div class="col-xs-6">
+                                                    <div class="col-xs-7">
                                                         Heat #@heatLoopCount
                                                     </div>
-                                                    <div class="col-xs-6 text-right">
+                                                    <div class="col-xs-4 text-right">
                                                         @if (heat.TieBreaker)
                                                         {
                                                             <span class="text-warning" title="Tie breaker">
@@ -308,6 +308,10 @@
                                                         }
                                                         <i class="fa fa-arrow-circle-right"></i>
                                                     </div>
+                                                </a>
+                                                <i class=""></i>
+                                                <a class="col-xs-1 text-warning" href="@Url.Action("Edit", "Heat", new {id = _heat.Id, raceId = heat.RaceId, message = "editing"})" title="Edit results">
+                                                    <i class="fa fa-wrench"></i>
                                                 </a>
                                             </div>
                                         }
