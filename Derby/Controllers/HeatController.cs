@@ -351,7 +351,7 @@ namespace Derby.Controllers
                 TempData.TryGetValue("returnPath", out returnPath);
                 string returnPathStr = returnPath as string;
 
-                return RedirectToAction("Details", "Competition", new { competitionId = heat.CompetitionId });
+                return RedirectToAction("Details", "Competition", new { id = heat.CompetitionId });
             }
 
             return View(LoadCreateView(heat.RaceId));
