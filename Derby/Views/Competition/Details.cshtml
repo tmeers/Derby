@@ -57,7 +57,10 @@
                                     // TODO This is all wrong and isn't good. Something is still wrong in the data model. I think. Or maybe I'm wrong and it's just late. 
                                     var _currentRacer = scout;
                                     var _racer = Model.Racers.Where(y => !y.Den.IsSystemPlaceholder).FirstOrDefault(x => x.Scout.Id == _currentRacer.Id);
-                                    
+                                    if (_racer == null && scout.Inactive)
+                                    {
+                                        continue;
+                                    }
                                     <tr>
                                         <td>@_currentRacer.Name</td>
                                         @if (_racer != null)
