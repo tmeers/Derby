@@ -22,6 +22,8 @@ namespace Derby.ViewModels
         public int DenId { get; set; }
         public int ScoutId { get; set; }
         public int CompetitionId { get; set; }
+
+        [Display(Name = "Scout Name")]
         public string ScoutName { get; set; }
     }
 }
