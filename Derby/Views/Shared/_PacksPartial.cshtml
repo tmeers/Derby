@@ -9,9 +9,10 @@
         }
         else
         {
+            <li>@Html.ActionLink("All Packs", "Index", "pack", null, null)</li>
+
             foreach (var item in Model)
             {
-                <li>@Html.ActionLink("All Packs", "Index", "pack", null, null)</li>
                 <li>
                     @Html.ActionLink(item.Name + " - " + item.Region, "details", "pack", new { id = item.Id }, null)
                 </li>
