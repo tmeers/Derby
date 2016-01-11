@@ -327,6 +327,10 @@
     <Compile Include="Migrations\201411230234584_InviteStatus.Designer.cs">
       <DependentUpon>201411230234584_InviteStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601100110218_IdentityFix.cs" />
+    <Compile Include="Migrations\201601100110218_IdentityFix.Designer.cs">
+      <DependentUpon>201601100110218_IdentityFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Competition.cs" />
@@ -592,6 +596,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411230234584_InviteStatus.resx">
       <DependentUpon>201411230234584_InviteStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601100110218_IdentityFix.resx">
+      <DependentUpon>201601100110218_IdentityFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
