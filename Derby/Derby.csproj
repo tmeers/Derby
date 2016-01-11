@@ -338,7 +338,6 @@
     <Compile Include="Models\Den.cs" />
     <Compile Include="Models\DerbyDb.cs" />
     <Compile Include="Models\Heat.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InviteEmail.cs" />
     <Compile Include="Models\Lane.cs" />
     <Compile Include="ViewModels\LeaderViewModel.cs" />
