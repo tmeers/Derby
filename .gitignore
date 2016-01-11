@@ -111,3 +111,4 @@ UpgradeLog*.XML
 Derby/HiddenSettings.config
 Derby/Views/Shared/_Analytics.cshtml
 Derby/email.config
+.vs/config/applicationhost.config
