@@ -254,7 +254,7 @@ namespace Derby.Controllers
         {
             PackAccess pa = new PackAccess();
             var user = User.Identity.GetUserId();
-            Competition competition = db.Competitions.Find();
+            Competition competition = db.Competitions.FirstOrDefault(x => x.Id == id);
 
             if (competition == null || !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Contributor))
             {
