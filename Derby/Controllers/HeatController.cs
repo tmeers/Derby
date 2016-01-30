@@ -121,7 +121,7 @@ namespace Derby.Controllers
             List<Scout> scouts = new List<Scout>(db.Scouts.Where(x => x.PackId == competition.PackId));
             if (scouts.Any())
             {
-                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId).ToList())
+                foreach (var item in db.Racers.Where(x => x.DenId == race.DenId && x.CompetitionId == competition.Id).ToList())
                 {
                     var racer = new RacerContestantViewModel(item);
                     racer.ScoutName = scouts.FirstOrDefault(x => x.Id == item.ScoutId).Name;
