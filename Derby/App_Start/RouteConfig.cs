@@ -162,7 +162,7 @@ namespace Derby
             routes.MapRoute(
                 name: "Invite-Accept",
                 url: "invite/{id}",
-                defaults: new { controller = "Heat", action = "Create" }
+                defaults: new { controller = "Invitation", action = "Accept", id = UrlParameter.Optional }
             );
 
             routes.MapRouteLowercase(

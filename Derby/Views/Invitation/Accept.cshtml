@@ -2,7 +2,36 @@
 @{
     ViewBag.Title = "Accept";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h2>Accept</h2>
+<h2>Derby Invitation</h2>
+<div>
+    @if (Request.IsAuthenticated && Model != null)
+    {
+        <div class="">
+            <p>
+                Hey there! Looks like someone invited you to join in on your Derby action!
+            </p>
+            <p>
 
+            </p>
+        </div>
+    }
+    else if (Model == null)
+    {
+        <div class="">
+            <p>Oops! Looks like you didn't supply an invitation code! Please check your email again and make sure you clicked the correct link!</p>
+        </div>
+    }
+    else
+    {
+        <div class="">
+            <p>
+                Looks like you need to login first! <a href="/login?invite="></a>
+            </p>
+        </div>
+
+    }
+
+</div>

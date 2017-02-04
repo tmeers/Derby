@@ -129,6 +129,18 @@ namespace Derby.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        
+        public ActionResult Accept(string id)
+        {
+            PackInvitation packinvitation = db.PackInvitations.FirstOrDefault(x => x.Code == id);
+
+            if (packinvitation == null)
+            {
+                return View(packinvitation);
+            }
+
+            return View();
+        }
 
         protected override void Dispose(bool disposing)
         {
