@@ -45,6 +45,10 @@ else
                 {
                     <td class="invite-pending" title="Invite is pending in the queue"><i class="text-warning fa fa-circle-o-notch fa-spin"></i></td>
                 }
+                else if (item.Status == EmailStatus.Accepted)
+                {
+                    <td class="invite-pending" title="Invite has been accepted"><i class="text-warning fa fa-check"></i></td>
+                }
                 
             </tr>
             }
