@@ -1,7 +1,6 @@
 ﻿@model Derby.Models.PackMembership
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -18,19 +17,19 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.PackId)
+                @Html.DisplayNameFor(model => model.Pack.Id)
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.PackId)
+                @Html.DisplayFor(model => model.Pack.Id)
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.User.Email)
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.UserId)
+                @Html.DisplayFor(model => model.User.Email)
             </dd>
     
             <dt>
