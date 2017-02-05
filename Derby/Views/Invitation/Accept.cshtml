@@ -16,7 +16,7 @@
 
 <h2>Derby Invitation</h2>
 <div>
-    @if (Request.IsAuthenticated && Model != null)
+    @if (Request.IsAuthenticated && Model != null && !Model.Accepted)
     {
         using (Html.BeginForm())
         {
@@ -35,7 +35,14 @@
              <div>
                  <input type="submit" value="Accept" class="btn btn-success"/>
              </div>
-         }
+        }
+    }
+    else if (Request.IsAuthenticated && Model.Accepted)
+    {
+        <div class="">
+            <p>Oops! Looks like you've already accepted this invite!</p>
+            <p>Since you're already logged in, you should be all set to open your unit and get started.</p>
+        </div>
     }
     else if (Model == null)
     {
