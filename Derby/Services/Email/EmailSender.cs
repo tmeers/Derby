@@ -62,7 +62,7 @@ If you are receiving this in error, please feel free to ignore the message.", ur
             SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email(System.Configuration.ConfigurationManager.AppSettings["Sendgrid.Email"]);
             string subject = "Derby Invitation";
             SendGrid.Helpers.Mail.Email to = new SendGrid.Helpers.Mail.Email(invite.To);
-            Content content = new Content("html", invite.Message);
+            Content content = new Content("text/plain", invite.Message);
             Mail mail = new Mail(from, subject, to, content);
 
             try

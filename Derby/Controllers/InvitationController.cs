@@ -134,12 +134,42 @@ namespace Derby.Controllers
         {
             PackInvitation packinvitation = db.PackInvitations.FirstOrDefault(x => x.Code == id);
 
-            if (packinvitation == null)
+            if (packinvitation != null)
             {
                 return View(packinvitation);
             }
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Accept([Bind(Include = "Code")] PackInvitation invite)
+        {
+            if (ModelState.IsValid)
+            {
+                PackInvitation _invite = db.PackInvitations.FirstOrDefault(x => x.Code == invite.Code);
+                _invite.Accepted = true;
+                _invite.AcceptedUserId = User.Identity.GetUserId();
+                _invite.Status = EmailStatus.Accepted;
+
+                db.PackInvitations.AddOrUpdate(_invite);
+
+                string currentUserId = User.Identity.GetUserId();
+                PackAccess member = new PackAccess();
+                member.AddMembership(_invite.Pack.Id, currentUserId, OwnershipType.Guest);
+
+                db.SaveChanges();
+
+                if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                {
+                    this.ControllerContext.HttpContext.Request.Cookies.Remove("InviteCode");
+                }
+
+                return RedirectToAction("Index", "Pack", new {Id = _invite.Pack.Id});
+            }
+
+            return View(invite);
         }
 
         protected override void Dispose(bool disposing)

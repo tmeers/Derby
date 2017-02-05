@@ -79,7 +79,11 @@ namespace Derby
 			switch (result)
 			{
 				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
+                    if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                    {
+                        return RedirectToAction("Accept", "Invitation", new { id = this.ControllerContext.HttpContext.Request.Cookies["InviteCode"].Value });
+                    }
+                    return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.RequiresVerification:
@@ -124,7 +128,11 @@ namespace Derby
 			switch (result)
 			{
 				case SignInStatus.Success:
-					return RedirectToLocal(model.ReturnUrl);
+                    if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                    {
+                        return RedirectToAction("Accept", "Invitation", new { id = this.ControllerContext.HttpContext.Request.Cookies["InviteCode"].Value });
+                    }
+                    return RedirectToLocal(model.ReturnUrl);
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.Failure:
@@ -157,13 +165,16 @@ namespace Derby
 				{
 					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-					// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-					return RedirectToAction("Index", "Home");
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                    {
+                        return RedirectToAction("Accept", "Invitation", new { id = this.ControllerContext.HttpContext.Request.Cookies["InviteCode"].Value });
+                    }
+                    return RedirectToAction("Index", "Home");
 				}
 				AddErrors(result);
 			}
@@ -333,7 +344,11 @@ namespace Derby
 			switch (result)
 			{
 				case SignInStatus.Success:
-					return RedirectToLocal(returnUrl);
+                    if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                    {
+                        return RedirectToAction("Accept", "Invitation", new { id = this.ControllerContext.HttpContext.Request.Cookies["InviteCode"].Value });
+                    }
+                    return RedirectToLocal(returnUrl);
 				case SignInStatus.LockedOut:
 					return View("Lockout");
 				case SignInStatus.RequiresVerification:
@@ -374,13 +389,18 @@ namespace Derby
 					if (result.Succeeded)
 					{
 						await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-						return RedirectToLocal(returnUrl);
+                        if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("InviteCode"))
+                        {
+                            return RedirectToAction("Accept", "Invitation", new { id = this.ControllerContext.HttpContext.Request.Cookies["InviteCode"].Value });
+                        }
+
+                        return RedirectToLocal(returnUrl);
 					}
 				}
 				AddErrors(result);
 			}
 
-			ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl;
 			return View(model);
 		}
 

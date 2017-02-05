@@ -10,6 +10,7 @@ namespace Derby.Infrastructure
         Sent = 0,
         Failed = 1, 
         Resent = 2,
-        Pending = 3
+        Pending = 3,
+        Accepted = 4
     }
 }

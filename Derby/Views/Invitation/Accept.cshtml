@@ -1,22 +1,41 @@
-﻿
+﻿@model Derby.Models.PackInvitation
 @{
     ViewBag.Title = "Accept";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string expiry = "";
+    string loginPart = "";
+    if (Model != null)
+    {
+        expiry = Model.CreatedDate.AddDays(Model.ExpiryOffset).ToString("MM/dd/yyyy");
 
+        HttpCookie cookie = new HttpCookie("InviteCode");
+        cookie.Value = Model.Code;
+        this.Response.Cookies.Add(cookie);
+    }
 }
 
 <h2>Derby Invitation</h2>
 <div>
     @if (Request.IsAuthenticated && Model != null)
     {
-        <div class="">
-            <p>
-                Hey there! Looks like someone invited you to join in on your Derby action!
-            </p>
-            <p>
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-            </p>
-        </div>
+            @Html.HiddenFor(model => model.Code)
+
+             <div class="">
+                 <p>
+                     Hey there! Looks like Unit @Html.Raw(Model.Pack.Name) invited you to join in on their Derby action! This invitationi will expire on @Html.Raw(expiry).
+                 </p>
+                 <p>
+                     If you would like to access this invitation, click Accept below.
+                 </p>
+             </div>
+             <div>
+                 <input type="submit" value="Accept" class="btn btn-success"/>
+             </div>
+         }
     }
     else if (Model == null)
     {
@@ -28,7 +47,7 @@
     {
         <div class="">
             <p>
-                Looks like you need to login first! <a href="/login?invite="></a>
+                Looks like you need to <a href="/login">login first</a>! You will be routed back to this page once you've completed the login.
             </p>
         </div>
 
