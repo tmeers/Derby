@@ -1,7 +1,7 @@
-﻿@model Derby.Models.PackMembership
+﻿@using Derby.Infrastructure
+@model Derby.Models.PackMembership
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -23,25 +23,24 @@
             @Html.HiddenFor(model => model.Id)
     
             <div class="form-group">
-                @Html.LabelFor(model => model.PackId, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Pack.Name, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PackId)
-                    @Html.ValidationMessageFor(model => model.PackId)
+                    @Html.Raw(Model.Pack.Name)
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.UserId, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.User.Email, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserId)
-                    @Html.ValidationMessageFor(model => model.UserId)
+                    @Html.EditorFor(model => model.User.Email)
+                    @Html.ValidationMessageFor(model => model.User.Email)
                 </div>
             </div>
     
             <div class="form-group">
                 @Html.LabelFor(model => model.AccessLevel, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.AccessLevel)
+                    @Html.DropDownListFor(m => m.AccessLevel, new SelectList(Enum.GetValues(typeof(OwnershipType)), 0))
                     @Html.ValidationMessageFor(model => model.AccessLevel)
                 </div>
             </div>
