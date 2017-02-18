@@ -1,7 +1,7 @@
 Derby
 =====
 A community tool for managing Pinewood Derby and Raingutter Regatta races. The goal of the application is to provide a community system for multiple packs and regions to use. The program was born out of frustration from having to use multiple Excel spreadsheets to manage a derby. 
-![Pack Dashboard](https://s3.amazonaws.com/_neckbeard/Github/Derby-PackDashboard.Yeti.png "Pack competition dashboard")
+![Pack Dashboard](https://s3.amazonaws.com/_neckbeard/Github/Derby-PackDashboard.Yeti.2017.png "Pack competition dashboard")
 
 Features
 =====
