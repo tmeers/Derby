@@ -29,11 +29,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var racer in Model.Racers)
+                                @foreach (var racer in Model.Racers.OrderBy(x => x.Den.Id).ThenBy(x => x.CarNumber))
                                 {
                                     var _currentRacer = racer;
                                     <tr>
-                                        <td>@_currentRacer.Scout.Name</td>
+                                        <td><img src="@racer.Den.LogoPath" class="denlogo-xxsmall" />&nbsp;&nbsp;@_currentRacer.Scout.Name</td>
                                         <td>@_currentRacer.CarNumber</td>
                                         <td>@_currentRacer.Weight</td>
                                         <td>
