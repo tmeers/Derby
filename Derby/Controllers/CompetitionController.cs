@@ -213,20 +213,20 @@ namespace Derby.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PackId,Title,Location,RaceType,EventDate,LaneCount")] Competition competition)
+        public ActionResult Edit([Bind(Include = "Id,PackId,Title,Location,RaceType,EventDate,LaneCount,CreatedDate")] Competition competition)
         {
             PackAccess pa = new PackAccess();
             var user = User.Identity.GetUserId();
 
             if (ModelState.IsValid && !pa.CheckCompetitionMembership(competition.PackId, user, OwnershipType.Guest))
             {
-                db.Entry(competition).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
+            db.Entry(competition).State = EntityState.Modified;
+            db.SaveChanges();
 
             ViewBag.PackId = new SelectList(db.Packs, "Id", "Name", competition.PackId);
-            return View(competition);
+            return RedirectToAction("Details", "Pack", new { id = competition.PackId });
         }
 
         public ActionResult Lock(int? id)
