@@ -19,7 +19,7 @@ namespace Derby.Infrastructure
 
                 var _racer = racer;
                 List<Heat> _racerHeats = competition.Races.Where(x => x.DenId == _racer.Den.Id).SelectMany(h => h.Heats).ToList();
-                List<Contestant> _contestants = _racerHeats.SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
+                List<Contestant> _contestants = _racerHeats.Where(t => t.TieBreaker == false).SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
                 int _points = 0;
                 foreach (var item in _contestants)
                 {

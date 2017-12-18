@@ -28,19 +28,16 @@
             {
                 int _denId = den;
 
-                foreach (var leader in Model.Leaderboard.Where(d => d.DenId == _denId).OrderBy(y => y.DenId).ThenByDescending(x => x.Points))
+                foreach (var leader in Model.Leaderboard.Where(d => d.DenId == _denId).OrderBy(y => y.DenId).ThenByDescending(x => x.Points).ThenByDescending(x => x.PointsTieBreaker))
                 {
                     <tr>
                         <td>@leader.Name</td>
                         <td>@leader.CarNumber</td>
                         <td>
                             @leader.Points
-                            @{
-                                if (leader.PointsTieBreaker > 0)
-                                {
-                                    Html.Raw("(" + leader.PointsTieBreaker + ")");
-                                }
-                            }
+
+                            @Html.Raw("(" + leader.PointsTieBreaker + ")")
+
                         </td>
                         <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
                     </tr>
