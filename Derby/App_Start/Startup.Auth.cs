@@ -50,8 +50,8 @@ namespace Derby
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: System.Configuration.ConfigurationManager.AppSettings["Facebook.Auth.Id"],
-               appSecret: System.Configuration.ConfigurationManager.AppSettings["Facebook.Auth.Secret"]);
+               appId: System.Web.Configuration.WebConfigurationManager.AppSettings["Facebook.Auth.Id"],
+               appSecret: System.Web.Configuration.WebConfigurationManager.AppSettings["Facebook.Auth.Secret"]);
 
             //app.UseGoogleAuthentication();
 
