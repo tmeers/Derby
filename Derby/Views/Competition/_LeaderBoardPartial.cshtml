@@ -33,7 +33,15 @@
                     <tr>
                         <td>@leader.Name</td>
                         <td>@leader.CarNumber</td>
-                        <td>@leader.Points</td>
+                        <td>
+                            @leader.Points
+                            @{
+                                if (leader.PointsTieBreaker > 0)
+                                {
+                                    Html.Raw("(" + leader.PointsTieBreaker + ")");
+                                }
+                            }
+                        </td>
                         <td><img src="@leader.DenLogo" class="denlogo-xxsmall" /></td>
                     </tr>
                 }

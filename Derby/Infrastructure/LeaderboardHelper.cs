@@ -29,11 +29,22 @@ namespace Derby.Infrastructure
                     }
                 }
 
+                List<Contestant> _contestantsTie = _racerHeats.Where(t => t.TieBreaker == true).SelectMany(x => x.Contestants.Where(y => y.RacerId == _racer.Id)).ToList();
+                int _pointsTie = 0;
+                foreach (var item in _contestantsTie)
+                {
+                    if (item.Place != 0)
+                    {
+                        _pointsTie = _pointsTie + PointsCalculator.Calculate(competition.LaneCount, item.Place);
+                    }
+                }
+
                 _leader.Id = _racer.Id;
                 _leader.Name = _racer.Scout.Name;
                 _leader.DenId = _racer.Den.Id;
                 _leader.CarNumber = _racer.CarNumber;
                 _leader.Points = _points;
+                _leader.PointsTieBreaker = _pointsTie;
                 _leader.DenLogo = _racer.Den.LogoPath;
                 _leader.ScoutId = _racer.Scout.Id;
                 _leader.Weight = _racer.Weight;
